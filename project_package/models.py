@@ -12,6 +12,7 @@ class Abstract(Base):
     pubmed_id = Column(String)
     date = Column(DATE)
     abstract_text = Column(String)
+    keywords=Column(String) #keywords can be fetched from MESH headings--??
 
 class Entity(Base):
     __tablename__ = 'entity'
