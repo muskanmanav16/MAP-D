@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
 from typing import List
+import re
 
 # DB_PATH = r"D:\ClonedRepoSheet1\Group2\front_end\MyDB.db"
 
@@ -17,9 +18,13 @@ def get_info(keyword: str, start_date: str, end_date: str) -> List[dict]:
             "' AND date <= '" + end_date + "'"
     df = pd.read_sql_query(query, conn)
     conn.close()
+    # highlight keyword in the abstract text
+    df["abstract"] = df["abstract"].apply(lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x))
     return df.to_dict(orient='records')
 
 
 print(get_info("19", "2021-01-01", "2021-12-31"))
 
 
+# I've used apply() method of pandas df and inside it is re.sub() method of re module
+# to wrap keyword in a <mark> tag (mark tag is to highlight words)
