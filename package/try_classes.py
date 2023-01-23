@@ -22,10 +22,10 @@ class Utilapi:
         self.search_query = search_query
         # self.records = None
 
-    @staticmethod
-    def cache_file_exists(path: Union[str, Path]) -> bool:
-        """Checks if cache file exists."""
-        return path.is_file() if isinstance(path, Path) else Path.is_file(path)
+    # @staticmethod
+    # def cache_file_exists(path: Union[str, Path]) -> bool:
+    #     """Checks if cache file exists."""
+    #     return path.is_file() if isinstance(path, Path) else Path.is_file(path)
 
     def search(self):
         search_info = Entrez.esearch(db="pubmed", term=self.search_query, usehistory='y', retmax=50)
@@ -44,16 +44,16 @@ class Utilapi:
         start = 0
         batch_size = 1
         for start in range(0, 1, batch_size):
-            self.path_outfile = PUBMED_DIR.joinpath(f'{start + 1}.xml')
+            path_outfile = PUBMED_DIR.joinpath(f'{start + 1}.xml')
             end = min(3, start + batch_size)
             print("Going to download record %i to %i" % (start + 1, end))
             fetch_handle = Entrez.efetch(db="pubmed", rettype="medline", retmode="text", retstart=start,
                                          retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey, )
             data = fetch_handle.read()
             # print(data)
-            if self.cache_file_exists(self.path_outfile):
-                with open(self.path_outfile, "w") as f:
-                    f.write(data)
+            # if self.cache_file_exists(path_outfile):
+            with open(path_outfile, "w") as f:
+                f.write(data)
 
             records = Medline.parse(fetch_handle)
             dic = {}
