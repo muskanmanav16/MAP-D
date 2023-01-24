@@ -43,7 +43,7 @@ class Utilapi:
     def get_abstracts(self, fetch_webenv, fetch_querykey):
         start = 0
         batch_size = 1
-        for start in range(0, 1, batch_size):
+        for start in range(0, 3, batch_size):
             path_outfile = PUBMED_DIR.joinpath(f'{start + 1}.xml')
             end = min(3, start + batch_size)
             print("Going to download record %i to %i" % (start + 1, end))
@@ -55,20 +55,22 @@ class Utilapi:
             with open(path_outfile, "w") as f:
                 f.write(data)
 
-            records = Medline.parse(fetch_handle)
-            dic = {}
-            for record in records:
-                # print(record)
-                dic['pmid'] = record['PMID']
-                print(f'pmid{dic}')
-                dic['abstract'] = record['AB']
-                try:
-                    dic['date'] = datetime.strptime(record['DP'], '%Y %b %d').strftime('%Y/%m/%d')
-                except (KeyError, ValueError):
-                    dic['date'] = record['DP']
-            print(dic)
-
-        sleep(self.sleep_time)
+            with open(path_outfile) as handle:
+                records = Medline.parse(handle)
+                # print(records)
+                # print(type(records))
+                dic = {}
+                for record in records:
+                    # print(record)
+                    dic['pmid'] = record['PMID']
+                    # print(f'pmid{dic}')
+                    dic['abstract'] = record['AB']
+                    try:
+                        dic['date'] = datetime.strptime(record['DP'], '%Y %b %d').strftime('%Y/%m/%d')
+                    except (KeyError, ValueError):
+                        dic['date'] = record['DP']
+                print(dic)
+            sleep(self.sleep_time)
 
 
 util = Utilapi('biological AND (clinicaltrial[Filter]) AND (2020:2023[PDAT]) AND (english[Filter])')
