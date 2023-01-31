@@ -6,13 +6,17 @@ from startup import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 from Bio import Medline
 from datetime import datetime
 
+
 from pathlib import Path
 from typing import Optional, Union
 from sqlalchemy import select, inspect
 from sqlalchemy.orm import Session
 from sqlalchemy_utils import database_exists
+# from models import Base, Pubmed
 
 Entrez.email = "parinishtha.bhalla@gmail.com"
+
+
 
 class Utilapi:
 
@@ -27,7 +31,7 @@ class Utilapi:
     #     """Checks if cache file exists."""
     #     return path.is_file() if isinstance(path, Path) else Path.is_file(path)
 
-    def search(self):
+    def search(self) -> None:
         search_info = Entrez.esearch(db="pubmed", term=self.search_query, usehistory='y', retmax=50)
         record = Entrez.read(search_info)
         # print(record)
@@ -35,20 +39,24 @@ class Utilapi:
         # print(identifiers)
 
         total_abstract_count = int(record["Count"])
-        fetch_webenv = record['WebEnv']
-        fetch_querykey = record['QueryKey']
+        # print(total_abstract_count)
+        self.fetch_webenv = record['WebEnv']
+        self.fetch_querykey = record['QueryKey']
+        # print(self.fetch_webenv)
         # for uid in record['IdList']:
-        self.get_abstracts(fetch_webenv, fetch_querykey)
+        # self.get_abstracts
+        # return fetch_webenv, fetch_querykey
 
-    def get_abstracts(self, fetch_webenv, fetch_querykey):
+    def get_abstracts(self):
+
         start = 0
         batch_size = 1
-        for start in range(0, 3, batch_size):
+        for start in range(0, 6, batch_size):
             path_outfile = PUBMED_DIR.joinpath(f'{start + 1}.xml')
             end = min(3, start + batch_size)
             print("Going to download record %i to %i" % (start + 1, end))
             fetch_handle = Entrez.efetch(db="pubmed", rettype="medline", retmode="text", retstart=start,
-                                         retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey, )
+                                         retmax=batch_size, webenv=self.fetch_webenv, query_key=self.fetch_querykey, )
             data = fetch_handle.read()
             # print(data)
             # if self.cache_file_exists(path_outfile):
@@ -63,14 +71,20 @@ class Utilapi:
                 for record in records:
                     # print(record)
                     dic['pmid'] = record['PMID']
-                    # print(f'pmid{dic}')
+                    dic['title'] = record['TI']
                     dic['abstract'] = record['AB']
                     try:
-                        dic['date'] = datetime.strptime(record['DP'], '%Y %b %d').strftime('%Y/%m/%d')
+                        # x = datetime.strptime(record['DP'], '%Y %b %d').strftime('%Y/%m/%d')
+                        x = datetime.strptime(record['DP'], '%Y %b %d').date()
+                        print(type(x))
+                        dic['pub_date'] = x
                     except (KeyError, ValueError):
-                        dic['date'] = record['DP']
+                        dic['pub_date'] = record['DP']
                 print(dic)
             sleep(self.sleep_time)
+
+        return dic
+
 
 
 util = Utilapi('biological AND (clinicaltrial[Filter]) AND (2020:2023[PDAT]) AND (english[Filter])')
