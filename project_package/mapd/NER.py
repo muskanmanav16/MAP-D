@@ -69,3 +69,4 @@ for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
 #include above code in more structured form
 #check for any duplicated entries in entity and abstarct table
 #task3--make function to fetch the data for frontend
+#include some ideas and functions for cli & unit_tests
