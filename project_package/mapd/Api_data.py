@@ -45,7 +45,6 @@ class Utilapi:
                     print(f"Error while fetching data from pubmed: {e}")
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
-
-util = Utilapi('biological AND (clinicaltrial[Filter]) AND (2020:2022[PDAT]) AND (english[Filter])')
+util=Utilapi('"cancer s"[All Fields] OR "cancerated"[All Fields] OR "canceration"[All Fields] OR "cancerization"[All Fields] OR "cancerized"[All Fields] OR "cancerous"[All Fields] OR "neoplasms"[MeSH Terms] OR "neoplasms"[All Fields] OR "cancer"[All Fields] OR "cancers"[All Fields]) AND ("biologies"[All Fields] OR "biology"[MeSH Terms] OR "biology"[All Fields] OR "biology s"[All Fields])) AND ((fha[Filter]) AND (review[Filter]) AND (humans[Filter]) AND (2020/1/1:2022/12/31[pdat]) AND (english[Filter])')
+# util = Utilapi('biological AND (clinicaltrial[Filter]) AND (2020:2022[PDAT]) AND (english[Filter])')
 util.search()
-
