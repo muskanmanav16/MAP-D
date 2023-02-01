@@ -7,6 +7,10 @@ import logging
 from pathlib import Path
 from sqlalchemy import create_engine
 import pymysql
+import logging
+from sqlalchemy import create_engine
+from pathlib import Path
+
 
 HOME = Path.home()
 PROJECT_DIR = HOME.joinpath(".gp2_plab2", "group2")
