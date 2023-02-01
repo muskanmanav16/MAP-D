@@ -48,7 +48,7 @@ class EntityPrediction:
 
     def insert_entities(self, abstract_id, entities):
         for entity in entities:
-            e = Entity(entity=entity["entity"], labels=entity["labels"], pubmed_id=abstract_id)
+            e = Entity(entity=entity["entity"], labels=entity["labels"], abstract_id=abstract_id)
             self.session.add(e)
         self.session.commit()
 
@@ -61,7 +61,7 @@ abstracts = session.query(Abstract).all()
 # Loop through each abstract and predict entities
 for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
     entities = entity_predictor.predict_entities(abstract.abstract_text)
-    entity_predictor.insert_entities(abstract.pubmed_id, entities)
+    entity_predictor.insert_entities(abstract.id, entities)
 
 
 
