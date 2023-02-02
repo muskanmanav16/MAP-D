@@ -63,8 +63,8 @@ On some READMEs, you may see small images that convey metadata, such as whether 
 ## Visuals
 Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-CSS Animations and Transitions:
-![css_animations_and_transitions](/uploads/b35e62291ed8c7845b7514265d8129f6/css_animations_and_transitions.webm)
+
+![CSS Animations and Transitions:](/uploads/b35e62291ed8c7845b7514265d8129f6/css_animations_and_transitions.webm)
 
 
 ## Installation
