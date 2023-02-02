@@ -5,6 +5,7 @@
 from setuptools import setup, find_packages
 
 requirements = [
+    'numpy',
     'Click',
     'networkx',
     'matplotlib',
