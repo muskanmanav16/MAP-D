@@ -1,4 +1,5 @@
 import csv
+import os
 
 from flask import Flask, render_template, request, make_response, send_file
 import pandas as pd
@@ -42,6 +43,10 @@ def search_results():
     end_date = request.form['end_date']
     results = get_info(keyword, start_date, end_date)  # db_path might be a parameter in get_info() - modify acc.
 
+    # if not results:
+    #     results = "No results found, please try searching with more specific keywords"
+    #     return render_template('combi.html', results=results)
+    # else:
     # return render_template('search_results.html', results=results)
     return render_template('combi.html', results=results)
 
@@ -85,6 +90,19 @@ def download_results():
     return send_file('results.csv', as_attachment=True)
 
 
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Check for the FLASK_PORT environment variable
+    flask_port = os.getenv('FLASK_PORT')
+    print(flask_port)
+    # If the FLASK_PORT environment variable is set, use it as the port for the app
+    if flask_port:
+        app.run(debug=True, port=flask_port, host="0.0.0.0")
+    else:
+        # If the FLASK_PORT environment variable is not set, use the default port of 5000
+        app.run(debug=True, port=5000, host="0.0.0.0")
+
+
 
