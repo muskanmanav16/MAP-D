@@ -33,8 +33,8 @@ class Entity(Base):
 #     Title = Column(String(255))
 #     pubmed_id = Column(String(255))
 #     date = Column(DATE)
-#     # abstract_text = Column(Text)  
-#     abstract_text = Column(LONGTEXT)
+#     abstract_text = Column(TEXT)  
+#     # abstract_text = Column(LONGTEXT)
 #     # keywords=Column(String) #keywords can be fetched from MESH headings--??
 
 # class Entity(Base):
