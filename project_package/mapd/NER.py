@@ -13,9 +13,9 @@ from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 from mapd.models import Base,Abstract,Entity
 from tqdm import tqdm
 
-logging.getLogger('tensorflow').setLevel(logging.ERROR)
+# logging.getLogger('tensorflow').setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.ERROR)
 
 #check the device name and use GPU if it is available
 device_name = tf.test.gpu_device_name()
