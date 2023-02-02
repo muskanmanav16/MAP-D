@@ -64,7 +64,7 @@ On some READMEs, you may see small images that convey metadata, such as whether 
 Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
 CSS Animations and Transitions:
-https://radseason.com/wp-content/uploads/2018/06/View-from-Cologne-Cathedral.jpg
+
 
 
 ## Installation
