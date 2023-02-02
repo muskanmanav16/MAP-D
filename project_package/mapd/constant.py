@@ -1,35 +1,8 @@
-"""Top-level package for plab2. can be included in init file"""
 
 
+"""String constants."""
 
-import os
-import logging
-
-from pathlib import Path
-from sqlalchemy import create_engine
-import pymysql
-HOME = Path.home()
-PROJECT_DIR = HOME.joinpath(".gp2_plab2", "group2")
-LOG_DIR = PROJECT_DIR.joinpath("log")
-DB_PATH = PROJECT_DIR.joinpath("gp2_plab2.db")
-
-DATA_DIR = PROJECT_DIR.joinpath("data")
-PUBMED_DIR = DATA_DIR.joinpath("pubmed")
-
-
-# Make directories
-LOG_DIR.mkdir(exist_ok=True, parents=True)
-PUBMED_DIR.mkdir(exist_ok=True, parents=True)
-
-
-# Logging Configuration
-LOG_FILE_PATH = LOG_DIR.joinpath("group2_log.log")
-logging.basicConfig(filename=LOG_FILE_PATH,
-                    level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-# SQLite init
-# CONN_STRING = f"sqlite:///{DB_PATH}"
-# engine_str = 'mysql+mysqlconnector://{}:{}@{}/{}'.format(login, passwd, server, db)
-# CONN_STRING = 'mysql+pymysql://root:plab2rocks@db:3306/plab2db'
-# engine = create_engine(CONN_STRING)
+# String Constants
+ABSTRACT = "abstract"
+ENTITY = "entity"
+QUERY_STRING='"cancer s"[All Fields] OR "cancerated"[All Fields] OR "canceration"[All Fields] OR "cancerization"[All Fields] OR "cancerized"[All Fields] OR "cancerous"[All Fields] OR "neoplasms"[MeSH Terms] OR "neoplasms"[All Fields] OR "cancer"[All Fields] OR "cancers"[All Fields]) AND ("biologies"[All Fields] OR "biology"[MeSH Terms] OR "biology"[All Fields] OR "biology s"[All Fields])) AND ((fha[Filter]) AND (review[Filter]) AND (humans[Filter]) AND (2020/1/1:2022/12/31[pdat]) AND (english[Filter])'
