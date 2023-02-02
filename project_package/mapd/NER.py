@@ -13,7 +13,7 @@ from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 from mapd.models import Base,Abstract,Entity
 from tqdm import tqdm
 
-
+logging.getLogger('tensorflow').setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -26,9 +26,9 @@ else:
     print('Found GPU at: {}'.format(device_name))
 
 #DB connection
-Session = sessionmaker(bind=engine)
-session = Session()
-Base.metadata.create_all(engine)
+# Session = sessionmaker(bind=engine)
+# session = Session()
+# Base.metadata.create_all(engine)
 
 # Load the sciSpacy model
 model_name="en_ner_bionlp13cg_md"
@@ -48,20 +48,28 @@ class EntityPrediction:
 
     def insert_entities(self, abstract_id, entities):
         for entity in entities:
-            e = Entity(entity=entity["entity"], labels=entity["labels"], pubmed_id=abstract_id)
+            e = Entity(entity=entity["entity"], labels=entity["labels"], abstract_id=abstract_id)
             self.session.add(e)
         self.session.commit()
 
 
-entity_predictor = EntityPrediction(session)
+# entity_predictor = EntityPrediction(session)
+#
+# # Get all abstracts in the database from Abstract table
+# abstracts = session.query(Abstract).all()
+#
+# # Loop through each abstract and predict entities
+# for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
+#     entities = entity_predictor.predict_entities(abstract.abstract_text)
+#     entity_predictor.insert_entities(abstract.id, entities)
+#
 
-# Get all abstracts in the database from Abstract table
-abstracts = session.query(Abstract).all()
 
-# Loop through each abstract and predict entities
-for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
-    entities = entity_predictor.predict_entities(abstract.abstract_text)
-    entity_predictor.insert_entities(abstract.pubmed_id, entities)
+
+
+
+
+
 
 
 

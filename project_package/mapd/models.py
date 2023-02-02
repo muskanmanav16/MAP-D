@@ -20,4 +20,4 @@ class Entity(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     entity = Column(String)
     labels=Column(String)
-    pubmed_id = Column(Integer, ForeignKey(Abstract.id))
+    abstract_id = Column(Integer, ForeignKey(Abstract.id))
