@@ -39,7 +39,7 @@ test_requirements = ['pytest>=3', ]
 setup(
     author="Muskan Astha Deepika Parinishtha",
     author_email='mapd@gmx.net',
-    python_requires='>=2.7',
+    python_requires='>=3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
