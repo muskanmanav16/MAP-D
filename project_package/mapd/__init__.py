@@ -19,7 +19,7 @@ DB_PATH = PROJECT_DIR.joinpath("gp2_plab2.db")
 
 DATA_DIR = PROJECT_DIR.joinpath("data")
 PUBMED_DIR = DATA_DIR.joinpath("pubmed")
-TEST_PUBMED_DIR=DATA_DIR.joinpath("pubmed_test")
+TEST_PUBMED_DIR = DATA_DIR.joinpath("pubmed_test")
 
 
 # Make directories
