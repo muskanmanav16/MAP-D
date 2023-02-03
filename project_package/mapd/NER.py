@@ -1,7 +1,6 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #to ignore GPU error
 
-import scispacy
 import spacy
 import logging
 from sqlalchemy import create_engine, Column, Integer, String, Table, MetaData,ForeignKey, DATE,text,select, inspect,func
@@ -10,7 +9,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from typing import Optional, Union
 import en_ner_bionlp13cg_md    #The model we are going to use
 from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
-from mapd.models import Base,Abstract,Entity
+from mapd.models import Base, Abstract, Entity
 import tensorflow as tf
 
 logger = logging.getLogger(__name__)
