@@ -43,12 +43,18 @@ def search_results():
     end_date = request.form['end_date']
     results = get_info(keyword, start_date, end_date)  # db_path might be a parameter in get_info() - modify acc.
 
-    # if not results:
-    #     results = "No results found, please try searching with more specific keywords"
-    #     return render_template('combi.html', results=results)
-    # else:
-    # return render_template('search_results.html', results=results)
+    # paginate
+    # can change this value by modifying the results_per_page variable.
+    # The page variable is obtained from the query parameters in the request (e.g. /results?page=2).
+    # The start and end variables are used to slice the results list so that only the desired chunk is returned.
+    results_per_page = 2
+    page = request.args.get("page", 1)
+    start = (page - 1) * results_per_page
+    end = start + results_per_page
+    results = results[start:end]
+
     return render_template('combi.html', results=results)
+
 
 # search_results.html
 # displays the search results in a table format
@@ -66,22 +72,6 @@ def download_results():
     start_date = request.form['start_date']
     end_date = request.form['end_date']
     results = get_info(keyword, start_date, end_date)  # modify when task 3 is complete
-
-    # df = pd.DataFrame(results)
-    # response = make_response(df.to_csv())
-    # response.headers["Content-Disposition"] = "attachment; filename=results.csv"
-    # response.headers["Content-Type"] = "text/csv"
-    # return response
-
-
-    # for result in results:
-    #     result['PMID'] = f'=HYPERLINK("https://www.ncbi.nlm.nih.gov/pubmed/{result["PMID"]}","{result["PMID"]}")'
-    # with open('results.csv', mode='w', newline='') as file:
-    #     writer = csv.DictWriter(file, fieldnames=results[0].keys())
-    #     writer.writeheader()
-    #     writer.writerows(results)
-    # return send_file('results.csv', as_attachment=True)
-
     for result in results:
         result['PMID'] = f'=HYPERLINK("https://www.ncbi.nlm.nih.gov/pubmed/{result["PMID"]}","{result["PMID"]}")'
         result['abstract'] = result['abstract'].replace('<mark>'+keyword+'</mark>', keyword)
@@ -103,6 +93,7 @@ if __name__ == '__main__':
     else:
         # If the FLASK_PORT environment variable is not set, use the default port of 5000
         app.run(debug=True, port=5000, host="0.0.0.0")
+
 
 
 
