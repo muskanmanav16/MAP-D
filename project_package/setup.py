@@ -5,6 +5,7 @@
 from setuptools import setup, find_packages
 
 requirements = [
+    'numpy',
     'Click',
     'networkx',
     'matplotlib',
@@ -24,8 +25,9 @@ requirements = [
     'cryptography',
     'scipy',
     'scispacy',
-    'en-ner-bionlp13cg-md',
-    'tensorflow'
+    'en-ner-bionlp13cg-md @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz',
+    'spacy',
+    'tensorflow',
 
 
 

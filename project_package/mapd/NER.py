@@ -1,9 +1,9 @@
-import scispacy
 import os
-import sqlalchemy
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #to ignore GPU error
+
+import scispacy
 import spacy
 import logging
-import tensorflow as tf
 from sqlalchemy import create_engine, Column, Integer, String, Table, MetaData,ForeignKey, DATE,text,select, inspect,func
 from sqlalchemy_utils import database_exists
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -11,11 +11,11 @@ from typing import Optional, Union
 import en_ner_bionlp13cg_md    #The model we are going to use
 from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 from mapd.models import Base,Abstract,Entity
-from tqdm import tqdm
+import tensorflow as tf
 
-logging.getLogger('tensorflow').setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.ERROR)
+
 
 #check the device name and use GPU if it is available
 device_name = tf.test.gpu_device_name()
@@ -25,12 +25,6 @@ if device_name != '/device:GPU:0':
 else:
     print('Found GPU at: {}'.format(device_name))
 
-#DB connection
-# Session = sessionmaker(bind=engine)
-# session = Session()
-# Base.metadata.create_all(engine)
-
-# Load the sciSpacy model
 model_name="en_ner_bionlp13cg_md"
 nlp = spacy.load(model_name)
 
@@ -51,30 +45,3 @@ class EntityPrediction:
             e = Entity(entity=entity["entity"], labels=entity["labels"], abstract_id=abstract_id)
             self.session.add(e)
         self.session.commit()
-
-
-# entity_predictor = EntityPrediction(session)
-#
-# # Get all abstracts in the database from Abstract table
-# abstracts = session.query(Abstract).all()
-#
-# # Loop through each abstract and predict entities
-# for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
-#     entities = entity_predictor.predict_entities(abstract.abstract_text)
-#     entity_predictor.insert_entities(abstract.id, entities)
-#
-
-
-
-
-
-
-
-
-
-
-# TO DO
-#include above code in more structured form
-#check for any duplicated entries in entity and abstarct table
-#task3--make function to fetch the data for frontend
-#include some ideas and functions for cli & unit_tests

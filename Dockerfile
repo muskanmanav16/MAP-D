@@ -1,0 +1,38 @@
+FROM python:3.9
+
+
+# All members of group should be in the image metadata using LABEL
+# metadata
+LABEL maintainer="MAPD <mapd@gmx.net>"
+LABEL contributors="Astha Anand <s0asanan@uni-bonn.de>, Deepika Pradeep <s0deprad@uni-bonn.de>, Muskan Manav <s0mumana@uni-bonn.de>, Parinishtha Bhalla <s0pabhal@uni-bonn.de>"
+LABEL project-name="Natural Language Processing"
+LABEL Description="Building a search engine that utilizes NER"
+LABEL Usage="To find relevant biomedical papers from a large corpus"
+LABEL project-version="1.0"
+LABEL created-date="07-02-2023"
+
+
+ENV FLASK_PORT=5000
+# Expose the port defined by the FLASK_PORT environment variable
+EXPOSE ${FLASK_PORT}
+EXPOSE $FLASK_PORT
+
+
+COPY frontend/run.py /app/
+COPY frontend/templates /app/templates/
+COPY frontend/static /app/static
+COPY project_package/setup.py /app/
+COPY project_package/mapd /app/mapd
+
+
+WORKDIR /app
+
+# Install required packages
+RUN pip install -e .
+# scispacy model link
+RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz
+
+ENTRYPOINT ["python", "run.py"]
+
+
+
