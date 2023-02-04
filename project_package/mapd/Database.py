@@ -166,6 +166,10 @@ class Utilapi:
                     pass
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
+
+# x=Database()
+# x.rebuild_database()
+# x.add_abstract_to_databse()
 if __name__ == '__main__':
     Database().add_entity_data()
     # Database().get_abstract_info(36680181)
