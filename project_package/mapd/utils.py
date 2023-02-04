@@ -1,34 +1,40 @@
 """Collection of utility methods."""
-# from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
-# from Bio import Medline
-# from tqdm import tqdm
-# from sqlalchemy import create_engine, Column, Integer, String, Table, MetaData,ForeignKey, DATE,text,select, inspect,func
-# from mapd.models import Base,Abstract,Entity
-# from datetime import datetime
-#
-# from sqlalchemy.orm import sessionmaker
-# Base.metadata.create_all(engine)
-# Session = sessionmaker(bind=engine)
-# session = Session()
-# with engine.begin() as conn:
-#     for file in tqdm(PUBMED_DIR.glob("*.xml"), desc="Processing Files"):
-#         with open(file,encoding='utf-8') as handle:
-#             records = Medline.parse(handle)
-#             for record in records:
-#                 pmid = record['PMID']
-#                 abstract = record['AB']
-#                 date_list = record.get('PHST', [''])
-#                 if len(date_list) >= 4:
-#                     date_p = date_list[3]
-#                 else:
-#                     date_p = ''
-#                 try:
-#                     print(date_p)
-#                     date = datetime.strptime(date_p, '%Y/%m/%d %H:%M [pubmed]').date()
-#                 except (KeyError, ValueError):
-#                     date = None
-#
-#                 abstract_entry = Abstract(pubmed_id=pmid, abstract_text=abstract, date=date)
-#                 session.add(abstract_entry)
-#             session.commit()
 
+import pandas as pd
+import sqlite3
+import pandas as pd
+from typing import List
+from mapd.models import Base, Abstract,Entity
+from sqlalchemy import select, inspect, create_engine
+from sqlalchemy.orm import Session
+import re
+DB_PATH = 'E:\Desktop\LSISem3\Plab2\Projects\group project plab2\data\gp2_plab2.db'
+CONN_STRING = f"sqlite:///{DB_PATH}"
+engine = create_engine(CONN_STRING)
+test_session = Session(bind=engine)
+try:
+    engine = create_engine(CONN_STRING)
+    test_session = Session(bind=engine)
+except Exception as e:
+    print(f"Error connecting to database: {e}")
+
+def query_database(self, keyword: str, start_date=None, end_date=None):
+    """Returns all abstracts in the database that have been tagged with the queried keyword, and were published
+    between the start and end dates (if date parameters are input).
+
+    Returns:
+    A list of dict, each dict represents a row in the table, where keys are the column names"""
+
+    query_ = test_session.query(Abstract).outerjoin(Entity, Abstract.id == Entity.abstract_id)
+    query_ = query_.filter(Entity.labels.like('%' + keyword + '%'))
+    if start_date and end_date:
+        query_ = query_.filter(Abstract.date >= start_date, Abstract.date <= end_date)
+
+    df = pd.read_sql(query_.statement, query_.session.bind)
+
+    # highlight keyword in the abstract text
+    df["abstract_text"] = df["abstract_text"].apply(
+        lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
+    return df.to_dict(orient='records')
+if __name__ == '__main__':
+    query_database("19","2021-01-01", "2021-12-31")
