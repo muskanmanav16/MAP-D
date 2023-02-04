@@ -14,10 +14,15 @@ def main():
 
 @main.command()
 
-def build_database():
+def build_abstract_database():
     Database.build_database()
+    Database.add_abstract_to_database()
+
 @main.command():
 def get_abstracts():
+
+@main.command():
+def entity_dict():
     Utilapi.get_abstracts()
 
 @main.command()

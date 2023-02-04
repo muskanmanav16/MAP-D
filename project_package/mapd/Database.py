@@ -243,4 +243,4 @@ if __name__ == '__main__':
     # print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
     # db=Database()
     # db.rebuild_database()
-    # db.add_abstract_to_database()
+    db.add_abstract_to_database()
