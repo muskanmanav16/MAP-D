@@ -176,12 +176,23 @@ class Database:
         Returns:
         A list of dict, each dict represents a row in the table, where keys are the column names"""
 
-        query_ = self.session.query(Abstract).outerjoin(Entity, Abstract.id == Entity.abstract_id)
-        query_ = query_.filter(Entity.labels.like('%'+keyword+'%'))
-        if start_date and end_date:
-            query_ = query_.filter(Abstract.date >= start_date, Abstract.date <= end_date)
+        # query_ = self.session.query(Abstract).outerjoin(Entity, Abstract.id == Entity.abstract_id)
+        # query_ = query_.filter(Entity.labels.like('%'+keyword+'%'))
+        # query_ = query_.filter(Abstract.date >= start_date, Abstract.date <= end_date)
 
-        df = pd.read_sql(query_.statement, query_.session.bind)
+        if start_date and end_date:
+            query = (self.session.query(Abstract, Entity)
+                     .join(Entity)
+                     .filter(Entity.entity.like('%' + keyword + '%'))
+                     .filter(Abstract.date >= start_date, Abstract.date <= end_date).all()
+                     )
+        else:
+            query = (self.session.query(Abstract, Entity)
+                     .join(Entity)
+                     .filter(Entity.labels.like('%'+keyword+'%')).all()
+                     )
+
+        df = pd.read_sql(query.statement, query.session.bind)
 
         # highlight keyword in the abstract text
         df["abstract_text"] = df["abstract_text"].apply(
@@ -238,6 +249,7 @@ class Utilapi:
     # ent=Database().get_entity_dict()
     # print(ent)
     database = Database()
+    database.rebuild_database()
     print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
     # db=Database()
     # db.rebuild_database()
