@@ -130,6 +130,7 @@ class Database:
         """Populate the raw_entity_data with the Entity and labels stored in the Entity Table
 
         returns: dict, with key Entity and Labels as value"""
+
         self.add_entity_data()
         entities = self.session.query(Entity).all()
         for entity in entities:
@@ -188,7 +189,8 @@ class Database:
         return df.to_dict(orient='records')
 
 class Utilapi:
-    '''For interfacing with the NCBI Entrez API'''
+    """For interfacing with the NCBI Entrez API"""
+
     def __init__(self, search_query: str,cache_dir=PUBMED_DIR):
         self.sleep_time = 0.1  # reduce sleep time
         self.batch_size = 100  # increase batch size
@@ -196,7 +198,8 @@ class Utilapi:
         self.PUBMED_DIR=cache_dir
 
     def search(self):
-        '''Fetching pubmed abstract using NCBI Entrez API '''
+        """Fetching pubmed abstract using NCBI Entrez API"""
+
         try:
             search_info = Entrez.esearch(db="pubmed", term=self.search_query, usehistory='y', retmax=100)
             record = Entrez.read(search_info)
@@ -210,7 +213,8 @@ class Utilapi:
             pass
 
     def get_abstracts(self, fetch_webenv, fetch_querykey, total_abstract_count):
-        '''Batch download of PUBMED ABSTRACT using NCBI Entrez API each batch file contains 100 abstracts'''
+        """Batch download of PUBMED ABSTRACT using NCBI Entrez API each batch file contains 100 abstracts"""
+
         start = 0
         batch_size = 100
         with tqdm(total=total_abstract_count, desc="Downloading abstracts") as pbar:
@@ -218,7 +222,7 @@ class Utilapi:
                 end = min(total_abstract_count, start + batch_size)
                 try:
                     fetch_handle = Entrez.efetch(db="pubmed", rettype="medline", retmode="text", retstart=start,
-                                                 retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey, )
+                                                 retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey,)
                     data = fetch_handle.read()
                     path_outfile = self.PUBMED_DIR.joinpath(f'{start + 1}-{end}.xml')
                     with open(path_outfile, "w", encoding='utf-8') as f:
