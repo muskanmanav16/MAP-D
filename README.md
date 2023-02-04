@@ -52,7 +52,7 @@ When you're ready to make this README your own, just edit this file and use the 
 Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
 ## Name
-MAP-D Project: A search engine based on NER methods.
+**MAP-D Project:** A search engine based on NER methods.
 
 ## Description
 Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
@@ -67,8 +67,81 @@ Depending on what you are making, it can be a good idea to include screenshots o
 
 ![CSS Animations and Transitions ↑](/uploads/b35e62291ed8c7845b7514265d8129f6/css_animations_and_transitions.webm)
 
+
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Installing scispacy requires two steps: installing the library and intalling the models. To install the library, run:
+```bash
+pip install scispacy
+```
+
+to install a model (see our full selection of available models below), run a command like the following:
+
+```bash
+pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_sm-0.5.1.tar.gz
+```
+
+Note: We strongly recommend that you use an isolated Python environment (such as virtualenv or conda) to install scispacy.
+Take a look below in the "Setting up a virtual environment" section if you need some help with this.
+Additionally, scispacy uses modern features of Python and as such is only available for **Python 3.6 or greater**.
+
+
+
+#### Setting up a virtual environment
+
+[Conda](https://conda.io/) can be used set up a virtual environment with the
+version of Python required for scispaCy.  If you already have a Python
+environment you want to use, you can skip to the 'installing via pip' section.
+
+1.  [Follow the installation instructions for Conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html?highlight=conda#regular-installation).
+
+2.  Create a Conda environment called "scispacy" with Python 3.9 (any version >= 3.6 should work):
+
+    ```bash
+    conda create -n scispacy python=3.9
+    ```
+
+3.  Activate the Conda environment. You will need to activate the Conda environment in each terminal in which you want to use scispaCy.
+
+    ```bash
+    source activate scispacy
+    ```
+
+Now you can install `scispacy` and one of the models using the steps above.
+
+
+Once you have completed the above steps and downloaded one of the models below, you can load a scispaCy model as you would any other spaCy model. For example:
+```python
+import spacy
+nlp = spacy.load("en_core_sci_sm")
+doc = nlp("Alterations in the hypocretin receptor 2 and preprohypocretin genes produce narcolepsy in some animals.")
+```
+
+#### Note on upgrading
+If you are upgrading `scispacy`, you will need to download the models again, to get the model versions compatible with the version of `scispacy` that you have. The link to the model that you download should contain the version number of `scispacy` that you have.
+
+## Available Models
+
+To install a model, click on the link below to download the model, and then run 
+
+```python
+pip install </path/to/download>
+```
+
+Alternatively, you can install directly from the URL by right-clicking on the link, selecting "Copy Link Address" and running 
+```python
+pip install CMD-V(to paste the copied URL)
+```
+
+| Model          | Description       | Install URL
+|:---------------|:------------------|:----------|
+| en_core_sci_sm | A full spaCy pipeline for biomedical data with a ~100k vocabulary. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_sm-0.5.1.tar.gz)|
+| en_core_sci_md |  A full spaCy pipeline for biomedical data with a ~360k vocabulary and 50k word vectors. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_md-0.5.1.tar.gz)|
+| en_core_sci_lg |  A full spaCy pipeline for biomedical data with a ~785k vocabulary and 600k word vectors. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_lg-0.5.1.tar.gz)|
+| en_core_sci_scibert |  A full spaCy pipeline for biomedical data with a ~785k vocabulary and `allenai/scibert-base` as the transformer model. You may want to [use a GPU](https://spacy.io/usage#gpu) with this model. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_scibert-0.5.1.tar.gz)|
+| en_ner_craft_md|  A spaCy NER model trained on the CRAFT corpus.|[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_craft_md-0.5.1.tar.gz)|
+| en_ner_jnlpba_md | A spaCy NER model trained on the JNLPBA corpus.| [Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_jnlpba_md-0.5.1.tar.gz)|
+| en_ner_bc5cdr_md |  A spaCy NER model trained on the BC5CDR corpus. | [Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz)|
+| en_ner_bionlp13cg_md |  A spaCy NER model trained on the BIONLP13CG corpus. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz)|
 
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
