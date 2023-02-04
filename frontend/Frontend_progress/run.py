@@ -3,8 +3,10 @@ import os
 
 from flask import Flask, render_template, request, make_response, send_file
 import pandas as pd
+from sqlalchemy import select, inspect,create_engine
 # from dummy import get_info
-from mapd.Database import Database
+# from mapd.Database import Database
+from mapd.utils import query_database
 
 app = Flask(__name__, static_folder='static')
 
@@ -41,17 +43,7 @@ def search_results():
     keyword = request.form['keyword']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
-    results = Database.query_database(keyword, start_date, end_date)  # db_path might be a parameter in get_info() - modify acc.
-
-    # paginate
-    # can change this value by modifying the results_per_page variable.
-    # The page variable is obtained from the query parameters in the request (e.g. /results?page=2).
-    # The start and end variables are used to slice the results list so that only the desired chunk is returned.
-    results_per_page = 2
-    page = request.args.get("page", 1)
-    start = (page - 1) * results_per_page
-    end = start + results_per_page
-    results = results[start:end]
+    results = query_database(keyword, start_date, end_date)  # db_path might be a parameter in get_info() - modify acc.
 
     return render_template('combi.html', results=results)
 
@@ -71,7 +63,11 @@ def download_results():
     keyword = request.form['keyword']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
-    results = Database.query_database(keyword, start_date, end_date)  # modify when task 3 is complete
+    # DB_PATH = 'data/gp2_plab2.db'
+    # CONN_STRING = f"sqlite:///{DB_PATH}"
+    # engine = create_engine(CONN_STRING)
+    # test_session = Session(bind=engine)
+    results = query_database(keyword, start_date, end_date)  # modify when task 3 is complete
     for result in results:
         result['id'] = f'=HYPERLINK("https://www.ncbi.nlm.nih.gov/pubmed/{result["PMID"]}","{result["PMID"]}")'
         result['abstract_text'] = result['abstract'].replace('<mark>'+keyword+'</mark>', keyword)
