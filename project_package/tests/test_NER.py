@@ -18,6 +18,7 @@ class TestModel(unittest.TestCase):
 
     def test_entity_prediction(self):
         """Checks if the model prediction is as expected"""
+
         text = "Merkel cell polyomavirus (MCPyV) is the only human polyomavirus currently known to cause human cancer."
         # expected_output = [("Merkel cell polyomavirus", "CELL"), ("human polyomavirus", "ORGANISM"), ("human cancer", "ORGANISM")]
         expected_output = [{'entity': 'Merkel cell polyomavirus', 'labels': 'CELL'},
@@ -32,6 +33,7 @@ class TestModel(unittest.TestCase):
 
     def test_entity_prediction_empty_text(self):
         """Check model prediction for an empty string"""
+
         text = ""
         expected_output = []
         test_model = EntityPrediction(test_session)
