@@ -168,68 +168,37 @@ class Database:
             }
         return entries_dict
 
-    def query_database(self, keyword, start_date=None, end_date=None):
+    def query_database(self, keyword: str, start_date=None, end_date=None):
         """Returns all abstracts in the database that have been tagged with the queried keyword, and were published
         between the start and end dates (if date parameters are input).
 
         Returns:
         A list of dict, each dict represents a row in the table, where keys are the column names"""
 
-        query = session.query(Abstract)
-
-        if customer_name:
-            query = query.filter(Order.customer_name == customer_name)
-        if product_names:
-            query = query.filter(
-                Order.line_items.any(LineItem.product_name.in_(product_names))
-            )
-        query = query.filter(Abstract.labels.any(Entity.labels.like('%'+keyword+'%'))
+        query_ = self.session.query(Abstract)
+        query_ = query_.filter(Abstract.labels.any(Entity.labels.like('%'+keyword+'%'))
         if start_date and end_date:
-            query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
-        query = query.filter(Abstract.date == customer_name)
-        if start_data and end_date:
-            query = query.filter(Order.customer_name == customer_name)
+            query_ = query_.filter(Abstract.date >= start_date, Abstract.date <= end_date)
 
-        if start_date and end_date:
-            stmt = select(
-                        Abstract.pubmed_id,
-                        Abstract.Title,
-                        Abstract.date,
-                        Abstract.abstract_text,
-                        Entity.entity,
-                        Entity.labels
-                ).filter(Abstract.date >= start_date, Abstract.date <= end_date).join(Entity, isouter=True)
-        session.query(Object).filter(Object.column.like('something%'))
+        # if start_date and end_date:
+        #     stmt = select(
+        #                 Abstract.pubmed_id,
+        #                 Abstract.Title,
+        #                 Abstract.date,
+        #                 Abstract.abstract_text,
+        #                 Entity.entity,
+        #                 Entity.labels
+        #         ).filter(Abstract.date >= start_date, Abstract.date <= end_date).join(Entity, isouter=True)
+        # session.query(Object).filter(Object.column.like('something%'))
+        df = pd.read_sql(query_.statement, query_.session.bind)
 
-        entries = self.session.execute(stmt).fetchall()
-        ent = {}
-        for pubmed_id, title, date, abstract_text, entity, labels in entries:
-            ent[labels] = entity
-        for pubmed_id, title, date, abstract_text, entity, labels in entries:
-            entries_dict = {
-                "pubmed_id": pubmed_id,
-                "Title": title,
-                "date": date.strftime("%Y-%m-%d"),
-                "abstract_text": abstract_text,
-                "entities": ent
-            }
-        # dummy file - figuring out how to adapt it. do not complete!
-
-        conn = sqlite3.connect('MyDB.db')
-        # query = "SELECT * FROM PUBMED WHERE abstract LIKE '%" + keyword + "%' AND date >= '" + start_date + \
-        # "' AND date <= '" + end_date + "'"
-        query = "SELECT * FROM  PUBMED WHERE abstract LIKE '%" + keyword + "%'"
-        if start_date and end_date:
-            query += " AND date >= '" + start_date + "' AND date <= '" + end_date + "'"
         df = pd.read_sql_query(query, conn)
-        conn.close()
         # highlight keyword in the abstract text
         # df["abstract"] = df["abstract"].apply(lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x))
         df["abstract"] = df["abstract"].apply(
             lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
         return df.to_dict(orient='records')
 
-        pass
 class Utilapi:
     '''For interfacing with the NCBI Entrez API'''
     def __init__(self, search_query: str,cache_dir=PUBMED_DIR):
