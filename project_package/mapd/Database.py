@@ -21,8 +21,8 @@ from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 
 from mapd.models import Base, Abstract,Entity
 from mapd.constant import ABSTRACT, ENTITY,QUERY_STRING
-# from mapd.Api_data import Utilapi
 from mapd.NER import EntityPrediction
+
 Entrez.email = "mapd@gmx.net"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -31,9 +31,13 @@ logger.setLevel(logging.DEBUG)
 class Database:
     """For interfacing with the relational database."""
 
-    def __init__(self, db_engine=engine):
+    def __init__(self, db_engine=engine,cache_dir=PUBMED_DIR,query=QUERY_STRING):
         self.engine = db_engine
         self.session = Session(bind=self.engine)
+        self.PUBMED_DIR = cache_dir
+        self.QUERY_STRING = query
+        self.raw_entity_data = dict()
+
 
         # When DB doesn't exist
         if not database_exists(self.engine.url):
@@ -59,14 +63,20 @@ class Database:
         logger.warning("Dropping database...")
         Base.metadata.drop_all(bind=self.engine)
 
-    def add_abstract_to_databse(self):
+    def add_abstract_to_database(self):
+        '''First check if files exists in pubmed_dir if not it will download the Abstract in the cache folder
+        Also checks the Abstract Table if it filled or not then add the data to the database'''
 
-        if len(listdir(PUBMED_DIR)) < 50:
+        if any(os.listdir(PUBMED_DIR)):
+            print("Files exist")
+        else:
             Utilapi(QUERY_STRING).search()
-        # Utilapi(QUERY_STRING).search()
-        if self.session.query(Abstract).count() < 1500:
+        record = self.session.query(Abstract).first()
+        if record:
+            print("Record exists")
+        else:
             with self.engine.begin() as conn:
-                for file in tqdm(PUBMED_DIR.glob("*.xml"), desc="Processing Files"):
+                for file in tqdm(self.PUBMED_DIR.glob("*.xml"), desc="Processing Files"):
                     with open(file, encoding='utf-8') as handle:
                         records = Medline.parse(handle)
                         for record in records:
@@ -94,19 +104,37 @@ class Database:
                                 self.session.add(abstract_entry)
                         self.session.commit()
     def add_entity_data(self):
-        self.add_abstract_to_databse()
+        '''Populating the Entity table it also checks if record exists or not to aviod any duplicates'''
+        self.add_abstract_to_database()
         # Get all abstracts in the database from Abstract table
-        entity_predictor = EntityPrediction(self.session)
         abstracts = self.session.query(Abstract).all()
 
         # Loop through each abstract and predict entities
         for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
-            entities = entity_predictor.predict_entities(abstract.abstract_text)
-            entity_predictor.insert_entities(abstract.id, entities)
+            existing_entities = self.session.query(Entity).filter(Entity.abstract_id == abstract.id).all()
+            if existing_entities:
+                continue
+            else:
+                entity_predictor = EntityPrediction(self.session)
+                entities = entity_predictor.predict_entities(abstract.abstract_text)
+                entity_predictor.insert_entities(abstract.id, entities)
+
+    def get_entity_dict(self):
+        '''Populate the raw_entity_data with the Entity and labels stored in the Entity Table
+        :returns dict, with key Entity and Labels as value'''
+        self.add_entity_data()
+        entities = self.session.query(Entity).all()
+        for entity in entities:
+            self.raw_entity_data[entity.entity] = entity.labels
+        self.raw_entity_data = {k: v for k, v in self.raw_entity_data.items() if v not in self.raw_entity_data.keys()}
+        return self.raw_entity_data
 
     def get_abstract_info(self,pubmed_id: int) -> Optional[dict]:
-        """Get abstract info  for a given pubmedid from the relational database."""
-        # self.add_entity_data()
+        """Get abstract info  for a given pubmedid from the relational database.
+        :param pubmed_id: int
+        :returns dict, each dict represents a records in the abstract table along
+        with dictionary of entities containing entity and labels"""
+        self.add_entity_data()
         stmt = select(
             Abstract.pubmed_id,
             Abstract.Title,
@@ -131,12 +159,15 @@ class Database:
         return entries_dict
 
 class Utilapi:
-    def __init__(self, search_query: str):
+    '''For interfacing with the NCBI Entrez API'''
+    def __init__(self, search_query: str,cache_dir=PUBMED_DIR):
         self.sleep_time = 0.1  # reduce sleep time
         self.batch_size = 100  # increase batch size
         self.search_query = search_query
+        self.PUBMED_DIR=cache_dir
 
     def search(self):
+        '''Fetching pubmed abstract using NCBI Entrez API '''
         try:
             search_info = Entrez.esearch(db="pubmed", term=self.search_query, usehistory='y', retmax=100)
             record = Entrez.read(search_info)
@@ -150,6 +181,7 @@ class Utilapi:
             pass
 
     def get_abstracts(self, fetch_webenv, fetch_querykey, total_abstract_count):
+        '''Batch download of PUBMED ABSTRACT using NCBI Entrez API each batch file contains 100 abstracts'''
         start = 0
         batch_size = 100
         with tqdm(total=total_abstract_count, desc="Downloading abstracts") as pbar:
@@ -159,7 +191,7 @@ class Utilapi:
                     fetch_handle = Entrez.efetch(db="pubmed", rettype="medline", retmode="text", retstart=start,
                                                  retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey, )
                     data = fetch_handle.read()
-                    path_outfile = PUBMED_DIR.joinpath(f'{start + 1}-{end}.xml')
+                    path_outfile = self.PUBMED_DIR.joinpath(f'{start + 1}-{end}.xml')
                     with open(path_outfile, "w", encoding='utf-8') as f:
                         f.write(data)
                 except HTTPError:
@@ -167,5 +199,5 @@ class Utilapi:
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
 if __name__ == '__main__':
-    Database().add_entity_data()
-    # Database().get_abstract_info(36680181)
+   ent=Database().get_entity_dict()
+   print(ent)
