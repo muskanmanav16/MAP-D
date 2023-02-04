@@ -8,7 +8,7 @@ from tqdm import tqdm
 from pathlib import Path
 from typing import Optional, Union
 from sqlalchemy import select, inspect,create_engine, Column, Integer, String, Table, MetaData,ForeignKey, DATE,text,select, inspect,func
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, Query
 from sqlalchemy_utils import database_exists
 from datetime import datetime
 from Bio import Medline, Entrez
@@ -175,6 +175,21 @@ class Database:
         Returns:
         A list of dict, each dict represents a row in the table, where keys are the column names"""
 
+        query = session.query(Abstract)
+
+        if customer_name:
+            query = query.filter(Order.customer_name == customer_name)
+        if product_names:
+            query = query.filter(
+                Order.line_items.any(LineItem.product_name.in_(product_names))
+            )
+        query = query.filter(Abstract.labels.any(Entity.labels.like('%'+keyword+'%'))
+        if start_date and end_date:
+            query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
+        query = query.filter(Abstract.date == customer_name)
+        if start_data and end_date:
+            query = query.filter(Order.customer_name == customer_name)
+
         if start_date and end_date:
             stmt = select(
                         Abstract.pubmed_id,
@@ -183,7 +198,8 @@ class Database:
                         Abstract.abstract_text,
                         Entity.entity,
                         Entity.labels
-                ).filter(date >= start_date, date <= end_date).join(Entity, isouter=True)
+                ).filter(Abstract.date >= start_date, Abstract.date <= end_date).join(Entity, isouter=True)
+        session.query(Object).filter(Object.column.like('something%'))
 
         entries = self.session.execute(stmt).fetchall()
         ent = {}
