@@ -36,12 +36,12 @@ class Database:
     """For interfacing with the relational database."""
 
     def __init__(self, db_engine=engine,cache_dir=PUBMED_DIR,query=QUERY_STRING):
+
         self.engine = db_engine
         self.session = Session(bind=self.engine)
         self.PUBMED_DIR = cache_dir
         self.QUERY_STRING = query
         self.raw_entity_data = dict()
-
 
         # When DB doesn't exist
         if not database_exists(self.engine.url):
@@ -169,7 +169,7 @@ class Database:
             }
         return entries_dict
 
-    def query_database(self, keyword: str, start_date=None, end_date=None):
+    def query_database(self, keyword, start_date=None, end_date=None) -> list[dict]:
         """Returns all abstracts in the database that have been tagged with the queried keyword, and were published
         between the start and end dates (if date parameters are input).
 
@@ -233,15 +233,12 @@ class Utilapi:
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
 
-# x=Database()
-# x.rebuild_database()
-# x.add_abstract_to_database()
 # if __name__ == '__main__':
-#     db = Database()
+    # db = Database()
     # ent=Database().get_entity_dict()
     # print(ent)
-    # database = Database()
-    # print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
+    database = Database()
+    print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
     # db=Database()
     # db.rebuild_database()
     # db.add_abstract_to_database()
