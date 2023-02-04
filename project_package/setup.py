@@ -24,8 +24,10 @@ requirements = [
     'PyMySQL',
     'cryptography',
     'scipy',
+    'spacy>=3.4.0,<3.5.0',
+    'scispacy==0.5.1',
     'en-ner-bionlp13cg-md @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz',
-    'spacy',
+    'nmslib == 2.1.1',
     'tensorflow',
 
 
