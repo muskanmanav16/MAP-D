@@ -24,7 +24,7 @@ if device_name != '/device:GPU:0':
 else:
     print('Found GPU at: {}'.format(device_name))
 
-model_name="en_ner_bionlp13cg_md"
+model_name = "en_ner_bionlp13cg_md"
 nlp = spacy.load(model_name)
 
 

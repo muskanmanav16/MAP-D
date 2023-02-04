@@ -13,6 +13,10 @@ from sqlalchemy_utils import database_exists
 from datetime import datetime
 from Bio import Medline, Entrez
 from os import listdir
+import pandas as pd
+import re
+import sqlite3
+from datetime import date
 
 from time import sleep
 from urllib.error import HTTPError
@@ -60,11 +64,13 @@ class Database:
 
     def drop_database(self) -> None:
         """Drop all of the associated tables in the database."""
+
         logger.warning("Dropping database...")
         Base.metadata.drop_all(bind=self.engine)
 
     def add_entity_data(self):
-        '''Populating the Entity table it also checks if record exists or not to avoid any duplicates'''
+        """Populating the Entity table it also checks if record exists or not to avoid any duplicates"""
+
         self.add_abstract_to_database()
         # Get all abstracts in the database from Abstract table
         abstracts = self.session.query(Abstract).all()
@@ -80,8 +86,8 @@ class Database:
                 entity_predictor.insert_entities(abstract.id, entities)
 
     def add_abstract_to_database(self):
-        '''First check if files exists in pubmed_dir if not it will download the Abstract in the cache folder
-        Also checks the Abstract Table if it filled or not then add the data to the database'''
+        """First check if files exists in pubmed_dir if not it will download the Abstract in the cache folder
+        Also checks the Abstract Table if it filled or not then add the data to the database """
 
         if any(os.listdir(PUBMED_DIR)):
             print("Files exist")
@@ -121,8 +127,9 @@ class Database:
                         self.session.commit()
 
     def get_entity_dict(self):
-        '''Populate the raw_entity_data with the Entity and labels stored in the Entity Table
-        :returns dict, with key Entity and Labels as value'''
+        """Populate the raw_entity_data with the Entity and labels stored in the Entity Table
+
+        returns: dict, with key Entity and Labels as value"""
         self.add_entity_data()
         entities = self.session.query(Entity).all()
         for entity in entities:
@@ -132,8 +139,10 @@ class Database:
 
     def get_abstract_info(self,pubmed_id: int) -> Optional[dict]:
         """Get abstract info  for a given pubmedid from the relational database.
-        :param pubmed_id: int
-        :returns dict, each dict represents a records in the abstract table along
+        param:
+        pubmed_id: int
+
+        returns: dict, each dict represents a records in the abstract table along
         with dictionary of entities containing entity and labels"""
         self.add_entity_data()
         stmt = select(
@@ -261,6 +270,10 @@ class Utilapi:
                     pass
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
+
+# x=Database()
+# x.rebuild_database()
+# x.add_abstract_to_databse()
 if __name__ == '__main__':
    ent=Database().get_entity_dict()
    print(ent)
