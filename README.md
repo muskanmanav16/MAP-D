@@ -170,7 +170,7 @@ If you have run out of energy or time for your project, put a note at the top of
 
 ## Citing
 
-We use **ScipaCy** model '**_en_ner_bionlp13cg_md_**' to create our search engine MAP-D which predict Named Entity from Pubmed Abstracts.
+We use **ScispaCy** model '**_en_ner_bionlp13cg_md_**' to create our search engine MAP-D which predict Named Entity from Pubmed Abstracts.
 
 ![](data/scispacy_logo.png)
 

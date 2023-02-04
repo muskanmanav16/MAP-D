@@ -130,6 +130,7 @@ class Database:
         """Populate the raw_entity_data with the Entity and labels stored in the Entity Table
 
         returns: dict, with key Entity and Labels as value"""
+
         self.add_entity_data()
         entities = self.session.query(Entity).all()
         for entity in entities:
@@ -233,7 +234,7 @@ class Utilapi:
                 end = min(total_abstract_count, start + batch_size)
                 try:
                     fetch_handle = Entrez.efetch(db="pubmed", rettype="medline", retmode="text", retstart=start,
-                                                 retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey, )
+                                                 retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey,)
                     data = fetch_handle.read()
                     path_outfile = self.PUBMED_DIR.joinpath(f'{start + 1}-{end}.xml')
                     with open(path_outfile, "w", encoding='utf-8') as f:
