@@ -7,7 +7,7 @@ import pprint
 from mapd import DATA_DIR, engine
 from mapd.models import Base, Abstract,Entity
 def get_abstract_info(pubmed_id: int) -> Optional[dict]:
-    """Get abstract info  for a given pubmedid from the relational database."""
+    """Get abstract info  for a given pubmed id from the relational database."""
     session = Session(bind=engine)
     stmt = select(
         Abstract.pubmed_id,
@@ -31,6 +31,7 @@ def get_abstract_info(pubmed_id: int) -> Optional[dict]:
             "entities": ent
         }
     return entries_dict
+
 pp = pprint.PrettyPrinter(indent=4) #just for printing
 pp.pprint(get_abstract_info(36680181))
 def get_info(keyword:str, start_date: str = None, end_date: str = None) -> List[dict]:

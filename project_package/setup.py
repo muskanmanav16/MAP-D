@@ -27,7 +27,7 @@ requirements = [
     'spacy>=3.4.0,<3.5.0',
     'scispacy==0.5.1',
     'en-ner-bionlp13cg-md @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz',
-    # 'spacy',
+    'nmslib == 2.1.1',
     'tensorflow',
 
 
@@ -37,7 +37,7 @@ requirements = [
 test_requirements = ['pytest>=3', ]
 
 setup(
-    author="Muskan Astha Deepika Parinishtha",
+    author="Muskan Manav, Astha Anand, Deepika Pradeep, Parinishtha Bhalla",
     author_email='mapd@gmx.net',
     python_requires='>=3.6',
     classifiers=[
