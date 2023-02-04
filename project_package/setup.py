@@ -35,7 +35,7 @@ requirements = [
 test_requirements = ['pytest>=3', ]
 
 setup(
-    author="Muskan Astha Deepika Parinishtha",
+    author="Muskan Manav, Astha Anand, Deepika Pradeep, Parinishtha Bhalla",
     author_email='mapd@gmx.net',
     python_requires='>=3.6',
     classifiers=[

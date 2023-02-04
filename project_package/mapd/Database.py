@@ -59,7 +59,7 @@ class Database:
         logger.warning("Dropping database...")
         Base.metadata.drop_all(bind=self.engine)
 
-    def add_abstract_to_databse(self):
+    def add_abstract_to_database(self):
 
         if len(listdir(PUBMED_DIR)) < 50:
             Utilapi(QUERY_STRING).search()
@@ -94,7 +94,7 @@ class Database:
                                 self.session.add(abstract_entry)
                         self.session.commit()
     def add_entity_data(self):
-        self.add_abstract_to_databse()
+        self.add_abstract_to_database()
         # Get all abstracts in the database from Abstract table
         entity_predictor = EntityPrediction(self.session)
         abstracts = self.session.query(Abstract).all()
