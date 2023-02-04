@@ -41,7 +41,8 @@ def search_results():
     keyword = request.form['keyword']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
-    results = Database.query_database(keyword, start_date, end_date)  # db_path might be a parameter in get_info() - modify acc.
+    db = Database()  # creating an instance of the Database class
+    results = db.query_database(keyword, start_date, end_date)  # db_path might be a parameter in get_info() - modify acc.
 
     # paginate
     # can change this value by modifying the results_per_page variable.
@@ -71,7 +72,8 @@ def download_results():
     keyword = request.form['keyword']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
-    results = Database.query_database(keyword, start_date, end_date)  # modify when task 3 is complete
+    db = Database()  # creating an instance of the Database class
+    results = db.query_database(keyword, start_date, end_date)
     for result in results:
         result['id'] = f'=HYPERLINK("https://www.ncbi.nlm.nih.gov/pubmed/{result["PMID"]}","{result["PMID"]}")'
         result['abstract_text'] = result['abstract'].replace('<mark>'+keyword+'</mark>', keyword)
