@@ -200,7 +200,8 @@ class Database:
         return df.to_dict(orient='records')
 
 class Utilapi:
-    '''For interfacing with the NCBI Entrez API'''
+    """For interfacing with the NCBI Entrez API"""
+
     def __init__(self, search_query: str,cache_dir=PUBMED_DIR):
         self.sleep_time = 0.1  # reduce sleep time
         self.batch_size = 100  # increase batch size
@@ -208,7 +209,8 @@ class Utilapi:
         self.PUBMED_DIR=cache_dir
 
     def search(self):
-        '''Fetching pubmed abstract using NCBI Entrez API '''
+        """Fetching pubmed abstract using NCBI Entrez API"""
+
         try:
             search_info = Entrez.esearch(db="pubmed", term=self.search_query, usehistory='y', retmax=100)
             record = Entrez.read(search_info)
@@ -222,7 +224,8 @@ class Utilapi:
             pass
 
     def get_abstracts(self, fetch_webenv, fetch_querykey, total_abstract_count):
-        '''Batch download of PUBMED ABSTRACT using NCBI Entrez API each batch file contains 100 abstracts'''
+        """Batch download of PUBMED ABSTRACT using NCBI Entrez API each batch file contains 100 abstracts"""
+
         start = 0
         batch_size = 100
         with tqdm(total=total_abstract_count, desc="Downloading abstracts") as pbar:
