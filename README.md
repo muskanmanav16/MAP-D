@@ -97,12 +97,13 @@ If you have run out of energy or time for your project, put a note at the top of
 
 ## Citing
 
-We use **SciSpacy** model '**_en_ner_bionlp13cg_md_**' to create our search engine MAP-D which predict Named Entity from Pubmed Abstracts.
+We use **ScipaCy** model '**_en_ner_bionlp13cg_md_**' to create our search engine MAP-D which predict Named Entity from Pubmed Abstracts.
 
 ![](data/scispacy_logo.png)
 
-Citing the paper which uses this project [ScispaCy: Fast and Robust Models for Biomedical Natural Language Processing](https://www.semanticscholar.org/paper/ScispaCy%3A-Fast-and-Robust-Models-for-Biomedical-Neumann-King/de28ec1d7bd38c8fc4e8ac59b6133800818b4e29). Additionally, indicating the version and model of ScispaCy you used in the research.
-```python
+Citing the paper which uses this project [ScispaCy: Fast and Robust Models for Biomedical Natural Language Processing](https://www.semanticscholar.org/paper/ScispaCy%3A-Fast-and-Robust-Models-for-Biomedical-Neumann-King/de28ec1d7bd38c8fc4e8ac59b6133800818b4e29). Additionally, indicating the version and model of ScispaCy used in the research.
+
+```
 @inproceedings{neumann-etal-2019-scispacy,
     title = "{S}cispa{C}y: {F}ast and {R}obust {M}odels for {B}iomedical {N}atural {L}anguage {P}rocessing",
     author = "Neumann, Mark  and
@@ -119,6 +120,8 @@ Citing the paper which uses this project [ScispaCy: Fast and Robust Models for B
     pages = "319--327",
     eprint = {arXiv:1902.07669},
     abstract = "Despite recent advances in natural language processing, many statistical models for processing text perform extremely poorly under domain shift. Processing biomedical and clinical text is a critically important application area of natural language processing, for which there are few robust, practical, publicly available models. This paper describes scispaCy, a new Python library and models for practical biomedical/scientific text processing, which heavily leverages the spaCy library. We detail the performance of two packages of models released in scispaCy and demonstrate their robustness on several tasks and datasets. Models and code are available at https://allenai.github.io/scispacy/.",
-}```
+}
+```
+
 ScispaCy is an open-source project developed by [the Allen Institute for Artificial Intelligence (AI2)](https://allenai.org/). AI2 is a non-profit institute with the mission to contribute to humanity through high-impact AI research and engineering.
 
