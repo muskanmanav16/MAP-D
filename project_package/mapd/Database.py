@@ -223,6 +223,7 @@ class Utilapi:
             self.get_abstracts(fetch_webenv, fetch_querykey, total_abstract_count)
         except HTTPError:
             pass
+        return record
 
     def get_abstracts(self, fetch_webenv, fetch_querykey, total_abstract_count):
         """Batch download of PUBMED ABSTRACT using NCBI Entrez API each batch file contains 100 abstracts"""
