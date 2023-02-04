@@ -33,10 +33,12 @@ requirements = [
     'tensorflow',
     'nltk',
     'pathlib',
-    'ncbiutils',
-    'biopython',
-    'pytest',
     'ruamel-yaml-conda==0.15.100',
+    'ncbiutils',
+    'pytest',
+    'bio==1.5.3',
+    'biopython==1.80',
+
 
 
 
