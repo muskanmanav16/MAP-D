@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Optional, Union
 from sqlalchemy import select, inspect,create_engine, Column, Integer, String, Table, MetaData,ForeignKey, DATE,text,select, inspect,func
 from sqlalchemy.orm import Session, Query
+from sqlalchemy import join
 from sqlalchemy_utils import database_exists
 from datetime import datetime
 from Bio import Medline, Entrez
@@ -175,24 +176,39 @@ class Database:
 
         Returns:
         A list of dict, each dict represents a row in the table, where keys are the column names"""
-
-        # query_ = self.session.query(Abstract).outerjoin(Entity, Abstract.id == Entity.abstract_id)
-        # query_ = query_.filter(Entity.labels.like('%'+keyword+'%'))
-        # query_ = query_.filter(Abstract.date >= start_date, Abstract.date <= end_date)
+        stmt = (select(
+            Abstract.pubmed_id,
+            Abstract.Title,
+            Abstract.date,
+            Abstract.abstract_text,
+            Entity.entity).
+            filter(Entity.entity.like('%'+keyword+'%')).join(Entity, Abstract.id == Entity.abstract_id))
 
         if start_date and end_date:
-            query = (self.session.query(Abstract, Entity)
-                     .join(Entity)
-                     .filter(Entity.entity.like('%' + keyword + '%'))
-                     .filter(Abstract.date >= start_date, Abstract.date <= end_date).all()
-                     )
-        else:
-            query = (self.session.query(Abstract, Entity)
-                     .join(Entity)
-                     .filter(Entity.labels.like('%'+keyword+'%')).all()
-                     )
+            stmt = stmt.filter(Abstract.date >= start_date, Abstract.date <= end_date)
 
-        df = pd.read_sql(query.statement, query.session.bind)
+        # query = self.session.query(Abstract, Entity).join(Entity) #, Abstract.id == Entity.abstract_id)
+        # query = query.filter(Entity.entity.like('%'+keyword+'%'))
+        # if start_date and end_date:
+        #     query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
+
+        # if start_date and end_date:
+        #     query = (self.session.query(Abstract, Entity)
+        #              .select_from(join(Abstract, Entity))
+        #              .filter(Entity.entity.like('%'+keyword+'%'))
+        #              .filter(Abstract.date >= start_date, Abstract.date <= end_date)
+        #              .all()
+        #              )
+        # else:
+        #     query = (self.session.query(Abstract, Entity)
+        #              .select_from(join(Abstract, Entity))
+        #              .filter(Entity.entity.like('%'+keyword+'%'))
+        #              .all()
+        #              )
+
+        # df = pd.read_sql(query.statement, query.session.bind)
+        # df = pd.read_sql(query.statement, query.session.bind)
+        df = pd.read_sql(stmt, self.session.bind)
 
         # highlight keyword in the abstract text
         df["abstract_text"] = df["abstract_text"].apply(
@@ -249,8 +265,8 @@ class Utilapi:
     # ent=Database().get_entity_dict()
     # print(ent)
     database = Database()
-    database.rebuild_database()
-    print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
+    # database.rebuild_database()
+    print(database.query_database("mouse", "2021-01-01", "2021-12-31"))
     # db=Database()
     # db.rebuild_database()
     # db.add_abstract_to_database()
