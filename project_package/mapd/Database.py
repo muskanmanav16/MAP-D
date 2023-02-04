@@ -198,7 +198,7 @@ class Utilapi:
         self.PUBMED_DIR=cache_dir
 
     def search(self):
-        """Fetching pubmed abstract using NCBI Entrez API"""
+        """Search pubmed abstract using NCBI Entrez API - esearch"""
 
         try:
             search_info = Entrez.esearch(db="pubmed", term=self.search_query, usehistory='y', retmax=100)
@@ -214,7 +214,7 @@ class Utilapi:
         return record
 
     def get_abstracts(self, fetch_webenv, fetch_querykey, total_abstract_count):
-        """Batch download of PUBMED ABSTRACT using NCBI Entrez API each batch file contains 100 abstracts"""
+        """Batch download of PUBMED ABSTRACTS using NCBI Entrez API - eftech each batch file contains 100 abstracts"""
 
         start = 0
         batch_size = 100
