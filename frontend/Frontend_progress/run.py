@@ -3,8 +3,8 @@ import os
 
 from flask import Flask, render_template, request, make_response, send_file
 import pandas as pd
-from dummy import get_info
-
+# from dummy import get_info
+from mapd.Database import Database
 
 app = Flask(__name__, static_folder='static')
 
@@ -41,7 +41,7 @@ def search_results():
     keyword = request.form['keyword']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
-    results = get_info(keyword, start_date, end_date)  # db_path might be a parameter in get_info() - modify acc.
+    results = Database.query_database(keyword, start_date, end_date)  # db_path might be a parameter in get_info() - modify acc.
 
     # paginate
     # can change this value by modifying the results_per_page variable.
@@ -71,10 +71,10 @@ def download_results():
     keyword = request.form['keyword']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
-    results = get_info(keyword, start_date, end_date)  # modify when task 3 is complete
+    results = Database.query_database(keyword, start_date, end_date)  # modify when task 3 is complete
     for result in results:
-        result['PMID'] = f'=HYPERLINK("https://www.ncbi.nlm.nih.gov/pubmed/{result["PMID"]}","{result["PMID"]}")'
-        result['abstract'] = result['abstract'].replace('<mark>'+keyword+'</mark>', keyword)
+        result['id'] = f'=HYPERLINK("https://www.ncbi.nlm.nih.gov/pubmed/{result["PMID"]}","{result["PMID"]}")'
+        result['abstract_text'] = result['abstract'].replace('<mark>'+keyword+'</mark>', keyword)
     df = pd.DataFrame(results)
     df.to_csv('results.csv', index=False)
     return send_file('results.csv', as_attachment=True)
@@ -93,7 +93,6 @@ if __name__ == '__main__':
     else:
         # If the FLASK_PORT environment variable is not set, use the default port of 5000
         app.run(debug=True, port=5000, host="0.0.0.0")
-
 
 
 

@@ -175,27 +175,15 @@ class Database:
         Returns:
         A list of dict, each dict represents a row in the table, where keys are the column names"""
 
-        query_ = self.session.query(Abstract)
-        query_ = query_.filter(Abstract.labels.any(Entity.labels.like('%'+keyword+'%'))
+        query_ = self.session.query(Abstract).outerjoin(Entity, Abstract.id == Entity.abstract_id)
+        query_ = query_.filter(Entity.labels.like('%'+keyword+'%'))
         if start_date and end_date:
             query_ = query_.filter(Abstract.date >= start_date, Abstract.date <= end_date)
 
-        # if start_date and end_date:
-        #     stmt = select(
-        #                 Abstract.pubmed_id,
-        #                 Abstract.Title,
-        #                 Abstract.date,
-        #                 Abstract.abstract_text,
-        #                 Entity.entity,
-        #                 Entity.labels
-        #         ).filter(Abstract.date >= start_date, Abstract.date <= end_date).join(Entity, isouter=True)
-        # session.query(Object).filter(Object.column.like('something%'))
         df = pd.read_sql(query_.statement, query_.session.bind)
 
-        df = pd.read_sql_query(query, conn)
         # highlight keyword in the abstract text
-        # df["abstract"] = df["abstract"].apply(lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x))
-        df["abstract"] = df["abstract"].apply(
+        df["abstract_text"] = df["abstract_text"].apply(
             lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
         return df.to_dict(orient='records')
 
@@ -242,7 +230,13 @@ class Utilapi:
 
 # x=Database()
 # x.rebuild_database()
-# x.add_abstract_to_databse()
+# x.add_abstract_to_database()
 if __name__ == '__main__':
-   ent=Database().get_entity_dict()
-   print(ent)
+    db = Database()
+    # ent=Database().get_entity_dict()
+    # print(ent)
+    # database = Database()
+    # print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
+    # db=Database()
+    # db.rebuild_database()
+    # db.add_abstract_to_database()
