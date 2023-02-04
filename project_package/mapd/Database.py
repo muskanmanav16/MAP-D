@@ -58,7 +58,16 @@ class Database:
         """Drop all of the associated tables in the database."""
         logger.warning("Dropping database...")
         Base.metadata.drop_all(bind=self.engine)
+    def add_entity_data(self):
+        self.add_abstract_to_database()
+        # Get all abstracts in the database from Abstract table
+        entity_predictor = EntityPrediction(self.session)
+        abstracts = self.session.query(Abstract).all()
 
+        # Loop through each abstract and predict entities
+        for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
+            entities = entity_predictor.predict_entities(abstract.abstract_text)
+            entity_predictor.insert_entities(abstract.id, entities)
     def add_abstract_to_database(self):
 
         if len(listdir(PUBMED_DIR)) < 50:
@@ -93,19 +102,8 @@ class Database:
                                 abstract_entry = Abstract(pubmed_id=pmid, Title=title, abstract_text=abstract, date=date)
                                 self.session.add(abstract_entry)
                         self.session.commit()
-    def add_entity_data(self):
-        self.add_abstract_to_database()
-        # Get all abstracts in the database from Abstract table
-        entity_predictor = EntityPrediction(self.session)
-        abstracts = self.session.query(Abstract).all()
-
-        # Loop through each abstract and predict entities
-        for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
-            entities = entity_predictor.predict_entities(abstract.abstract_text)
-            entity_predictor.insert_entities(abstract.id, entities)
-
     def get_abstract_info(self,pubmed_id: int) -> Optional[dict]:
-        """Get abstract info  for a given pubmedid from the relational database."""
+        """Get abstract info  for a given PubMed id from the relational database."""
         # self.add_entity_data()
         stmt = select(
             Abstract.pubmed_id,
@@ -129,6 +127,12 @@ class Database:
                 "entities": ent
             }
         return entries_dict
+
+    def query_database(self, keyword, start_date=None, end_date=None):
+        """Returns all abstracts in the database that have been tagged with the queried keyword, and were published
+        between the start and end dates (if date parameters are inpur)"""
+
+
 
 class Utilapi:
     def __init__(self, search_query: str):
