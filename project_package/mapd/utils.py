@@ -36,5 +36,5 @@ def query_database(self, keyword: str, start_date=None, end_date=None):
     df["abstract_text"] = df["abstract_text"].apply(
         lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
     return df.to_dict(orient='records')
-if __name__ == '__main__':
-    query_database("19","2021-01-01", "2021-12-31")
+# if __name__ == '__main__':
+#     query_database("19","2021-01-01", "2021-12-31")
