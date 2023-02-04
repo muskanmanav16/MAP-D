@@ -63,6 +63,22 @@ class Database:
         logger.warning("Dropping database...")
         Base.metadata.drop_all(bind=self.engine)
 
+    def add_entity_data(self):
+        '''Populating the Entity table it also checks if record exists or not to avoid any duplicates'''
+        self.add_abstract_to_database()
+        # Get all abstracts in the database from Abstract table
+        abstracts = self.session.query(Abstract).all()
+
+        # Loop through each abstract and predict entities
+        for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
+            existing_entities = self.session.query(Entity).filter(Entity.abstract_id == abstract.id).all()
+            if existing_entities:
+                continue
+            else:
+                entity_predictor = EntityPrediction(self.session)
+                entities = entity_predictor.predict_entities(abstract.abstract_text)
+                entity_predictor.insert_entities(abstract.id, entities)
+
     def add_abstract_to_database(self):
         '''First check if files exists in pubmed_dir if not it will download the Abstract in the cache folder
         Also checks the Abstract Table if it filled or not then add the data to the database'''
@@ -103,21 +119,6 @@ class Database:
                                 abstract_entry = Abstract(pubmed_id=pmid, Title=title, abstract_text=abstract, date=date)
                                 self.session.add(abstract_entry)
                         self.session.commit()
-    def add_entity_data(self):
-        '''Populating the Entity table it also checks if record exists or not to aviod any duplicates'''
-        self.add_abstract_to_database()
-        # Get all abstracts in the database from Abstract table
-        abstracts = self.session.query(Abstract).all()
-
-        # Loop through each abstract and predict entities
-        for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
-            existing_entities = self.session.query(Entity).filter(Entity.abstract_id == abstract.id).all()
-            if existing_entities:
-                continue
-            else:
-                entity_predictor = EntityPrediction(self.session)
-                entities = entity_predictor.predict_entities(abstract.abstract_text)
-                entity_predictor.insert_entities(abstract.id, entities)
 
     def get_entity_dict(self):
         '''Populate the raw_entity_data with the Entity and labels stored in the Entity Table
@@ -158,6 +159,52 @@ class Database:
             }
         return entries_dict
 
+    def query_database(self, keyword, start_date=None, end_date=None):
+        """Returns all abstracts in the database that have been tagged with the queried keyword, and were published
+        between the start and end dates (if date parameters are inpur).
+
+        Returns:
+        A list of dict, each dict represents a row in the table, where keys are the column names"""
+
+        if start_date and end_date:
+            stmt = select(
+                        Abstract.pubmed_id,
+                        Abstract.Title,
+                        Abstract.date,
+                        Abstract.abstract_text,
+                        Entity.entity,
+                        Entity.labels
+                ).filter(date >= start_date, date <= end_date).join(Entity, isouter=True)
+
+        entries = self.session.execute(stmt).fetchall()
+        ent = {}
+        for pubmed_id, title, date, abstract_text, entity, labels in entries:
+            ent[labels] = entity
+        for pubmed_id, title, date, abstract_text, entity, labels in entries:
+            entries_dict = {
+                "pubmed_id": pubmed_id,
+                "Title": title,
+                "date": date.strftime("%Y-%m-%d"),
+                "abstract_text": abstract_text,
+                "entities": ent
+            }
+        # dummy file - figuring out how to adapt it. do not complete!
+
+        conn = sqlite3.connect('MyDB.db')
+        # query = "SELECT * FROM PUBMED WHERE abstract LIKE '%" + keyword + "%' AND date >= '" + start_date + \
+        # "' AND date <= '" + end_date + "'"
+        query = "SELECT * FROM  PUBMED WHERE abstract LIKE '%" + keyword + "%'"
+        if start_date and end_date:
+            query += " AND date >= '" + start_date + "' AND date <= '" + end_date + "'"
+        df = pd.read_sql_query(query, conn)
+        conn.close()
+        # highlight keyword in the abstract text
+        # df["abstract"] = df["abstract"].apply(lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x))
+        df["abstract"] = df["abstract"].apply(
+            lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
+        return df.to_dict(orient='records')
+
+        pass
 class Utilapi:
     '''For interfacing with the NCBI Entrez API'''
     def __init__(self, search_query: str,cache_dir=PUBMED_DIR):
