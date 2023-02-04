@@ -18,10 +18,10 @@ def build_abstract_database():
     Database.build_database()
     Database.add_abstract_to_database()
 
-@main.command():
+@main.command()
 def get_abstracts():
 
-@main.command():
+@main.command()
 def entity_dict():
     Utilapi.get_abstracts()
 
