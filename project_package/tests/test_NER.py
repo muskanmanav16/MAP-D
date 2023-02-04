@@ -7,7 +7,7 @@ from sqlalchemy import select, inspect, create_engine
 from sqlalchemy.orm import Session
 import unittest
 
-DB_PATH = 'project_package/tests/data/test_db.db'
+DB_PATH = 'project_package/tests/data/Test_DB.db'
 CONN_STRING = f"sqlite:///{DB_PATH}"
 engine = create_engine(CONN_STRING)
 test_session = Session(bind=engine)
