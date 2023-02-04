@@ -160,7 +160,17 @@ For people who want to make changes to your project, it's helpful to have some d
 You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
 ## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+This project is contributed by:
+
+**M**uskan Manav [s0mumana@uni-bonn.de]() ; [manavm0](https://gitlab.informatik.uni-bonn.de/manavm0)
+
+**A**stha Anand [s0asanan@uni-bonn.de]() ; [ananda0](https://gitlab.informatik.uni-bonn.de/ananda0)
+
+**P**arinishtha Bhalla [parinishtha.bhalla@gmail.com]() ; [bhallap0](https://gitlab.informatik.uni-bonn.de/bhallap0)
+
+**D**eepika Pradeep [s0deprad@uni-bonn.de]() ; [pradeepd0](https://gitlab.informatik.uni-bonn.de/pradeepd0)
+
+And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-bonn.de/bschultz) for helping us out through out the project.
 
 ## License
 For open source projects, say how it is licensed.
