@@ -236,12 +236,12 @@ class Utilapi:
 # x=Database()
 # x.rebuild_database()
 # x.add_abstract_to_database()
-if __name__ == '__main__':
-    db = Database()
+# if __name__ == '__main__':
+#     db = Database()
     # ent=Database().get_entity_dict()
     # print(ent)
     # database = Database()
     # print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
     # db=Database()
     # db.rebuild_database()
-    db.add_abstract_to_database()
+    # db.add_abstract_to_database()
