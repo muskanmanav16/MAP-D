@@ -62,7 +62,7 @@ def get_entity_dict(row_wise_results: bool):
 
 @main.command()
 @click.argument('pmid')
-def get_abstract_info(pmid):
+def get_abstract_info(pmid): # can test with PMID 36316711
     """Retrieves information about an abstract given its PMID (PubMed ID).
 
     Parameters
