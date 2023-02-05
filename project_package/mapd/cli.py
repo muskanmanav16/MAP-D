@@ -1,17 +1,19 @@
 import click
-import logging
+# import logging
 import uvicorn
 import pandas as pd
 from mapd.Database import Database
 from mapd.NER import EntityPrediction
 from mapd.utils import query_database
 from mapd import DB_PATH
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
-# Instantiate Database class, add abstracts from cached/freshly downloaded files if they do not already exist:
+# logger = logging.getLogger(__name__)
+# logger.setLevel(logging.DEBUG)
+
+# # Instantiate Database class, add abstracts from cached/freshly downloaded files if they do not already exist:
 db = Database()
 db.add_abstract_to_database()
+
 
 # Creating Click group:
 @click.group()
@@ -19,12 +21,15 @@ def main():
     """Entry method"""
     pass
 
+
 @main.command()
 def build_db():
     """Builds database and populates it with abstract records using either cached/newly downloaded files."""
     db = Database()
     db.add_abstract_to_database()
     click.echo("Built database of PubMed abstracts at {}.".format(DB_PATH))
+
+
 @main.command()
 def rebuild_db():
     """Rebuilds database from scratch after dropping any existing tables, and adds associated entities to Entity table"""
@@ -35,10 +40,12 @@ def rebuild_db():
     click.echo("Rebuilt database of PubMed abstracts from scratch at {}.".format(DB_PATH))
     click.echo("Entity table of database populated with entities for each abstract.")
 
+
 @main.command()
-@click.option('-r', '--row_wise_results', default=False, is_flag=True)#, help="option to print dict entries row by row")
-def get_entity_dict(row_wise_results):
-    """Returns a dictionary of entities in the table, with each entry containing an entity (key) and its label (value)"""
+@click.option('-r', '--row_wise_results', default=False, is_flag=True, help="option to print dict entries row by row")
+def get_entity_dict(row_wise_results: bool):
+    """Returns a dictionary of entities in the table, with each entry containing
+    an entity (key) and its label (value) """
 
     if db.raw_entity_data:
         entity_dict = db.raw_entity_data
@@ -51,6 +58,7 @@ def get_entity_dict(row_wise_results):
             click.echo(entry)
     else:
         click.echo(entity_dict)
+
 
 @main.command()
 @click.argument('pmid')
@@ -85,6 +93,7 @@ def insert_entities(abstract_id, entities):
     entity_predictor.insert_entities(abstract_id, entities)
     click.echo('Entities inserted into Entity table for abstract {}'.format(abstract_id))
 
+
 @main.command()
 @click.argument('text')
 def predict_entities(text):
@@ -100,11 +109,12 @@ def predict_entities(text):
     click.echo('Entities predicted for input text:')
     click.echo(entities)
 
+
 @main.command()
 @click.argument('keyword')
 @click.argument('filepath')
-@click.option('s','--start_date', default=None, help='start date for time range of desired query result')
-@click.option('e','--end_date', default=None, help='end date for time range of desired query result')
+@click.option('s', '--start_date', default=None, help='start date for time range of desired query result')
+@click.option('e', '--end_date', default=None, help='end date for time range of desired query result')
 def query_db(keyword: str, filepath, start_date=None, end_date=None):
     """Queries database for keyword and (optionally) date range, and saves results to file at specified address.
     Parameters
@@ -125,15 +135,16 @@ def query_db(keyword: str, filepath, start_date=None, end_date=None):
 
     timerange = ' '
     if start_date and end_date:
-        timerange = 'in time range '+start_date+' and '+ end_date
+        timerange = 'in time range ' + start_date + ' and ' + end_date
 
-    click.echo('Results file for query {}{} stored at {}'.format(keyword,timerange,filepath))
+    click.echo('Results file for query {}{} stored at {}'.format(keyword, timerange, filepath))
 
 
 @main.command()
 def serve():
     """Starts web server."""
-    uvicorn.run("frontend.Frontend_progress.run:app") # this may need editing
+    uvicorn.run("frontend.Frontend_progress.run:app")  # this may need editing
 
+#
 if __name__ == "__main__":
     main()
