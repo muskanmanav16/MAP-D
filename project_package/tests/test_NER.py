@@ -1,4 +1,4 @@
-"""NER module tests."""
+"""NER module unit tests."""
 
 # from pathlib import Path
 # import spacy
