@@ -1,5 +1,4 @@
 import click
-# import logging
 import uvicorn
 import pandas as pd
 from mapd.Database import Database
@@ -7,15 +6,11 @@ from mapd.NER import EntityPrediction
 from mapd.utils import query_database
 from mapd import DB_PATH
 
-# logger = logging.getLogger(__name__)
-# logger.setLevel(logging.DEBUG)
-
 # # Instantiate Database class, add abstracts from cached/freshly downloaded files if they do not already exist:
 db = Database()
 db.add_abstract_to_database()
 
 
-# Creating Click group:
 @click.group()
 def main():
     """Entry method"""
@@ -96,6 +91,7 @@ def predict_entities(text: str):
 @click.option('-s', '--start_date', default=None, help='start date for time range of desired query result')
 @click.option('-e', '--end_date', default=None, help='end date for time range of desired query result')
 def query_db(keyword: str, filepath: str, start_date=None, end_date=None):
+    # can test with: python cli.py query-db 'pancreatic' 'results2.csv' -s 2021-01-03 -e 2021-09-02
     """Queries database for keyword and (optionally) date range, and saves results to file at specified address.
     Parameters
     ----------
@@ -115,15 +111,15 @@ def query_db(keyword: str, filepath: str, start_date=None, end_date=None):
 
     timerange = ' '
     if start_date and end_date:
-        timerange = 'in time range ' + start_date + ' and ' + end_date
-    click.echo('Results file for query {} {} stored at {}'.format(keyword, timerange, filepath))
+        timerange = 'in time range ' + start_date + ' - ' + end_date
+    click.echo('Results file for query "{}" {} stored at {}'.format(keyword, timerange, filepath))
 
 
 @main.command()
 def serve():
     """Starts web server."""
-    uvicorn.run("frontend.Frontend_progress.run:app")  # this needs editing
+    uvicorn.run("group2/frontend/Frontend_progress/run:app")
 
-#
+
 if __name__ == "__main__":
     main()
