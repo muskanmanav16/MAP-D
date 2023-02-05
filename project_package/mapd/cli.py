@@ -77,11 +77,11 @@ def predict_entities(text):
 
 @main.command()
 @click.argument('keyword')
-@click.option('filepath')
-@click.option('s','--start_date', default=None, help='start date for time range of desired query result'')
+@click.argument('filepath',help='File path for query results file')
+@click.option('s','--start_date', default=None, help='start date for time range of desired query result')
 @click.option('e','--end_date', default=None, help='end date for time range of desired query result')
-def query_db(keyword: str, start_date=None, end_date=None, filepath):
-    """"""
+def query_db(keyword: str, filepath, start_date=None, end_date=None):
+    """Queries database for keyword and (optionally) date range, and saves results to file at specified address."""
 
     results = query_database(keyword, start_date, end_date)
     for result in results:
