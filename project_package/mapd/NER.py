@@ -15,15 +15,6 @@ import tensorflow as tf
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
 
-
-#check the device name and use GPU if it is available
-device_name = tf.test.gpu_device_name()
-if device_name != '/device:GPU:0':
-    print('GPU device not found. Using CPU instead.')
-    tf.config.set_visible_devices([], 'GPU')
-else:
-    print('Found GPU at: {}'.format(device_name))
-
 model_name = "en_ner_bionlp13cg_md"
 nlp = spacy.load(model_name)
 
