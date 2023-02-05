@@ -74,26 +74,6 @@ def get_abstract_info(pmid): # can test with PMID 36316711
     entries_dict = db.get_abstract_info(pubmed_id=pmid)
     click.echo(entries_dict)
 
-
-@main.command()
-@click.argument('abstract_id')
-@click.argument('entities')
-def insert_entities(abstract_id, entities):
-    """Adds entities into the Entity table in the database for a given.
-
-    Parameters
-    ----------
-    abstract_id: int
-        PubMed ID of abstract
-
-    entities: str or list[str]*
-        Entities to be inserted into the database
-    """
-    entity_predictor = EntityPrediction(db.session)
-    entity_predictor.insert_entities(abstract_id, entities)
-    click.echo('Entities inserted into Entity table for abstract {}'.format(abstract_id))
-
-
 @main.command()
 @click.argument('text')
 def predict_entities(text):
