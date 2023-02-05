@@ -4,7 +4,9 @@ import pandas as pd
 from mapd.Database import Database
 from mapd.NER import EntityPrediction
 from mapd.utils import query_database
-from mapd import DB_PATH
+from mapd import DB_PATH, PROJECT_DIR
+from os import chdir
+from pathlib import Path
 
 # # Instantiate Database class, add abstracts from cached/freshly downloaded files if they do not already exist:
 db = Database()
@@ -118,7 +120,9 @@ def query_db(keyword: str, filepath: str, start_date=None, end_date=None):
 @main.command()
 def serve():
     """Starts web server."""
-    uvicorn.run("group2/frontend/Frontend_progress/run:app")
+    app_dir = PROJECT_DIR.joinpath("frontend","Frontend_progress")
+    chdir(app_dir)
+    uvicorn.run("run:app")
 
 
 if __name__ == "__main__":
