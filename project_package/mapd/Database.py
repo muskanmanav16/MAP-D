@@ -172,58 +172,6 @@ class Database:
             }
         return entries_dict
 
-    def query_database(self, keyword, start_date=None, end_date=None) -> list[dict]:
-        """Returns all abstracts in the database that have been tagged with the queried keyword, and were published
-        between the start and end dates (if date parameters are input).
-
-        Returns:
-        A list of dict, each dict represents a row in the table, where keys are the column names"""
-        # stmt = (select(
-        #     Abstract.pubmed_id,
-        #     Abstract.Title,
-        #     Abstract.date,
-        #     Abstract.abstract_text,
-        #     Entity.entity).
-        #     filter(Entity.entity.like('%'+keyword+'%')).join(Entity, Abstract.id == Entity.abstract_id))
-        #
-        # if start_date and end_date:
-        #     stmt = stmt.filter(Abstract.date >= start_date, Abstract.date <= end_date)
-        # query = self.session.execute(stmt)
-
-        query = (self.session.query(Abstract, Entity)
-                 .join(Entity)
-                 .filter(Entity.entity.like('%' + keyword + '%')))
-        if start_date and end_date:
-            query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
-        # query = self.session.query(Abstract, Entity).join(Entity) #, Abstract.id == Entity.abstract_id)
-        # query = query.filter(Entity.entity.like('%'+keyword+'%'))
-        # if start_date and end_date:
-        #     query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
-
-        # if start_date and end_date:
-        #     query = (self.session.query(Abstract, Entity)
-        #              .select_from(join(Abstract, Entity))
-        #              .filter(Entity.entity.like('%'+keyword+'%'))
-        #              .filter(Abstract.date >= start_date, Abstract.date <= end_date)
-        #              .all()
-        #              )
-        # else:
-        #     query = (self.session.query(Abstract, Entity)
-        #              .select_from(join(Abstract, Entity))
-        #              .filter(Entity.entity.like('%'+keyword+'%'))
-        #              .all()
-        #              )
-
-        # df = pd.read_sql(query.statement, query.session.bind)
-        # df = pd.read_sql(query.statement, query.session.bind)
-        df = pd.read_sql(query.statement, query.session.bind)
-
-        # highlight keyword in the abstract text
-        df["abstract_text"] = df["abstract_text"].apply(
-            lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
-        return df.to_dict(orient='records')
-
-
 class Utilapi:
     """For interfacing with the NCBI Entrez API"""
 
@@ -273,9 +221,7 @@ class Utilapi:
     # db = Database()
     # ent=Database().get_entity_dict()
     # print(ent)
-    database = Database()
     # database.rebuild_database()
-    print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
     # db=Database()
     # db.rebuild_database()
     # db.add_abstract_to_database()
