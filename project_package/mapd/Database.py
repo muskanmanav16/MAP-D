@@ -189,12 +189,12 @@ class Database:
         # if start_date and end_date:
         #     stmt = stmt.filter(Abstract.date >= start_date, Abstract.date <= end_date)
         # query = self.session.execute(stmt)
-
-        query = (self.session.query(Abstract, Entity)
-                 .join(Entity)
-                 .filter(Entity.entity.like('%' + keyword + '%')))
-        if start_date and end_date:
-            query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
+        #
+        # query = (self.session.query(Abstract, Entity)
+        #          .join(Entity)
+        #          .filter(Entity.entity.like('%' + keyword + '%')))
+        # if start_date and end_date:
+        #     query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
         # query = self.session.query(Abstract, Entity).join(Entity) #, Abstract.id == Entity.abstract_id)
         # query = query.filter(Entity.entity.like('%'+keyword+'%'))
         # if start_date and end_date:
@@ -216,7 +216,16 @@ class Database:
 
         # df = pd.read_sql(query.statement, query.session.bind)
         # df = pd.read_sql(query.statement, query.session.bind)
-        df = pd.read_sql(query.statement, query.session.bind)
+
+        conn = sqlite3.connect(DB_PATH)
+        # query = "SELECT * FROM PUBMED WHERE abstract LIKE '%" + keyword + "%' AND date >= '" + start_date + \
+        # "' AND date <= '" + end_date + "'"
+        query = "SELECT * FROM Abstract WHERE Abstract.abstract_text LIKE '%" + keyword + "%'"
+        if start_date and end_date:
+            query += " AND Abstract.date >= '" + start_date + "' AND Abstract.date <= '" + end_date + "'"
+        df = pd.read_sql_query(query, conn)
+        conn.close()
+        # df = pd.read_sql(query.statement, query.session.bind)
 
         # highlight keyword in the abstract text
         df["abstract_text"] = df["abstract_text"].apply(
