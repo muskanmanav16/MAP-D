@@ -7,8 +7,10 @@ import xmltodict
 from tqdm import tqdm
 from pathlib import Path
 from typing import Optional, Union
-from sqlalchemy import select, inspect,create_engine, Column, Integer, String, Table, MetaData,ForeignKey, DATE,text,select, inspect,func
+from sqlalchemy import select, inspect, create_engine, Column, Integer, String, Table, MetaData, ForeignKey, DATE, text, \
+    select, inspect, func
 from sqlalchemy.orm import Session, Query
+from sqlalchemy import join
 from sqlalchemy_utils import database_exists
 from datetime import datetime
 from Bio import Medline, Entrez
@@ -23,8 +25,8 @@ from urllib.error import HTTPError
 from sqlalchemy.orm import sessionmaker
 from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 
-from mapd.models import Base, Abstract,Entity
-from mapd.constant import ABSTRACT, ENTITY,QUERY_STRING
+from mapd.models import Base, Abstract, Entity
+from mapd.constant import ABSTRACT, ENTITY, QUERY_STRING
 from mapd.NER import EntityPrediction
 
 Entrez.email = "mapd@gmx.net"
@@ -122,7 +124,8 @@ class Database:
                             if date in [None, ""] or abstract in [None, ""]:
                                 continue
                             else:
-                                abstract_entry = Abstract(pubmed_id=pmid, Title=title, abstract_text=abstract, date=date)
+                                abstract_entry = Abstract(pubmed_id=pmid, Title=title, abstract_text=abstract,
+                                                          date=date)
                                 self.session.add(abstract_entry)
                         self.session.commit()
 
@@ -138,7 +141,7 @@ class Database:
         self.raw_entity_data = {k: v for k, v in self.raw_entity_data.items() if v not in self.raw_entity_data.keys()}
         return self.raw_entity_data
 
-    def get_abstract_info(self,pubmed_id: int) -> Optional[dict]:
+    def get_abstract_info(self, pubmed_id: int) -> Optional[dict]:
         """Get abstract info  for a given pubmedid from the relational database.
         param:
         pubmed_id: int
@@ -175,27 +178,69 @@ class Database:
 
         Returns:
         A list of dict, each dict represents a row in the table, where keys are the column names"""
+        # stmt = (select(
+        #     Abstract.pubmed_id,
+        #     Abstract.Title,
+        #     Abstract.date,
+        #     Abstract.abstract_text,
+        #     Entity.entity).
+        #     filter(Entity.entity.like('%'+keyword+'%')).join(Entity, Abstract.id == Entity.abstract_id))
+        #
+        # if start_date and end_date:
+        #     stmt = stmt.filter(Abstract.date >= start_date, Abstract.date <= end_date)
+        # query = self.session.execute(stmt)
+        #
+        # query = (self.session.query(Abstract, Entity)
+        #          .join(Entity)
+        #          .filter(Entity.entity.like('%' + keyword + '%')))
+        # if start_date and end_date:
+        #     query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
+        # query = self.session.query(Abstract, Entity).join(Entity) #, Abstract.id == Entity.abstract_id)
+        # query = query.filter(Entity.entity.like('%'+keyword+'%'))
+        # if start_date and end_date:
+        #     query = query.filter(Abstract.date >= start_date, Abstract.date <= end_date)
 
-        query_ = self.session.query(Abstract).outerjoin(Entity, Abstract.id == Entity.abstract_id)
-        query_ = query_.filter(Entity.labels.like('%'+keyword+'%'))
+        # if start_date and end_date:
+        #     query = (self.session.query(Abstract, Entity)
+        #              .select_from(join(Abstract, Entity))
+        #              .filter(Entity.entity.like('%'+keyword+'%'))
+        #              .filter(Abstract.date >= start_date, Abstract.date <= end_date)
+        #              .all()
+        #              )
+        # else:
+        #     query = (self.session.query(Abstract, Entity)
+        #              .select_from(join(Abstract, Entity))
+        #              .filter(Entity.entity.like('%'+keyword+'%'))
+        #              .all()
+        #              )
+
+        # df = pd.read_sql(query.statement, query.session.bind)
+        # df = pd.read_sql(query.statement, query.session.bind)
+
+        conn = sqlite3.connect(DB_PATH)
+        # query = "SELECT * FROM PUBMED WHERE abstract LIKE '%" + keyword + "%' AND date >= '" + start_date + \
+        # "' AND date <= '" + end_date + "'"
+        query = "SELECT * FROM Abstract WHERE Abstract.abstract_text LIKE '%" + keyword + "%'"
         if start_date and end_date:
-            query_ = query_.filter(Abstract.date >= start_date, Abstract.date <= end_date)
-
-        df = pd.read_sql(query_.statement, query_.session.bind)
+            query += " AND Abstract.date >= '" + start_date + "' AND Abstract.date <= '" + end_date + "'"
+        df = pd.read_sql_query(query, conn)
+        conn.close()
+        # df = pd.read_sql(query.statement, query.session.bind)
 
         # highlight keyword in the abstract text
         df["abstract_text"] = df["abstract_text"].apply(
             lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
         return df.to_dict(orient='records')
 
+
 class Utilapi:
     """For interfacing with the NCBI Entrez API"""
 
-    def __init__(self, search_query: str,cache_dir=PUBMED_DIR):
+    def __init__(self, search_query: str, cache_dir=PUBMED_DIR):
         self.sleep_time = 0.1  # reduce sleep time
         self.batch_size = 100  # increase batch size
         self.search_query = search_query
-        self.PUBMED_DIR=cache_dir
+        self.PUBMED_DIR = cache_dir
 
     def search(self):
         """Search pubmed abstract using NCBI Entrez API - esearch"""
@@ -223,7 +268,7 @@ class Utilapi:
                 end = min(total_abstract_count, start + batch_size)
                 try:
                     fetch_handle = Entrez.efetch(db="pubmed", rettype="medline", retmode="text", retstart=start,
-                                                 retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey,)
+                                                 retmax=batch_size, webenv=fetch_webenv, query_key=fetch_querykey, )
                     data = fetch_handle.read()
                     path_outfile = self.PUBMED_DIR.joinpath(f'{start + 1}-{end}.xml')
                     with open(path_outfile, "w", encoding='utf-8') as f:
@@ -233,11 +278,12 @@ class Utilapi:
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
 
-# if __name__ == '__main__':
+    # if __name__ == '__main__':
     # db = Database()
     # ent=Database().get_entity_dict()
     # print(ent)
     database = Database()
+    # database.rebuild_database()
     print(database.query_database("cancer", "2021-01-01", "2021-12-31"))
     # db=Database()
     # db.rebuild_database()
