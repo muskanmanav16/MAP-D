@@ -120,9 +120,10 @@ def query_db(keyword: str, filepath: str, start_date=None, end_date=None):
 @main.command()
 def serve():
     """Starts web server."""
-
-    app_dir = path.join(getcwd(), "frontend", "Frontend_progress") # navigate to group2 directory first
-    chdir(app_dir)
+    TOP_FOLDER = Path(__file__).parent.parent.parent
+    run_path = TOP_FOLDER.joinpath("frontend/Frontend_progress/")
+    # app_dir = path.join(getcwd(), "frontend", "Frontend_progress") # navigate to group2 directory first
+    chdir(run_path)
     uvicorn.run("run:app")
 
 
