@@ -22,7 +22,6 @@ from datetime import date
 
 from time import sleep
 from urllib.error import HTTPError
-from sqlalchemy.orm import sessionmaker
 from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 
 from mapd.models import Base, Abstract, Entity
@@ -71,21 +70,25 @@ class Database:
         Base.metadata.drop_all(bind=self.engine)
 
     def add_entity_data(self):
-        """Populating the Entity table it also checks if record exists or not to avoid any duplicates"""
-
+        '''Populating the Entity table it also checks if record exists or not to aviod any duplicates'''
         self.add_abstract_to_database()
         # Get all abstracts in the database from Abstract table
         abstracts = self.session.query(Abstract).all()
-
-        # Loop through each abstract and predict entities
-        for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
-            existing_entities = self.session.query(Entity).filter(Entity.abstract_id == abstract.id).all()
-            if existing_entities:
-                continue
-            else:
-                entity_predictor = EntityPrediction(self.session)
-                entities = entity_predictor.predict_entities(abstract.abstract_text)
-                entity_predictor.insert_entities(abstract.id, entities)
+        existing_entities = self.session.query(Entity).all()
+        # Check if the number of entries in the Entity table is less than 900
+        if len(existing_entities) >= 800:
+            print("Entities have already been predicted.")
+            return
+        if len(abstracts) > 0:
+            # Loop through each abstract and predict entities
+            for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
+                existing_entities = self.session.query(Entity).filter(Entity.abstract_id == abstract.id).all()
+                if existing_entities:
+                    continue
+                else:
+                    entity_predictor = EntityPrediction(self.session)
+                    entities = entity_predictor.predict_entities(abstract.abstract_text)
+                    entity_predictor.insert_entities(abstract.id, entities)
 
     def add_abstract_to_database(self):
         """First check if files exists in pubmed_dir if not it will download the Abstract in the cache folder
@@ -99,35 +102,34 @@ class Database:
         if record:
             print("Record exists")
         else:
-            with self.engine.begin() as conn:
-                for file in tqdm(self.PUBMED_DIR.glob("*.xml"), desc="Processing Files"):
-                    with open(file, encoding='utf-8') as handle:
-                        records = Medline.parse(handle)
-                        for record in records:
-                            pmid = record['PMID']
-                            title = record['TI']
+            for file in tqdm(self.PUBMED_DIR.glob("*.xml"), desc="Processing Files"):
+                with open(file, encoding='utf-8') as handle:
+                    records = Medline.parse(handle)
+                    for record in records:
+                        pmid = record['PMID']
+                        title = record['TI']
+                        try:
+                            abstract = record['AB']
+                        except (KeyError, ValueError):
+                            abstract = None
+                        date_str = record['DP']
+                        try:
+                            date = datetime.strptime(date_str, '%Y-%m-%d')
+                        except ValueError:
                             try:
-                                abstract = record['AB']
-                            except (KeyError, ValueError):
-                                abstract = None
-                            date_str = record['DP']
-                            try:
-                                date = datetime.strptime(date_str, '%Y-%m-%d')
+                                date = datetime.strptime(date_str, '%Y %b %d')
                             except ValueError:
                                 try:
-                                    date = datetime.strptime(date_str, '%Y %b %d')
+                                    date = datetime.strptime(date_str, '%Y %B %d')
                                 except ValueError:
-                                    try:
-                                        date = datetime.strptime(date_str, '%Y %B %d')
-                                    except ValueError:
-                                        date = None
-                            if date in [None, ""] or abstract in [None, ""]:
-                                continue
-                            else:
-                                abstract_entry = Abstract(pubmed_id=pmid, Title=title, abstract_text=abstract,
-                                                          date=date)
-                                self.session.add(abstract_entry)
-                        self.session.commit()
+                                    date = None
+                        if date in [None, ""] or abstract in [None, ""]:
+                            continue
+                        else:
+                            abstract_entry = Abstract(pubmed_id=pmid, Title=title, abstract_text=abstract,
+                                                      date=date)
+                            self.session.add(abstract_entry)
+                    self.session.commit()
 
     def get_entity_dict(self):
         """Populate the raw_entity_data with the Entity and labels stored in the Entity Table
@@ -217,11 +219,3 @@ class Utilapi:
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
 
-    # if __name__ == '__main__':
-    # db = Database()
-    # ent=Database().get_entity_dict()
-    # print(ent)
-    # database.rebuild_database()
-    # db=Database()
-    # db.rebuild_database()
-    # db.add_abstract_to_database()
