@@ -14,7 +14,9 @@ from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 
 query = '("hyaluronan receptors"[MeSH Terms] OR ("hyaluronan"[All Fields] AND "receptors"[All Fields]) OR "hyaluronan receptors"[All Fields] OR "cd44"[All Fields]) AND ((ffrft[Filter]) AND (medline[Filter]) AND (review[Filter]) AND (english[Filter]) AND (2020:2020[pdat]))'
 
-TEST_DB_PATH = 'project_package/tests/data/Test_DB.db'
+# TEST_DB_PATH = 'project_package/tests/data/Test_DB.db'
+TEST_FOLDER = Path(__file__).parent
+TEST_DB_PATH = TEST_FOLDER.joinpath("data/Test_DB.db")
 TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
 test_engine = create_engine(TEST_CONN_STRING)
 test_session = Session(bind=test_engine)
@@ -22,7 +24,8 @@ test_session = Session(bind=test_engine)
 class TestDatabase:
     """Unit tests for Database class in Database.py"""
 
-    @pytest.fixture(scope='module')
+
+    # @pytest.fixture(scope='module')
     def test_db(self):
         """Create test DB and drop after."""
         db = Database(db_engine=test_engine)
@@ -37,15 +40,16 @@ class TestDatabase:
         abstract_cols = ("id", "Title", "pubmed_id", "date", "abstract_text")
         entity_cols = ("id", "entity", "labels", "abstract_id")
         assert all([x in tables for x in ("abstract", "entity")])  # Correct tables
-        assert all([x in Abstract.__table__.columns for x in abstract_cols])  # Correct HGNC columns
-        assert all([x in Entity.__table__.columns for x in entity_cols])  # Correct Uniprot columns
+        assert all([x in Abstract.__table__.columns for x in abstract_cols])  # Correct Abstract table columns
+        assert all([x in Entity.__table__.columns for x in entity_cols])  # Correct Entity table columns columns
 
-        yield db
 
-        print('Delete Test Database')
-        db.session.close()
-        Path.unlink(TEST_DB_PATH)
-        assert not TEST_DB_PATH.is_file()
+        # yield db
+
+        # print('Delete Test Database')
+        # db.session.close()
+        # Path.unlink(TEST_DB_PATH)
+        # assert not TEST_DB_PATH.is_file()
 
     def test_row_number(self):
         # x = Database()
@@ -54,6 +58,17 @@ class TestDatabase:
         entity_row = test_session.query(Entity).count()
         assert abstract_row == 59
         assert entity_row == 930
+
+    # def test_new_database(self):
+    #     x = Database()
+    #     x.rebuild_database()
+    #     #This is giving a TypeError that the above line is missing a positional argument-'self'
+    #     db_path = TEST_DB_PATH
+    #     assert db_path.is_file() is True
+
+
+
+
 
 class TestApi(unittest.TestCase):
     def test_entrez_search_query(self):

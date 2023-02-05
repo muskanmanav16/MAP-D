@@ -35,7 +35,7 @@ logger.setLevel(logging.DEBUG)
 class Database:
     """For interfacing with the relational database."""
 
-    def __init__(self, db_engine=engine,cache_dir=PUBMED_DIR,query=QUERY_STRING):
+    def __init__(self, db_engine=engine, cache_dir=PUBMED_DIR, query=QUERY_STRING):
 
         self.engine = db_engine
         self.session = Session(bind=self.engine)
