@@ -3,16 +3,16 @@
 import pandas as pd
 import sqlite3
 import pandas as pd
+from pathlib import Path
 from typing import List
 from mapd.models import Base, Abstract,Entity
 from sqlalchemy import select, inspect, create_engine,distinct
 from sqlalchemy.orm import Session
-# from mapd import DB_PATH
 import re
 import os
 
-root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DB_PATH=os.path.join(root_dir, 'data', 'gp2_plab2.db')
+TOP_FOLDER = Path(__file__).parent.parent.parent
+DB_PATH= TOP_FOLDER.joinpath("data/gp2_plab2.db")
 CONN_STRING = f"sqlite:///{DB_PATH}"
 engine = create_engine(CONN_STRING)
 
@@ -58,10 +58,10 @@ def query_database(keyword: str, start_date=None, end_date=None):
     for pub_id in pubmed_id_set:
         test_list.append(get_abstract_info(pub_id))
     df = pd.DataFrame(test_list)
-    df["abstract_text"] = df["abstract_text"].apply(
-        lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
+    if 'abstract_text' in df.columns:
+        df["abstract_text"] = df["abstract_text"].apply(
+            lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
     return df.to_dict(orient='records')
-#
+
 # if __name__ == '__main__':
 #     print(query_database(keyword="amino acid",start_date='2022-01-01',end_date='2022-12-31'))
-    # print(type(query_database(keyword="amino acid",start_date='2022-01-01',end_date='2022-12-31')))
