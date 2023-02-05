@@ -1,70 +1,107 @@
-import logging
-
 import click
+import logging
 import uvicorn
-
-from mapd.Database import Database, Utilapi
-
+import pandas as pd
+from mapd.Database import Database
+from mapd.NER import EntityPrediction
+from mapd.utils import query_database
+from mapd import DB_PATH
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
+# Instantiate Database class, add abstracts from cached/freshly downloaded files if they do not already exist:
+db = Database()
+db.add_abstract_to_database()
+db.add_entity_data()
+
+# Creating Click group:
 @click.group()
 def main():
-    """Entry method."""
+
+    """Entry method"""
     pass
 
 @main.command()
+def rebuild_db():
+    """Rebuilds database from scratch after dropping any existing tables, and adds associated entities to Entity table"""
 
-def build_abstract_database():
-    Database.build_database()
-    Database.add_abstract_to_database()
-
-@main.command()
-def get_abstracts():
-
-@main.command()
-def entity_dict():
-    Utilapi.get_abstracts()
+    db.rebuild_database()
+    db.add_abstract_to_database()
+    db.add_entity_data()
+    click.echo(
+        """Rebuilt database of PubMed abstracts from scratch at {}.
+        Entity table of database populated with entities for each abstract.""".format(DB_PATH))
 
 @main.command()
-@click.argument('pmid')
-def get_abstract_info(pmid: str):
-    """Retrieves identifier information for a given PubMed id."""
+@click.option('-r', '--row_wise_results', is_flag=True, default=False,
+              help='option to print dictionary entries {entity:label} row by row')
+def get_entity_dict(row_wise_results):
+    """Returns a dictionary of entities in the table, with each entry containing an entity (key) and its label (value)"""
 
-    entries_dict = Database.get_abstract_info(pubmed_id = pmid)
+    entity_dict = db.get_entity_dict()
+    click.echo('Dictionary of entities (keys) and their labels (values)')
 
-    return entries_dict
-
-@main.command()
-@click.argument('pmid')
-def add_abstract_to_db(pmid: str):
-    """Retrieves identifier information for a given PubMed id."""
-
-    entries_dict = Database.get_abstract_info(pubmed_id = pmid)
-
-    return entries_dict
+    if row_wise_results:
+        for entry in entity_dict.items():
+            click.echo(entry)
+    else:
+        click.echo(entity_dict)
 
 @main.command()
-@click.option('-p', '--ppi', default=None, help="A CSV file containing PPIs.")
-@click.option('-n', '--nodes', default=None, help="A TSV file containing defined nodes of a network.")
-@click.option('-e', '--edges', default=None, help="A TSV file containing defined edges of a network.")
-@click.option('-v', '--verbose', default=False, is_flag=True, help="Prints stats to STDOUT.")
-@click.option('-r', '--enrich', default=False, is_flag=True, help="Enrich the graph with RNA and DNA molecules.")
-@click.option('-o', '--output', default=None, help="File path to save summary stats.")
-def stats(ppi: str, nodes: str, edges: str, output: str, verbose: bool, enrich: bool):
-    """Generates node/edge lists from a PPI file."""
-    sa = Statistics(node_list=nodes, edge_list=edges, ppi_file=ppi, enrich=enrich)
-    sa.summary_statistics()
+@click.argument('pmid', help ='PubMed ID of abstract for which information will be retrieved')
+def get_abstract_info(pmid):
+    """Retrieves information about an abstract given its PMID (PubMed ID)."""
 
-    if verbose:
-        click.echo(sa.sum_stats)
+    entries_dict = db.get_abstract_info(pubmed_id=pmid)
+    click.echo(entries_dict)
 
-    if output:
-        sa.export_stats(output)
+
+@main.command()
+@click.argument('abstract_id', help='ID of the associated abstract in the Abstract table of the database')
+@click.argument('entities', help='Entities to be inserted into the database')
+def insert_entities(abstract_id, entities):
+    """Adds entities into the Entity table in the database for a given."""
+    entity_predictor = EntityPrediction(db.session)
+    entity_predictor.insert_entities(abstract_id, entities)
+    click.echo('Entities inserted into Entity table for abstract {}'.format(abstract_id))
+
+@main.command()
+@click.argument('text', help='Input text for entity prediction')
+def predict_entities(text):
+    """Given a text, predicts entities using Scispacy NER model."""
+
+    entity_predictor = EntityPrediction(db.session)
+    entities = entity_predictor.predict_entities(text)
+    click.echo('Entities predicted for input text:')
+    click.echo(entities)
+
+@main.command()
+@click.argument('keyword')
+@click.option('filepath')
+@click.option('s','--start_date', default=None, help='start date for time range of desired query result'')
+@click.option('e','--end_date', default=None, help='end date for time range of desired query result')
+def query_db(keyword: str, start_date=None, end_date=None, filepath):
+    """"""
+
+    results = query_database(keyword, start_date, end_date)
+    for result in results:
+        result['id'] = f'=HYPERLINK("https://www.ncbi.nlm.nih.gov/pubmed/{result["id"]}","{result["id"]}")'
+        result['abstract_text'] = result['abstract_text'].replace('<mark>' + keyword + '</mark>', keyword)
+
+    df = pd.DataFrame(results)
+    df.to_csv(filepath, index=False)
+
+    timerange = ' '
+    if start_date and end_date:
+        timerange = 'in time range '+start_date+' and '+ end_date
+
+    click.echo('Results file for query {}{} stored at {}'.format(keyword,timerange,filepath))
+
+
 @main.command()
 def serve():
     """Start the API web server."""
-    uvicorn.run("project_package.frontend.Frontend_progress.run:app")
-
+    uvicorn.run("group2.frontend.Frontend_progress.run:app") # this may need editing
 
 if __name__ == "__main__":
     main()
