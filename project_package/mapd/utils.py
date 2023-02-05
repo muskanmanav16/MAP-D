@@ -7,10 +7,12 @@ from typing import List
 from mapd.models import Base, Abstract,Entity
 from sqlalchemy import select, inspect, create_engine,distinct
 from sqlalchemy.orm import Session
+# from mapd import DB_PATH
 import re
+import os
 
-DB_PATH = 'E:\Desktop\LSISem3\Plab2\Projects\group project plab2\data\gp2_plab2.db'
-# DB_PATH='testing_gp2_plab2.db'
+root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DB_PATH=os.path.join(root_dir, 'data', 'gp2_plab2.db')
 CONN_STRING = f"sqlite:///{DB_PATH}"
 engine = create_engine(CONN_STRING)
 
