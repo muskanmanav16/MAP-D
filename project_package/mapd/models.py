@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DATE, TEXT
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
@@ -36,7 +36,6 @@ class Abstract(Base):
     abstract_text = Column(TEXT)
     # abstract_text = Column(LONGTEXT)
     # keywords=Column(String) #keywords can be fetched from MESH headings--??
-    children = relationship("Entity", back_populates="parent")
 
 class Entity(Base):
     __tablename__ = 'entity'
@@ -45,5 +44,5 @@ class Entity(Base):
     entity = Column(String(255))
     labels = Column(String(255))
     abstract_id = Column(Integer, ForeignKey(Abstract.id))
-    parent = relationship("Abstract", back_populates="children")
+    
 

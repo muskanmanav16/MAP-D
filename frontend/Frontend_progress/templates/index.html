@@ -16,7 +16,16 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 
-		
+		<script>
+  function validateKeyword() {
+    var keyword = document.getElementById("keyword").value.trim();
+    if (!keyword) {
+      alert("Keyword/Phrase cannot be empty or contain only spaces.");
+      return false;
+    }
+    return true;
+  }
+</script>
 
     </head>
     <body id="page-top">
@@ -50,14 +59,14 @@
 		<div>
 		  <form class="form-group" action="{{ url_for('search_results', page=1) }}" method="post">
     <label for="keyword">Keyword/Phrase</label><br>
-    <input class="form-control-keyword" placeholder="e.g. IL2, IFNA, cell cycle, ..." type="text" name="keyword" id="keyword" required> 
+    <input class="form-control-keyword" placeholder="e.g. Eye, Diabetes, Cyst, ..." type="text" name="keyword" id="keyword" required>
 	<br>
     <label for="start_date">Start Date:</label>
     <input type="date" name="start_date" id="start_date" >
     <label for="end_date">End Date:</label>
     <input type="date" name="end_date" id="end_date" >
     <br>
-    <input class="btn btn-primary btn-xl text-uppercase" type="submit" value="Search">
+    <input class="btn btn-primary btn-xl text-uppercase" type="submit" value="Search" onclick="return validateKeyword()">
   </form>
   </div>
             

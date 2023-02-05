@@ -11872,7 +11872,7 @@ header.resultshead {
 }
 
 .btn-table{
-	border-radius: 50px ;
+	border-radius: 8px ;
 	padding: 0.7rem;
 	margin-bottom: 1rem;
 	margin-top: 1rem;
@@ -11926,4 +11926,13 @@ header.resultshead {
   font-weight: 300;
   line-height: 1.2;
   color: #CFCFCF;
+}
+
+.table {
+font-family:Arial, Helvetica, sans-serif !important;
+font-size:0.85rem !important;	
+}
+
+.labelstyle{
+font-size:0.8rem !important;		
 }
