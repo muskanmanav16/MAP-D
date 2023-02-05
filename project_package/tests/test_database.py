@@ -26,6 +26,7 @@ class TestDatabase:
 
 
     # @pytest.fixture(scope='module')
+    # @pytest.fixture
     def test_db(self):
         """Create test DB and drop after."""
         db = Database(db_engine=test_engine)
@@ -59,12 +60,22 @@ class TestDatabase:
         assert abstract_row == 59
         assert entity_row == 930
 
-    # def test_new_database(self):
-    #     x = Database()
-    #     x.rebuild_database()
-    #     #This is giving a TypeError that the above line is missing a positional argument-'self'
-    #     db_path = TEST_DB_PATH
-    #     assert db_path.is_file() is True
+    def test_get_abstract_info(self):
+        db = Database(db_engine=test_engine)
+        result = db.get_abstract_info(36298759)
+
+        # Assert the returned result
+        assert result == {
+            "pubmed_id": '36298759',
+            "Title": "Current In Vitro and In Vivo Models to Study MCPyV-Associated MCC.",
+            "date": "2022-10-07",
+            "abstract_text": "Merkel cell polyomavirus (MCPyV) is the only human polyomavirus currently known to cause human cancer. MCPyV is believed to be an etiological factor in at least 80% of cases of the rare but aggressive skin malignancy Merkel cell carcinoma (MCC). In these MCPyV+ MCC tumors, clonal integration of the viral genome results in the continued expression of two viral proteins: the viral small T antigen (ST) and a truncated form of the viral large T antigen. The oncogenic potential of MCPyV and the functional properties of the viral T antigens that contribute to neoplasia are becoming increasingly well-characterized with the recent development of model systems that recapitulate the biology of MCPyV+ MCC. In this review, we summarize our understanding of MCPyV and its role in MCC, followed by the current state of both in vitro and in vivo model systems used to study MCPyV and its contribution to carcinogenesis. We also highlight the remaining challenges within the field and the major considerations related to the ongoing development of in vitro and in vivo models of MCPyV+ MCC.",
+            "entities": {'CANCER': 'skin malignancy Merkel cell carcinoma',
+              'CELL': 'Merkel cell polyomavirus',
+              'ORGANISM': 'human polyomavirus'},
+        }
+
+        # db.add_entity_data.assert_called_once()
 
 
 
