@@ -18,10 +18,10 @@ def build_abstract_database():
     Database.build_database()
     Database.add_abstract_to_database()
 
-@main.command():
+@main.command()
 def get_abstracts():
 
-@main.command():
+@main.command()
 def entity_dict():
     Utilapi.get_abstracts()
 
@@ -33,6 +33,16 @@ def get_abstract_info(pmid: str):
     entries_dict = Database.get_abstract_info(pubmed_id = pmid)
 
     return entries_dict
+
+@main.command()
+@click.argument('pmid')
+def add_abstract_to_db(pmid: str):
+    """Retrieves identifier information for a given PubMed id."""
+
+    entries_dict = Database.get_abstract_info(pubmed_id = pmid)
+
+    return entries_dict
+
 @main.command()
 @click.option('-p', '--ppi', default=None, help="A CSV file containing PPIs.")
 @click.option('-n', '--nodes', default=None, help="A TSV file containing defined nodes of a network.")

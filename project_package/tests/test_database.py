@@ -3,14 +3,57 @@
 import pytest
 from pathlib import Path
 import requests
-from mapd.Database import Utilapi
+from mapd.Database import Database, Utilapi
+from mapd.models import Abstract, Entity
 from ncbiutils.ncbiutils import PubMedFetch
 from Bio import Medline, Entrez
 import unittest
+from sqlalchemy import select, inspect, create_engine
+from sqlalchemy.orm import Session
 from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 
 query = '("hyaluronan receptors"[MeSH Terms] OR ("hyaluronan"[All Fields] AND "receptors"[All Fields]) OR "hyaluronan receptors"[All Fields] OR "cd44"[All Fields]) AND ((ffrft[Filter]) AND (medline[Filter]) AND (review[Filter]) AND (english[Filter]) AND (2020:2020[pdat]))'
 
+TEST_DB_PATH = 'project_package/tests/data/Test_DB.db'
+TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
+test_engine = create_engine(TEST_CONN_STRING)
+test_session = Session(bind=test_engine)
+
+class TestDatabase:
+    """Unit tests for Database class in Database.py"""
+
+    @pytest.fixture(scope='module')
+    def test_db(self):
+        """Create test DB and drop after."""
+        db = Database(db_engine=test_engine)
+        inspector = inspect(test_engine)
+
+        print('Build Test Database')
+        db.build_database()
+        assert TEST_DB_PATH.is_file()  # DB is created
+
+        # Check tables and columns
+        tables = inspector.get_table_names()
+        abstract_cols = ("id", "Title", "pubmed_id", "date", "abstract_text")
+        entity_cols = ("id", "entity", "labels", "abstract_id")
+        assert all([x in tables for x in ("abstract", "entity")])  # Correct tables
+        assert all([x in Abstract.__table__.columns for x in abstract_cols])  # Correct HGNC columns
+        assert all([x in Entity.__table__.columns for x in entity_cols])  # Correct Uniprot columns
+
+        yield db
+
+        print('Delete Test Database')
+        db.session.close()
+        Path.unlink(TEST_DB_PATH)
+        assert not TEST_DB_PATH.is_file()
+
+    def test_row_number(self):
+        # x = Database()
+        # y = x.session
+        abstract_row = test_session.query(Abstract).count()
+        entity_row = test_session.query(Entity).count()
+        assert abstract_row == 59
+        assert entity_row == 930
 
 class TestApi(unittest.TestCase):
     def test_entrez_search_query(self):
