@@ -12,7 +12,8 @@ logger.setLevel(logging.DEBUG)
 # Instantiate Database class, add abstracts from cached/freshly downloaded files if they do not already exist:
 db = Database()
 db.add_abstract_to_database()
-db.add_entity_data()
+if not db.raw_entity_data: # if entities have not already been predicted
+    db.get_entity_dict()
 
 # Creating Click group:
 @click.group()
@@ -38,9 +39,12 @@ def rebuild_db():
 def get_entity_dict(row_wise_results):
     """Returns a dictionary of entities in the table, with each entry containing an entity (key) and its label (value)"""
 
-    entity_dict = db.get_entity_dict()
-    click.echo('Dictionary of entities (keys) and their labels (values)')
+    if db.raw_entity_data:
+        entity_dict = db.raw_entity_data
+    else:
+        entity_dict = db.get_entity_dict()
 
+    click.echo('Dictionary of entities (keys) and their labels (values)')
     if row_wise_results:
         for entry in entity_dict.items():
             click.echo(entry)
