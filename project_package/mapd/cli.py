@@ -52,9 +52,15 @@ def get_entity_dict(row_wise_results):
         click.echo(entity_dict)
 
 @main.command()
-@click.argument('pmid', help ='PubMed ID of abstract for which information will be retrieved')
+@click.argument('pmid')
 def get_abstract_info(pmid):
-    """Retrieves information about an abstract given its PMID (PubMed ID)."""
+    """Retrieves information about an abstract given its PMID (PubMed ID).
+
+    Parameters
+    ----------
+    pmid: int
+        PubMed ID of abstract
+    """
 
     entries_dict = db.get_abstract_info(pubmed_id=pmid)
     click.echo(entries_dict)
@@ -62,17 +68,31 @@ def get_abstract_info(pmid):
 
 @main.command()
 @click.argument('abstract_id', help='ID of the associated abstract in the Abstract table of the database')
-@click.argument('entities', help='Entities to be inserted into the database')
+@click.argument('entities')
 def insert_entities(abstract_id, entities):
-    """Adds entities into the Entity table in the database for a given."""
+    """Adds entities into the Entity table in the database for a given.
+
+    Parameters
+    ----------
+    abstract_id: int
+        PubMed ID of abstract
+
+    entities: str or list[str]*
+        Entities to be inserted into the database
+    """
     entity_predictor = EntityPrediction(db.session)
     entity_predictor.insert_entities(abstract_id, entities)
     click.echo('Entities inserted into Entity table for abstract {}'.format(abstract_id))
 
 @main.command()
-@click.argument('text', help='Input text for entity prediction')
+@click.argument('text')
 def predict_entities(text):
-    """Given a text, predicts entities using Scispacy NER model."""
+    """Given a text, predicts entities using Scispacy NER model.
+    Parameters
+    ----------
+    text: str
+        Input text for entity prediction
+    """
 
     entity_predictor = EntityPrediction(db.session)
     entities = entity_predictor.predict_entities(text)
@@ -81,11 +101,18 @@ def predict_entities(text):
 
 @main.command()
 @click.argument('keyword')
-@click.argument('filepath',help='File path for query results file')
+@click.argument('filepath')
 @click.option('s','--start_date', default=None, help='start date for time range of desired query result')
 @click.option('e','--end_date', default=None, help='end date for time range of desired query result')
 def query_db(keyword: str, filepath, start_date=None, end_date=None):
-    """Queries database for keyword and (optionally) date range, and saves results to file at specified address."""
+    """Queries database for keyword and (optionally) date range, and saves results to file at specified address.
+    Parameters
+    ----------
+    keyword: str
+        Keyword to query database with
+    filepath: str
+        File path for query results file
+    """
 
     results = query_database(keyword, start_date, end_date)
     for result in results:
