@@ -20,7 +20,7 @@ def main():
     pass
 
 @main.command()
-def build_db:
+def build_db():
     """Builds database and populates it with abstract records using either cached/newly downloaded files."""
     db = Database()
     db.add_abstract_to_database()
