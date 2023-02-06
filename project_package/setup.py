@@ -5,8 +5,7 @@
 from setuptools import setup, find_packages
 
 requirements = [
-    'pip==22.3.1',
-    'conda==4.12.0',
+    'pip',
     'numpy',
     'Click',
     'networkx',
@@ -33,11 +32,10 @@ requirements = [
     'tensorflow',
     'nltk',
     'pathlib',
-    'ruamel-yaml-conda==0.15.100',
     'ncbiutils',
     'pytest',
-    'bio==1.5.3',
-    'biopython==1.80',
+    'bio',
+    'biopython',
 
 
 
