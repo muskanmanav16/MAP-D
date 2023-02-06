@@ -129,4 +129,3 @@ class TestApi(unittest.TestCase):
             pubmed_fetch.get_citations("", id="")
 
 
-
