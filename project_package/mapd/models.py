@@ -27,7 +27,7 @@ Base = declarative_base()
 # The Text data type in SQLAlchemy is mapped to the TEXT data type in MySQL, which has a maximum length of 65,535 characters.
       
 class Abstract(Base):
-    __tablename__ = 'abstract'
+    __tablename__ = 'Abstract'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     Title = Column(String(255))

@@ -24,11 +24,11 @@ COPY frontend/Frontend_progress/static /app/static/
 
 # setup???
 COPY project_package/setup.py /app/
-# COPY project_package/mapd /app/mapd
+COPY project_package/mapd /app/mapd
 
 # copy db from cache folder
 COPY data/gp2_plab2.db /app/data/gp2_plab2.db
-#COPY data /app/
+COPY data /app/
 
 # copy task 3 func
 COPY project_package/mapd/utils.py /app/mapd/utils.py
@@ -39,7 +39,7 @@ WORKDIR /app
 # Install required packages
 RUN pip install -e .
 # scispacy model link
-RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz
+
 
 ENTRYPOINT ["python", "run.py"]
 
