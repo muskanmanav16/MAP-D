@@ -1,80 +1,39 @@
-# Group2
+# MAP-D: Next-Generation Search Engine for Academics and Researchers
 
 
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.informatik.uni-bonn.de/bschultz/group2.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.informatik.uni-bonn.de/bschultz/group2/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-**MAP-D Project:** A search engine based on NER methods.
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
+MAP-D is an innovative search engine designed to make the process of finding relevant biomedical papers easier and more efficient. 
+
+If you're a student, professor, or researcher, you'll find MAP-D a game-changer in your research process. Say goodbye to the frustration of traditional search engines and try MAP-D today!
+
+### Features:
+- Utilizes NER technology to categorize and index biomedical papers
+- Delivers relevant search results from a large corpus
+- Ideal for students, professors, and researchers alike
+
+Try MAP-D now and take the first step towards a smoother and more efficient research experience!
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
 
 ## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-
+#### CSS Animations and Transitions
 
 ![CSS Animations and Transitions ↑](/uploads/b35e62291ed8c7845b7514265d8129f6/css_animations_and_transitions.webm)
 
 
+
 ## Installation
-Installing scispacy requires two steps: installing the library and intalling the models. To install the library, run:
+Installing scispacy requires two steps, installing the library and intalling the models. 
+
+To install the library, run:
 ```bash
 pip install scispacy
 ```
 
-to install a model (see our full selection of available models below), run a command like the following:
+To install a model (see our full selection of available models below), run a command like the following:
 
 ```bash
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_sm-0.5.1.tar.gz
@@ -83,7 +42,6 @@ pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/e
 Note: We strongly recommend that you use an isolated Python environment (such as virtualenv or conda) to install scispacy.
 Take a look below in the "Setting up a virtual environment" section if you need some help with this.
 Additionally, scispacy uses modern features of Python and as such is only available for **Python 3.6 or greater**.
-
 
 
 #### Setting up a virtual environment
@@ -143,21 +101,50 @@ pip install CMD-V(to paste the copied URL)
 | en_ner_bc5cdr_md |  A spaCy NER model trained on the BC5CDR corpus. | [Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz)|
 | en_ner_bionlp13cg_md |  A spaCy NER model trained on the BIONLP13CG corpus. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz)|
 
+
+## CLI and Containerization
+
+CLI command:
+
+To build the database with two tables, Abstract and entity, run the following command:
+
+```bash
+python cli.py build-db
+```
+
+Containerization:
+
+Please refer to our Dockerfile and run the following commands:
+
+```bash
+docker build . -t mapdpkg:latest
+```
+
+```bash
+docker run --name groupprojectplab2 -p 5000:5000 -e DOCKER_CONTAINER=1 -d mapdpkg:latest
+```
+
+To stop the container:
+
+```bash
+docker stop groupprojectplab2
+```
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+
+![Quick_walkthrough-MAP-D ↑](/uploads/e03eaaef943bac975c2f046c564a17be/Quick_walkthrough-MAP-D.webm)
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+For any assistance, you can write to us at our official email address: mapd@gmx.net. <br>
+-or- <br>
+You can use the contact form on the website.
+
+![image](/uploads/658761253ed260a6c88f4b323ee0e936/image.png)
+
+We would love to hear from you!
 
 ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
 ## Authors and acknowledgment
 This project is contributed by:
@@ -172,11 +159,6 @@ This project is contributed by:
 
 And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-bonn.de/bschultz) for helping us out through out the project.
 
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
 
 ## Citing
 
