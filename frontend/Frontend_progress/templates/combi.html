@@ -92,8 +92,9 @@
 
         <td>{{ result['date'] }}</td>
         <td width="70%">
-          <div id="{{ result['pubmed_id'] }}" class="text-justify p-sm-2" style="display: none;">{{ result['abstract_text']|safe }}</div>
-            <button type="button" class="btn-table" onclick="toggleAbstract('{{ result['pubmed_id'] }}')">{{ result['Title'] }}</button>
+          <button type="button" class="btn-table" onclick="toggleAbstract('{{ result['pubmed_id'] }}')">{{ result['Title'] }}</button>
+            <div id="{{ result['pubmed_id'] }}" class="text-justify p-sm-2" style="display: none;">{{ result['abstract_text']|safe }}</div>
+
 		</td>
         <td>{{result['entities']}}</td>
         <td class="labelstyle">{{ result['labels'] }}</td>
