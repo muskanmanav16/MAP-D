@@ -105,7 +105,6 @@ def query_db(keyword: str, filepath: str, start_date=None, end_date=None):
 
     results = query_database(keyword, start_date, end_date)
     for result in results:
-        # result['id'] = f'=HYPERLINK("https://www.ncbi.nlm.nih.gov/pubmed/{result["id"]}","{result["id"]}")'
         result['abstract_text'] = result['abstract_text'].replace('<mark>' + keyword + '</mark>', keyword)
 
     df = pd.DataFrame(results)
