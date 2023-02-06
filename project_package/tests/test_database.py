@@ -21,7 +21,7 @@ TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
 test_engine = create_engine(TEST_CONN_STRING)
 test_session = Session(bind=test_engine)
 
-ENTITY_DICT_PATH = 'project_package/tests/data/test_entity_dict_result.txt'
+ENTITY_DICT_PATH = 'project_package/tests/data/test_data_entities.txt'
 
 
 class TestDatabase:
