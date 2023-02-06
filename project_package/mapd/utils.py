@@ -14,6 +14,7 @@ import os
 TOP_FOLDER = Path(__file__).parent.parent.parent
 DB_PATH= TOP_FOLDER.joinpath("data/gp2_plab2.db")
 # CONN_STRING = f"sqlite:///{DB_PATH}"
+CONN_STRING = None
 
 # CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
 # #CONN_STRING = "sqlite:////app/data/gp2_plab2.db"
@@ -22,10 +23,17 @@ DB_PATH= TOP_FOLDER.joinpath("data/gp2_plab2.db")
 # CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
 # engine = create_engine(CONN_STRING)
 
-if 'DATABASE_URL' in os.environ:
-    CONN_STRING = os.environ['DATABASE_URL']
+# if 'DATABASE_URL' in os.environ:
+#     CONN_STRING = os.environ['DATABASE_URL']
+# else:
+#     CONN_STRING = f"sqlite:///{DB_PATH}"
+
+if 'DOCKER_CONTAINER' in os.environ:
+    CONN_STRING = "sqlite:////app/data/gp2_plab2.db"
+    print(CONN_STRING)
 else:
     CONN_STRING = f"sqlite:///{DB_PATH}"
+    print(CONN_STRING)
 
 
 def get_abstract_info(pubmed_id: int):
