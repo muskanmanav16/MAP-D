@@ -53,7 +53,7 @@ Additionally, scispacy uses modern features of Python and as such is only availa
 #### Setting up a virtual environment
 Please skip this section if you already setup your virtual environment using our own Build-in package **mapd**.
 
-Athugh There are several optons which can be used to setup the virtual envionment in your system.
+Although There are several optons which can be used to setup the virtual envionment in your system.
 [Conda](https://conda.io/) can be used set up a virtual environment with the
 version of Python required for scispaCy.  If you already have a Python
 environment you want to use, you can skip to the 'installing via pip' section.
