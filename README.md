@@ -4,21 +4,19 @@
 ## MAP-D
 **MAP-D Project:** A search engine based on NER methods.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Team member contributions:
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Task 1, 2, 3&4, testing, CLI, docker etc.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## Walkthrough of MAP-D web application:
 
-
+*Description*
 
 ![CSS Animations and Transitions ↑](/uploads/b35e62291ed8c7845b7514265d8129f6/css_animations_and_transitions.webm)
 
+## How to use MAP-D
 
-## Installation
+#### scispacy Installation
 Installing scispacy requires two steps: installing the library and intalling the models. To install the library, run:
 ```bash
 pip install scispacy
@@ -33,7 +31,6 @@ pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/e
 Note: We strongly recommend that you use an isolated Python environment (such as virtualenv or conda) to install scispacy.
 Take a look below in the "Setting up a virtual environment" section if you need some help with this.
 Additionally, scispacy uses modern features of Python and as such is only available for **Python 3.6 or greater**.
-
 
 
 #### Setting up a virtual environment
