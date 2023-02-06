@@ -26,7 +26,8 @@ from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 
 from mapd.models import Base, Abstract, Entity
 from mapd.constant import ABSTRACT, ENTITY, QUERY_STRING
-from mapd.NER import EntityPrediction
+
+# from mapd.NER import EntityPrediction
 
 Entrez.email = "mapd@gmx.net"
 logger = logging.getLogger(__name__)
@@ -69,26 +70,26 @@ class Database:
         logger.warning("Dropping database...")
         Base.metadata.drop_all(bind=self.engine)
 
-    def add_entity_data(self):
-        '''Populating the Entity table it also checks if record exists or not to aviod any duplicates'''
-        self.add_abstract_to_database()
-        # Get all abstracts in the database from Abstract table
-        abstracts = self.session.query(Abstract).all()
-        existing_entities = self.session.query(Entity).all()
-        # Check if the number of entries in the Entity table is less than 900
-        if len(existing_entities) >= 800:
-            print("Entities have already been predicted.")
-            return
-        if len(abstracts) > 0:
-            # Loop through each abstract and predict entities
-            for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
-                existing_entities = self.session.query(Entity).filter(Entity.abstract_id == abstract.id).all()
-                if existing_entities:
-                    continue
-                else:
-                    entity_predictor = EntityPrediction(self.session)
-                    entities = entity_predictor.predict_entities(abstract.abstract_text)
-                    entity_predictor.insert_entities(abstract.id, entities)
+    # def add_entity_data(self):
+    #     '''Populating the Entity table it also checks if record exists or not to aviod any duplicates'''
+    #     self.add_abstract_to_database()
+    #     # Get all abstracts in the database from Abstract table
+    #     abstracts = self.session.query(Abstract).all()
+    #     existing_entities = self.session.query(Entity).all()
+    #     # Check if the number of entries in the Entity table is less than 900
+    #     if len(existing_entities) >= 800:
+    #         print("Entities have already been predicted.")
+    #         return
+    #     if len(abstracts) > 0:
+    #         # Loop through each abstract and predict entities
+    #         for abstract in tqdm(abstracts, desc="Predicting entities for abstracts"):
+    #             existing_entities = self.session.query(Entity).filter(Entity.abstract_id == abstract.id).all()
+    #             if existing_entities:
+    #                 continue
+    #             else:
+    #                 entity_predictor = EntityPrediction(self.session)
+    #                 entities = entity_predictor.predict_entities(abstract.abstract_text)
+    #                 entity_predictor.insert_entities(abstract.id, entities)
 
     def add_abstract_to_database(self):
         """First check if files exists in pubmed_dir if not it will download the Abstract in the cache folder
@@ -174,6 +175,7 @@ class Database:
             }
         return entries_dict
 
+
 class Utilapi:
     """For interfacing with the NCBI Entrez API"""
 
@@ -219,3 +221,6 @@ class Utilapi:
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
 
+
+x = Database()
+x.get_abstract_info(36316711)

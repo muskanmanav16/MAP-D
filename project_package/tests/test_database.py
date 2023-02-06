@@ -78,11 +78,13 @@ class TestDatabase:
               'ORGANISM': 'human polyomavirus'},
         }
 
-        # db.add_entity_data.assert_called_once()
-    #
+
     def test_get_entity_dict(self):
 
-        expected_entity_dict = ENTITY_DICT_PATH
+        with open(ENTITY_DICT_PATH, 'r') as file:
+            expected_entity_dict = file.read()
+
+        # expected_entity_dict = ENTITY_DICT_PATH
 
         # Test the get_entity_dict method
         database = Database(db_engine=test_engine)
