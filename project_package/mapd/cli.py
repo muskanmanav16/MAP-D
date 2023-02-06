@@ -4,14 +4,15 @@ import pandas as pd
 from mapd.Database import Database
 from mapd.NER import EntityPrediction
 from mapd.utils import query_database
-from mapd import DB_PATH, PROJECT_DIR
-from os import chdir, path, getcwd
+from mapd import DB_PATH
 from pathlib import Path
+import logging
 
-# # Instantiate Database class, add abstracts from cached/freshly downloaded files if they do not already exist:
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# Instantiate Database class
 db = Database()
-db.add_abstract_to_database()
-
 
 @click.group()
 def main():
@@ -23,7 +24,7 @@ def main():
 def build_db():
     """Builds database and populates it with abstract records using either cached/newly downloaded files."""
     db = Database()
-    db.add_abstract_to_database()
+    db.add_entity_data()
     click.echo("Built database of PubMed abstracts at {}.".format(DB_PATH))
 
 
@@ -32,7 +33,6 @@ def rebuild_db():
     """Rebuilds database from scratch after dropping any existing tables, and adds associated entities to Entity table"""
 
     db.rebuild_database()
-    db.add_abstract_to_database()
     db.add_entity_data()
     click.echo("Rebuilt database of PubMed abstracts from scratch at {}.".format(DB_PATH))
     click.echo("Entity table of database populated with entities for each abstract.")
@@ -120,11 +120,8 @@ def query_db(keyword: str, filepath: str, start_date=None, end_date=None):
 @main.command()
 def serve():
     """Starts web server."""
-    TOP_FOLDER = Path(__file__).parent.parent.parent
-    # run_path = TOP_FOLDER.joinpath("frontend/Frontend_progress/")
-    # app_dir = path.join(getcwd(), "frontend", "Frontend_progress") # navigate to group2 directory first
-    # chdir(run_path)
-    uvicorn.run(".../frontend/Frontend_progress.run:app")
+
+    uvicorn.run("frontend/Frontend_progress/run:app")
 
 
 if __name__ == "__main__":
