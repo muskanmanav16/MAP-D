@@ -20,7 +20,7 @@ TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
 test_engine = create_engine(TEST_CONN_STRING)
 test_session = Session(bind=test_engine)
 from mapd import TEST_PUBMED_DIR
-ENTITY_DICT_PATH = "tests/data/full_data_entities.txt"
+ENTITY_DICT_PATH = "tests/data/test_data_entities.txt"
 
 class TestDatabase:
     """Unit tests for Database class in Database.py"""
@@ -86,7 +86,7 @@ class TestDatabase:
         # expected_entity_dict = ENTITY_DICT_PATH
 
         # Test the get_entity_dict method
-        database = Database()
+        database = Database(db_engine=test_engine)
         entity_dict = database.get_entity_dict()
 
         assert entity_dict == expected_entity_dict
