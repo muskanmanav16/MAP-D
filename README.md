@@ -14,8 +14,6 @@ If you're a student, professor, or researcher, you'll find MAP-D a game-changer 
 - Ideal for students, professors, and researchers alike
 
 Try MAP-D now and take the first step towards a smoother and more efficient research experience!
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
 
 ## Visuals
 
