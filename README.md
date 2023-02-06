@@ -6,7 +6,7 @@
 
 ## Team member contributions:
 
-Task 1, 2, 3&4, testing, CLI, docker etc.
+Task 1, 2, 3&4 (others are graded in common? not sure).
 
 ## Walkthrough of MAP-D web application:
 
