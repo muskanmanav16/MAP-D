@@ -1,5 +1,7 @@
 # Group 2 - Programming Lab 2 Final Project (NLP)
 
+REQUIRED
+A clear and descriptive README.md that details what the package is, what it does, how it can be used, and examples of how to use the CLI
 
 ## MAP-D
 **MAP-D Project:** A search engine based on NER methods.
