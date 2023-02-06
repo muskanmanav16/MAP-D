@@ -21,7 +21,7 @@ TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
 test_engine = create_engine(TEST_CONN_STRING)
 test_session = Session(bind=test_engine)
 
-ENTITY_DICT_PATH = 'project_package/tests/data/test_entity_dict_result.txt'
+ENTITY_DICT_PATH = 'project_package/tests/data/test_data_entities.txt'
 
 
 class TestDatabase:
@@ -78,11 +78,13 @@ class TestDatabase:
               'ORGANISM': 'human polyomavirus'},
         }
 
-        # db.add_entity_data.assert_called_once()
-    #
+
     def test_get_entity_dict(self):
 
-        expected_entity_dict = ENTITY_DICT_PATH
+        with open(ENTITY_DICT_PATH, 'r') as file:
+            expected_entity_dict = file.read()
+
+        # expected_entity_dict = ENTITY_DICT_PATH
 
         # Test the get_entity_dict method
         database = Database(db_engine=test_engine)
