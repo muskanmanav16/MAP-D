@@ -1,31 +1,20 @@
-import json
-import os
-import time
+
 import logging
-import requests
-import xmltodict
 from tqdm import tqdm
-from pathlib import Path
-from typing import Optional, Union
-from sqlalchemy import select, inspect, create_engine, Column, Integer, String, Table, MetaData, ForeignKey, DATE, text, \
-    select, inspect, func
-from sqlalchemy.orm import Session, Query
-from sqlalchemy import join
+from typing import Optional
+from sqlalchemy import select, inspect
+from sqlalchemy.orm import Session
+
 from sqlalchemy_utils import database_exists
 from datetime import datetime
 from Bio import Medline, Entrez
-from os import listdir
-import pandas as pd
-import re
-import sqlite3
-from datetime import date
 
 from time import sleep
 from urllib.error import HTTPError
-from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
+from mapd import engine, PUBMED_DIR
 
 from mapd.models import Base, Abstract, Entity
-from mapd.constant import ABSTRACT, ENTITY, QUERY_STRING
+from mapd.constant import QUERY_STRING
 from mapd.NER import EntityPrediction
 
 Entrez.email = "mapd@gmx.net"
@@ -93,43 +82,42 @@ class Database:
     def add_abstract_to_database(self):
         """First check if files exists in pubmed_dir if not it will download the Abstract in the cache folder
         Also checks the Abstract Table if it filled or not then add the data to the database """
-
-        if any(os.listdir(PUBMED_DIR)):
-            print("Files exist")
+        if len(list(self.PUBMED_DIR.glob("*.xml"))) > 0:
+            print('Abstract Downloaded')
         else:
             Utilapi(QUERY_STRING).search()
-        record = self.session.query(Abstract).first()
-        if record:
-            print("Record exists")
-        else:
-            for file in tqdm(self.PUBMED_DIR.glob("*.xml"), desc="Processing Files"):
-                with open(file, encoding='utf-8') as handle:
-                    records = Medline.parse(handle)
-                    for record in records:
-                        pmid = record['PMID']
-                        title = record['TI']
+        for file in tqdm(self.PUBMED_DIR.glob("*.xml"), desc="Processing Files"):
+            with open(file, encoding='utf-8') as handle:
+                records = Medline.parse(handle)
+                for record in records:
+                    pmid = record['PMID']
+                    title = record['TI']
+                    try:
+                        abstract = record['AB']
+                    except (KeyError, ValueError):
+                        abstract = None
+                    date_str = record['DP']
+                    try:
+                        date = datetime.strptime(date_str, '%Y-%m-%d')
+                    except ValueError:
                         try:
-                            abstract = record['AB']
-                        except (KeyError, ValueError):
-                            abstract = None
-                        date_str = record['DP']
-                        try:
-                            date = datetime.strptime(date_str, '%Y-%m-%d')
+                            date = datetime.strptime(date_str, '%Y %b %d')
                         except ValueError:
                             try:
-                                date = datetime.strptime(date_str, '%Y %b %d')
+                                date = datetime.strptime(date_str, '%Y %B %d')
                             except ValueError:
-                                try:
-                                    date = datetime.strptime(date_str, '%Y %B %d')
-                                except ValueError:
-                                    date = None
-                        if date in [None, ""] or abstract in [None, ""]:
+                                date = None
+                    if date in [None, ""] or abstract in [None, ""]:
+                        continue
+                    else:
+                        abstract_entry = self.session.query(Abstract).filter_by(pubmed_id=pmid).first()
+                        if abstract_entry is not None:
                             continue
                         else:
                             abstract_entry = Abstract(pubmed_id=pmid, Title=title, abstract_text=abstract,
-                                                      date=date)
+                                                  date=date)
                             self.session.add(abstract_entry)
-                    self.session.commit()
+                self.session.commit()
 
     def get_entity_dict(self):
         """Populate the raw_entity_data with the Entity and labels stored in the Entity Table
@@ -185,7 +173,6 @@ class Utilapi:
 
     def search(self):
         """Search pubmed abstract using NCBI Entrez API - esearch"""
-
         try:
             search_info = Entrez.esearch(db="pubmed", term=self.search_query, usehistory='y', retmax=100)
             record = Entrez.read(search_info)
@@ -219,3 +206,7 @@ class Utilapi:
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
 
+#run below command to download the abstract and populate the db
+# if __name__== '__main__':
+#     db=Database()
+#     db.add_entity_data()
