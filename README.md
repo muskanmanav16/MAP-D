@@ -167,7 +167,7 @@ This project is contributed by:
 
 **D**eepika Pradeep [s0deprad@uni-bonn.de]() ; [pradeepd0](https://gitlab.informatik.uni-bonn.de/pradeepd0)
 
-And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-bonn.de/bschultz) for helping us out through out the project.
+And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-bonn.de/bschultz) for helping us through out this project.
 
 ## Project Contributors
 
