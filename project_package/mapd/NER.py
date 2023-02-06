@@ -10,7 +10,6 @@ from typing import Optional, Union
 import en_ner_bionlp13cg_md    #The model we are going to use
 from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 from mapd.models import Base, Abstract, Entity
-import tensorflow as tf
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
