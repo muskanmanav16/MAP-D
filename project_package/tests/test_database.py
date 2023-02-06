@@ -20,7 +20,7 @@ TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
 test_engine = create_engine(TEST_CONN_STRING)
 test_session = Session(bind=test_engine)
 from mapd import TEST_PUBMED_DIR
-ENTITY_DICT_PATH = r"tests/data/full_data_entities.txt"
+ENTITY_DICT_PATH = "tests/data/full_data_entities.txt"
 
 class TestDatabase:
     """Unit tests for Database class in Database.py"""
