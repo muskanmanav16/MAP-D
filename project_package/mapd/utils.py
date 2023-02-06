@@ -13,9 +13,10 @@ import os
 
 TOP_FOLDER = Path(__file__).parent.parent.parent
 DB_PATH= TOP_FOLDER.joinpath("data/gp2_plab2.db")
-CONN_STRING = f"sqlite:///{DB_PATH}"
+# CONN_STRING = f"sqlite:///{DB_PATH}"
+# CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
+CONN_STRING = "sqlite:////app/data/gp2_plab2.db"
 engine = create_engine(CONN_STRING)
-
 
 
 def get_abstract_info(pubmed_id: int):
