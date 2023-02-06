@@ -217,7 +217,7 @@ We use **ScispaCy** model '**_en_ner_bionlp13cg_md_**' to create our search engi
 
 ![](data/scispacy_logo.png)
 
-Citing the paper which uses this project [ScispaCy: Fast and Robust Models for Biomedical Natural Language Processing](https://www.semanticscholar.org/paper/ScispaCy%3A-Fast-and-Robust-Models-for-Biomedical-Neumann-King/de28ec1d7bd38c8fc4e8ac59b6133800818b4e29). Additionally, indicating the version and model of ScispaCy used in the research.
+Citing the paper which uses this project [ScispaCy: Fast and Robust Models for Biomedical Natural Language Processing](https://www.semanticscholar.org/paper/ScispaCy%3A-Fast-and-Robust-Models-for-Biomedical-Neumann-King/de28ec1d7bd38c8fc4e8ac59b6133800818b4e29). 
 
 ```
 @inproceedings{neumann-etal-2019-scispacy,
