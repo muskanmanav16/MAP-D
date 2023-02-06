@@ -14,17 +14,13 @@ from mapd import DATA_DIR, engine, DB_PATH, PUBMED_DIR
 
 query = '("hyaluronan receptors"[MeSH Terms] OR ("hyaluronan"[All Fields] AND "receptors"[All Fields]) OR "hyaluronan receptors"[All Fields] OR "cd44"[All Fields]) AND ((ffrft[Filter]) AND (medline[Filter]) AND (review[Filter]) AND (english[Filter]) AND (2020:2020[pdat]))'
 
-# TEST_DB_PATH = 'project_package/tests/data/Test_DB.db'
-# TEST_FOLDER = Path(__file__).parent
-# TEST_DB_PATH = TEST_FOLDER.joinpath("data/Test_DB.db")
-# TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
-# test_engine = create_engine(TEST_CONN_STRING)
-# test_session = Session(bind=test_engine)
-
-from mapd import TEST_PUBMED_DIR, TEST_DB_PATH, test_engine
-
-ENTITY_DICT_PATH = "C:/Users/deepi/Documents/LSI_bonn/Programming_Lab_2/group2/project_package/tests/data/test_data_entities.txt"
-
+TEST_FOLDER = Path(__file__).parent
+TEST_DB_PATH = TEST_FOLDER.joinpath("data/Test_DB.db")
+TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
+test_engine = create_engine(TEST_CONN_STRING)
+test_session = Session(bind=test_engine)
+from mapd import TEST_PUBMED_DIR
+ENTITY_DICT_PATH = r"tests/data/full_data_entities.txt"
 
 class TestDatabase:
     """Unit tests for Database class in Database.py"""
@@ -47,7 +43,7 @@ class TestDatabase:
         entity_cols = ("id", "entity", "labels", "abstract_id")
         assert all([x in tables for x in ("abstract", "entity")])  # Correct tables
         assert all([x in Abstract.__table__.columns for x in abstract_cols])  # Correct Abstract table columns
-        assert all([x in Entity.__table__.columns for x in entity_cols])  # Correct Entity table columns columns
+        assert all([x in Entity.__table__.columns for x in entity_cols])  # Correct Entity table columns
 
 
         # yield db
@@ -90,7 +86,7 @@ class TestDatabase:
         # expected_entity_dict = ENTITY_DICT_PATH
 
         # Test the get_entity_dict method
-        database = Database(db_engine=test_engine)
+        database = Database()
         entity_dict = database.get_entity_dict()
 
         assert entity_dict == expected_entity_dict
