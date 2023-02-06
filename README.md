@@ -21,9 +21,17 @@ Try MAP-D now and take the first step towards a smoother and more efficient rese
 
 ![CSS Animations and Transitions ↑](/uploads/b35e62291ed8c7845b7514265d8129f6/css_animations_and_transitions.webm)
 
-
+## MAPD Package Installation
+ To install all the requirements and dependencies used in this project run the following command in the project repository.
+```python
+pip install -e project_package/
+```
+All the requirements are stored in [setup.py](https://gitlab.informatik.uni-bonn.de/bschultz/group2/-/blob/main/project_package/setup.py)
 
 ## Installation
+
+Please skip this section if you already setup our **mapd** package in your system without any issue. If there is problem while installing scispacy please follow the following steps.
+
 Installing scispacy requires two steps, installing the library and intalling the models. 
 
 To install the library, run:
@@ -43,7 +51,9 @@ Additionally, scispacy uses modern features of Python and as such is only availa
 
 
 #### Setting up a virtual environment
+Please skip this section if you already setup your virtual environment using our own Build-in package **mapd**.
 
+Athugh There are several optons which can be used to setup the virtual envionment in your system.
 [Conda](https://conda.io/) can be used set up a virtual environment with the
 version of Python required for scispaCy.  If you already have a Python
 environment you want to use, you can skip to the 'installing via pip' section.
@@ -77,6 +87,8 @@ If you are upgrading `scispacy`, you will need to download the models again, to 
 
 ## Available Models
 
+Apart from the model ('**_en_ner_bionlp13cg_md_**') we used there are other models which you can download or install in your system.
+
 To install a model, click on the link below to download the model, and then run 
 
 ```python
@@ -100,7 +112,7 @@ pip install CMD-V(to paste the copied URL)
 | en_ner_bionlp13cg_md |  A spaCy NER model trained on the BIONLP13CG corpus. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz)|
 
 
-## CLI and Containerization
+## Command Requirements
 
 CLI command:
 
@@ -157,7 +169,43 @@ This project is contributed by:
 
 And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-bonn.de/bschultz) for helping us out through out the project.
 
+## Contribution
 
+###### **NLP Tasks:**
+
+- **Task-1 : Create a Corpus (2pts)**
+
+    - _API: Parinishtha, Muskan_
+    
+    - _Build Database: Muskan_
+
+- **Task-2 : Tag the Abstracts using NER (2pts)**
+
+    - _Muskan_
+
+- **Task-3: Develop the Search Functionality (2pts)**
+  
+  - _Function and GUI connection: Muskan,Astha_
+
+- **Task-4: GUI (3pts)**
+  
+  - _Astha_ 
+
+- **Task-5: Containerize the Application (1pts)**
+  - _Astha, Muskan_
+
+###### **Package:**
+
+- _setup.py : Muskan_
+- _Rest: All_
+
+###### **Unit Test:** 
+- _Parinishtha_
+
+###### **CLI:**
+- _Deepika_
+
+Compilation: Astha, Muskan
 ## Citing
 
 We use **ScispaCy** model '**_en_ner_bionlp13cg_md_**' to create our search engine MAP-D which predict Named Entity from Pubmed Abstracts.
