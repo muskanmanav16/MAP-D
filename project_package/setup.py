@@ -5,8 +5,6 @@
 from setuptools import setup, find_packages
 
 requirements = [
-    'pip==22.3.1',
-    'conda==4.12.0',
     'numpy',
     'Click',
     'networkx',
@@ -29,15 +27,14 @@ requirements = [
     'spacy>=3.4.0,<3.5.0',
     'scispacy==0.5.1',
     'en-ner-bionlp13cg-md @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz',
-    'nmslib == 2.1.1',
-    'tensorflow',
+    'nmslib',
     'nltk',
     'pathlib',
-    'ruamel-yaml-conda==0.15.100',
     'ncbiutils',
     'pytest',
-    'bio==1.5.3',
-    'biopython==1.80',
+    'bio',
+    'biopython',
+    'flask_paginate',
 
 
 

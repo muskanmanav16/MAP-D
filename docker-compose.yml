@@ -12,6 +12,9 @@ services:
       - FLASK_PORT=5001
     ports:
       - "5000:5001"
+    volumes:
+      - ./data:/app/data
+    command: "sqlite3 /app/data/gp2_plab2.db"
 
 
 
