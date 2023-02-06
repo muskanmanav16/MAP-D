@@ -8,14 +8,16 @@ from typing import List
 from mapd.models import Base, Abstract,Entity
 from sqlalchemy import select, inspect, create_engine,distinct
 from sqlalchemy.orm import Session
+# from mapd import CONN_STRING
 import re
 import os
-
-TOP_FOLDER = Path(__file__).parent.parent.parent
-DB_PATH= TOP_FOLDER.joinpath("data/gp2_plab2.db")
-CONN_STRING = f"sqlite:///{DB_PATH}"
-engine = create_engine(CONN_STRING)
-
+#
+# TOP_FOLDER = Path(__file__).parent.parent.parent
+# DB_PATH= TOP_FOLDER.joinpath("data/gp2_plab2.db")
+# CONN_STRING = f"sqlite:///{DB_PATH}"
+# CONN_STRING = "mysql+pymysql://root:mapdrocks@db:3306/mapddb"
+#CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
+CONN_STRING = "sqlite:////app/data/gp2_plab2.db"
 
 
 def get_abstract_info(pubmed_id: int):
