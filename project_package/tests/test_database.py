@@ -21,6 +21,9 @@ TEST_CONN_STRING = f"sqlite:///{TEST_DB_PATH}"
 test_engine = create_engine(TEST_CONN_STRING)
 test_session = Session(bind=test_engine)
 
+ENTITY_DICT_PATH = 'project_package/tests/data/test_entity_dict_result.txt'
+
+
 class TestDatabase:
     """Unit tests for Database class in Database.py"""
 
@@ -76,13 +79,21 @@ class TestDatabase:
         }
 
         # db.add_entity_data.assert_called_once()
+    #
+    def test_get_entity_dict(self):
 
+        expected_entity_dict = ENTITY_DICT_PATH
 
+        # Test the get_entity_dict method
+        database = Database(db_engine=test_engine)
+        entity_dict = database.get_entity_dict()
 
+        assert entity_dict == expected_entity_dict
 
 
 class TestApi(unittest.TestCase):
     def test_entrez_search_query(self):
+        """Test to check if the NCBI EUtils esearch query works as expected"""
 
         # Test valid input
         result = Utilapi(search_query=query).search()
@@ -101,6 +112,8 @@ class TestApi(unittest.TestCase):
         assert (any(Path(PUBMED_DIR).iterdir())) is True
 
     def test_entrez_fetch_query(self):
+        """Test to check if the NCBI EUtils efetch query works as expected"""
+
         #List of PubMed identifiers for those records we wish to retrieve
         uids = ['16186693']
 
