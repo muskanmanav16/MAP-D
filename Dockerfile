@@ -22,7 +22,7 @@ COPY frontend/Frontend_progress/run.py /app/
 COPY frontend/Frontend_progress/templates /app/templates/
 COPY frontend/Frontend_progress/static /app/static/
 
-# setup???
+# setup
 COPY project_package/setup.py /app/
 COPY project_package/mapd /app/mapd
 
@@ -38,7 +38,7 @@ WORKDIR /app
 
 # Install required packages
 RUN pip install -e .
-# scispacy model link
+
 
 
 ENTRYPOINT ["python", "run.py"]
