@@ -112,7 +112,7 @@ pip install CMD-V(to paste the copied URL)
 | en_ner_bionlp13cg_md |  A spaCy NER model trained on the BIONLP13CG corpus. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz)|
 
 
-## Command Requirements
+## Command Line Interfaces & Containerization
 
 CLI command:
 
@@ -169,7 +169,7 @@ This project is contributed by:
 
 And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-bonn.de/bschultz) for helping us out through out the project.
 
-## Contribution
+## Project Contributors
 
 ###### **NLP Tasks:**
 
@@ -205,7 +205,12 @@ And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-b
 ###### **CLI:**
 - _Deepika_
 
-Compilation: Astha, Muskan
+###### **Compilation:** 
+
+- _Astha, Muskan_
+
+###### **Testing:** 
+- _All_
 ## Citing
 
 We use **ScispaCy** model '**_en_ner_bionlp13cg_md_**' to create our search engine MAP-D which predict Named Entity from Pubmed Abstracts.
