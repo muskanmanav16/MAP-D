@@ -66,5 +66,3 @@ def query_database(keyword: str, start_date=None, end_date=None):
             lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
     return df.to_dict(orient='records')
 
-if __name__ == '__main__':
-    print(query_database(keyword="amino acid",start_date='2022-01-01',end_date='2022-12-31'))
