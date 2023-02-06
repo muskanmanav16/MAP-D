@@ -35,10 +35,11 @@ logging.basicConfig(filename=LOG_FILE_PATH,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # SQLite init
-CONN_STRING = f"sqlite:///{DB_PATH}"
+##CONN_STRING = f"sqlite:///{DB_PATH}"
 # engine_str = 'mysql+mysqlconnector://{}:{}@{}/{}'.format(login, passwd, server, db)
 # mysql+{python driver}://{username}:{password}@{server}:{port}/{database}
 ############## uncomment the next line for containerization- 
-# CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
+CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
   
 engine = create_engine(CONN_STRING)
+

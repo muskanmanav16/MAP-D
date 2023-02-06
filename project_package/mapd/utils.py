@@ -21,9 +21,10 @@ DB_PATH= TOP_FOLDER.joinpath("data/gp2_plab2.db")
 
 # CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
 # engine = create_engine(CONN_STRING)
+CONN_STRING = None
 
-if 'DATABASE_URL' in os.environ:
-    CONN_STRING = os.environ['DATABASE_URL']
+if 'DOCKER_CONTAINER' in os.environ:
+    CONN_STRING = "sqlite:////app/data/gp2_plab2.db"
 else:
     CONN_STRING = f"sqlite:///{DB_PATH}"
 
