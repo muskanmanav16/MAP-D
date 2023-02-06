@@ -13,28 +13,13 @@ import os
 
 TOP_FOLDER = Path(__file__).parent.parent.parent
 DB_PATH= TOP_FOLDER.joinpath("data/gp2_plab2.db")
-# CONN_STRING = f"sqlite:///{DB_PATH}"
 CONN_STRING = None
-
-# CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
-# #CONN_STRING = "sqlite:////app/data/gp2_plab2.db"
-# engine = create_engine(CONN_STRING)
-
-# CONN_STRING = 'mysql+pymysql://root:mapdrocks@db:3306/mapddb'
-# engine = create_engine(CONN_STRING)
-
-# if 'DATABASE_URL' in os.environ:
-#     CONN_STRING = os.environ['DATABASE_URL']
-# else:
-#     CONN_STRING = f"sqlite:///{DB_PATH}"
-
 if 'DOCKER_CONTAINER' in os.environ:
     CONN_STRING = "sqlite:////app/data/gp2_plab2.db"
     print(CONN_STRING)
 else:
     CONN_STRING = f"sqlite:///{DB_PATH}"
     print(CONN_STRING)
-
 
 def get_abstract_info(pubmed_id: int):
     engine = create_engine(CONN_STRING)
@@ -81,5 +66,3 @@ def query_database(keyword: str, start_date=None, end_date=None):
             lambda x: re.sub(f'({keyword})', r'<mark>\1</mark>', x, flags=re.IGNORECASE))
     return df.to_dict(orient='records')
 
-# if __name__ == '__main__':
-#     print(query_database(keyword="amino acid",start_date='2022-01-01',end_date='2022-12-31'))

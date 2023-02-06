@@ -1,8 +1,7 @@
 FROM python:3.9
 
 
-# All members of group should be in the image metadata using LABEL
-# metadata
+# metadata on all group members and mapd
 LABEL maintainer="MAPD <mapd@gmx.net>"
 LABEL contributors="Astha Anand <s0asanan@uni-bonn.de>, Deepika Pradeep <s0deprad@uni-bonn.de>, Muskan Manav <s0mumana@uni-bonn.de>, Parinishtha Bhalla <s0pabhal@uni-bonn.de>"
 LABEL project-name="Natural Language Processing"
@@ -22,7 +21,7 @@ COPY frontend/Frontend_progress/run.py /app/
 COPY frontend/Frontend_progress/templates /app/templates/
 COPY frontend/Frontend_progress/static /app/static/
 
-# setup???
+# setup
 COPY project_package/setup.py /app/
 COPY project_package/mapd /app/mapd
 
@@ -38,7 +37,7 @@ WORKDIR /app
 
 # Install required packages
 RUN pip install -e .
-# scispacy model link
+
 
 
 ENTRYPOINT ["python", "run.py"]
