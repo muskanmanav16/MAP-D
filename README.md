@@ -16,6 +16,10 @@ Task 1, 2, 3&4, testing, CLI, docker etc.
 
 ## How to use MAP-D
 
+#### Docker
+
+Do we need to explain scispacy installation etc. if Docker is already containerizing everything
+
 #### scispacy Installation
 Installing scispacy requires two steps: installing the library and intalling the models. To install the library, run:
 ```bash
@@ -90,11 +94,17 @@ pip install CMD-V(to paste the copied URL)
 | en_ner_bc5cdr_md |  A spaCy NER model trained on the BC5CDR corpus. | [Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz)|
 | en_ner_bionlp13cg_md |  A spaCy NER model trained on the BIONLP13CG corpus. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz)|
 
+#### Using the Command Line:
+
+Click commands query-db etc. use help for more
+
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+
+MAP-D can be used for:
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+
+email address on website
 
 ## Roadmap
 If you have ideas for releases in the future, it is a good idea to list them in the README.
