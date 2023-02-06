@@ -1,0 +1,86 @@
+{'Merkel cell polyomavirus': 'CELL', 'human polyomavirus': 'ORGANISM', 'human cancer': 'ORGANISM', 'MCPyV': 'ORGANISM', 'skin malignancy Merkel cell car
+cinoma': 'CANCER', 'MCPyV+ MCC tumors': 'CANCER', 'neoplasia': 'CANCER', 'MCPyV+': 'CANCER', 'Cancer': 'CANCER', 'patients': 'ORGANISM', 'cancer': 'CANC
+ER', 'cancerous': 'CELL', 'non-cancerous cells': 'CELL', 'solid': 'CELL', 'solid biopsy': 'CANCER', 'tumor DNA': 'MULTI_TISSUE_STRUCTURE', 'glycoprotein
+s': 'GENE_OR_GENE_PRODUCT', 'tissues': 'TISSUE', 'serum': 'ORGANISM_SUBSTANCE', 'Food': 'ORGANISM_SUBDIVISION', 'serum phosphoproteins': 'ORGANISM_SUBST
+ANCE', 'cancers': 'CANCER', 'metal oxide': 'SIMPLE_CHEMICAL', 'samples': 'CANCER', 'cancer patients': 'CANCER', 'Integrins': 'GENE_OR_GENE_PRODUCT', 'ce
+ll': 'CELL', 'squamous-cell carcinoma': 'CANCER', 'alphav': 'GENE_OR_GENE_PRODUCT', 'patient': 'ORGANISM', 'integrin alphaVbeta6': 'GENE_OR_GENE_PRODUCT
+', 'alphaVbeta6': 'GENE_OR_GENE_PRODUCT', 'epithelial-mesenchymal': 'CELL', 'transforming growth factor beta TGF-beta': 'GENE_OR_GENE_PRODUCT', 'alphavb
+eta6': 'GENE_OR_GENE_PRODUCT', 'Hepatocellular carcinoma': 'CANCER', 'HCC': 'CANCER', 'liver cancer': 'CANCER', 'cancer stem cells': 'CELL', 'CSCs': 'CE
+LL', 'cancer cells': 'CELL', 'stem cell': 'CELL', 'tumors': 'CANCER', 'tumor': 'CANCER', 'anti-cancer': 'CANCER', 'stemness': 'CELL', 'hepatic CSCs': 'C
+ANCER', 'cellular': 'CELL', 'stromal cells': 'CELL', 'immune cells': 'CELL', 'HCC patients': 'CANCER', 'lysyl oxidase': 'GENE_OR_GENE_PRODUCT', 'LOX': '
+GENE_OR_GENE_PRODUCT', 'LOX-like proteins 1-4': 'GENE_OR_GENE_PRODUCT', 'LOXL1-4': 'GENE_OR_GENE_PRODUCT', 'collagen': 'GENE_OR_GENE_PRODUCT', 'elastin'
+: 'GENE_OR_GENE_PRODUCT', 'extracellular matrix': 'CELLULAR_COMPONENT', 'ECM': 'CELLULAR_COMPONENT', 'connective tissue': 'TISSUE', 'embryonic': 'DEVELO
+PING_ANATOMICAL_STRUCTURE', 'wound': 'PATHOLOGICAL_FORMATION', 'Ovarian cancer': 'CANCER', 'gynecological malignancies': 'CANCER', 'ovarian cancer': 'CA
+NCER', 'tumor infiltrating lymphocytes': 'CELL', 'TILs': 'CELL', 'immune checkpoint': 'CELL', 'antitumor': 'CANCER', 'RCSB PDB': 'GENE_OR_GENE_PRODUCT',
+ 'macromolecular': 'CELLULAR_COMPONENT', 'nuclear': 'CELLULAR_COMPONENT', 'portal': 'MULTI_TISSUE_STRUCTURE', 'lens': 'TISSUE', 'Interleukin-33': 'GENE_
+OR_GENE_PRODUCT', 'IL-33': 'GENE_OR_GENE_PRODUCT', 'IL-1 cytokine': 'GENE_OR_GENE_PRODUCT', 'non-immune cells': 'CELL', 'alarmin': 'GENE_OR_GENE_PRODUCT
+', 'ST2': 'CELL', 'cells': 'CELL', 'IL-33/sST2': 'GENE_OR_GENE_PRODUCT', 'organ': 'ORGAN', 'dendritic cells': 'CELL', 'metastatic neoplasia': 'CANCER', 
+'tumor-infiltrating DCs': 'CANCER', 'immune cell': 'CELL', 'DC': 'CELL', 'lung tumors': 'CANCER', 'myeloid cells': 'CELL', 'DCs': 'CELL', 'tumor network
+s': 'MULTI_TISSUE_STRUCTURE', 'liver': 'ORGAN', 'small tumors': 'CANCER', 'alpha fetoprotein': 'GENE_OR_GENE_PRODUCT', 'AFP': 'GENE_OR_GENE_PRODUCT', 'H
+CC organ': 'CANCER', 'Coronavirus Disease 2019': 'ORGANISM', 'COVID-19': 'CELLULAR_COMPONENT', 'subvariants': 'CANCER', 'estrogen': 'SIMPLE_CHEMICAL', '
+breast cancer': 'CANCER', 'post-menopausal': 'ORGAN', 'endocrine': 'CELL', 'HR+ breast cancer': 'CANCER', 'FSH': 'GENE_OR_GENE_PRODUCT', 'follicle': 'MU
+LTI_TISSUE_STRUCTURE', 'heart': 'ORGAN', 'kidney': 'ORGAN', 'embryo': 'DEVELOPING_ANATOMICAL_STRUCTURE', 'bone': 'TISSUE', 'ovary': 'ORGAN', 'peripheral
+': 'TISSUE', 'ovaries': 'ORGAN', 'Pancreatic ductal adenocarcinoma': 'CANCER', 'PDAC': 'CANCER', 'Cancer-derived small extracellular vesicles': 'TISSUE'
+, 'lipids': 'SIMPLE_CHEMICAL', 'cancer-derived sEVs': 'CANCER', 'cancer-derived': 'CANCER', 'Janus kinase (JAK)-signal transducer': 'GENE_OR_GENE_PRODUC
+T', 'STAT': 'GENE_OR_GENE_PRODUCT', 'extracellular': 'IMMATERIAL_ANATOMICAL_ENTITY', 'interleukins': 'GENE_OR_GENE_PRODUCT', 'human': 'ORGANISM', 'TNF':
+ 'GENE_OR_GENE_PRODUCT', 'Toll-like receptor': 'GENE_OR_GENE_PRODUCT', 'ZBP1': 'GENE_OR_GENE_PRODUCT', 'receptor-interacting serine/threonine protein ki
+nase 3': 'GENE_OR_GENE_PRODUCT', 'RIPK3': 'GENE_OR_GENE_PRODUCT', 'TLR3/4': 'GENE_OR_GENE_PRODUCT', 'lung': 'ORGAN', 'lung tissue': 'TISSUE', 'airways':
+ 'MULTI_TISSUE_STRUCTURE', 'alveoli': 'TISSUE', 'epithelial stem cells': 'CELL', 'lungs': 'ORGAN', 'stem cells': 'CELL', 'Cervical cancer': 'CANCER', 'c
+ervical cancer': 'CANCER', 'cisplatin': 'SIMPLE_CHEMICAL', 'pelvic': 'ORGAN', 'women': 'ORGANISM', 'water': 'SIMPLE_CHEMICAL', 'Blood glucose': 'ORGANIS
+M_SUBSTANCE', 'oxygen': 'SIMPLE_CHEMICAL', 'PA': 'GENE_OR_GENE_PRODUCT', 'luminogens': 'CELL', 'NIR-II luminogens': 'SIMPLE_CHEMICAL', 'Cardiotonic ster
+oids': 'SIMPLE_CHEMICAL', 'Egyptians': 'SIMPLE_CHEMICAL', 'blood': 'ORGANISM_SUBSTANCE', 'toads': 'CELL', 'cardiotonic steroids reveal': 'SIMPLE_CHEMICA
+L', 'bufadienolides': 'ORGANISM_SUBDIVISION', 'nucleus': 'CELLULAR_COMPONENT', 'lactone': 'SIMPLE_CHEMICAL', 'humans': 'ORGANISM', 'cardiotonic steroids
+': 'SIMPLE_CHEMICAL', 'cardiotonic': 'SIMPLE_CHEMICAL', 'anticancer': 'CANCER', 'toad venom': 'GENE_OR_GENE_PRODUCT', 'marinobufagenin': 'SIMPLE_CHEMICA
+L', 'resibufogenin': 'SIMPLE_CHEMICAL', 'steroids': 'SIMPLE_CHEMICAL', 'myeloma': 'CANCER', 'tumor plasma cells': 'CELL', 'CTPCs': 'CELL', 'plasma cell'
+: 'CELL', 'extra-medullary MM': 'CANCER', 'CTPC': 'SIMPLE_CHEMICAL', 'peripheral blood samples': 'ORGANISM_SUBSTANCE', 'membrane': 'CELLULAR_COMPONENT',
+ 'alpha-catulin': 'GENE_OR_GENE_PRODUCT', 'vinculin': 'GENE_OR_GENE_PRODUCT', 'alpha-catenins': 'GENE_OR_GENE_PRODUCT', 'actin-filament': 'CELLULAR_COMP
+ONENT', 'cell-cell': 'CELL', 'cell-substrate': 'GENE_OR_GENE_PRODUCT', 'tissue': 'TISSUE', 'Head and neck cancer': 'CANCER', 'Caspase': 'GENE_OR_GENE_PR
+ODUCT', 'caspase': 'GENE_OR_GENE_PRODUCT', 'Cleaved Caspase 3': 'GENE_OR_GENE_PRODUCT', 'oral': 'ORGANISM_SUBDIVISION', 'head and neck cancer': 'CANCER'
+, 'HNC': 'CANCER', 'Caspase 3': 'GENE_OR_GENE_PRODUCT', 'HR': 'GENE_OR_GENE_PRODUCT', 'Caspase 3 IHC': 'GENE_OR_GENE_PRODUCT', 'HNC patients': 'CANCER',
+ 'cadmium': 'SIMPLE_CHEMICAL', 'chromium': 'SIMPLE_CHEMICAL', 'RNA molecules inside': 'GENE_OR_GENE_PRODUCT', 'Reactive oxygen species': 'SIMPLE_CHEMICA
+L', 'ROS': 'SIMPLE_CHEMICAL', 'Quercetin': 'SIMPLE_CHEMICAL', 'bioflavonoid': 'SIMPLE_CHEMICAL', 'solid tumors': 'CANCER', 'quercetin': 'SIMPLE_CHEMICAL
+', 'flavonoids': 'SIMPLE_CHEMICAL', 'malignant': 'CANCER', 'MAPK/ERK1/2': 'GENE_OR_GENE_PRODUCT', 'p53': 'GENE_OR_GENE_PRODUCT', 'JAK/STAT': 'GENE_OR_GE
+NE_PRODUCT', 'TRAIL': 'GENE_OR_GENE_PRODUCT', 'RAGE/PI3K/AKT/mTOR': 'CANCER', 'HMGB1': 'GENE_OR_GENE_PRODUCT', 'NF-kappaB': 'GENE_OR_GENE_PRODUCT', 'can
+cer cell': 'CELL', 'long-searched cancer': 'CANCER', 'LRRK2': 'GENE_OR_GENE_PRODUCT', 'Parkinson': 'PATHOLOGICAL_FORMATION', 'pancreatic malignancy': 'C
+ANCER', 'pancreatic cancer': 'CANCER', 'pancreatic': 'ORGAN', 'adipocytes': 'CELL', 'mouse': 'ORGANISM', 'human PDAC cell lines': 'ORGANISM', 'organoids
+': 'CELL', 'PCAC': 'SIMPLE_CHEMICAL', 'xenograft': 'CANCER', 'Cellular': 'CELL', 'DNA': 'CELLULAR_COMPONENT', 'single-cell': 'CELL', 'clonal': 'CELL', '
+organs': 'ORGAN', 'blood cell': 'CELL', 'brain tumours': 'CANCER', 'tumour': 'CANCER', 'tumours': 'CANCER', 'children': 'ORGANISM', 'low-grade gliomas':
+ 'CANCER', 'MAPK': 'GENE_OR_GENE_PRODUCT', 'high-grade gliomas': 'CANCER', 'infant medulloblastoma': 'CANCER', 'teratoid rhabdoid tumours': 'CANCER', 'e
+mbryonal tumours': 'CANCER', 'ependymoma': 'CELL', 'choroid plexus tumours': 'TISSUE', 'Haematopoietic stem cell': 'CELL', 'HSC': 'CELL', 'Self-renewal'
+: 'CELL', 'HSCs': 'CELL', 'foetal liver': 'ORGAN', 'bone marrow': 'MULTI_TISSUE_STRUCTURE', 'haematological malignancies': 'CANCER', 'Phosphoglycerate m
+utase 1': 'GENE_OR_GENE_PRODUCT', 'PGAM1': 'GENE_OR_GENE_PRODUCT', '2-phosphoglycerate': 'GENE_OR_GENE_PRODUCT', '3-phosphoglycerate': 'SIMPLE_CHEMICAL'
+, 'adenosine': 'SIMPLE_CHEMICAL', 'Breast cancer': 'CANCER', 'Triple-negative breast cancer': 'CANCER', 'TNBC': 'CANCER', 'breast tumor': 'CANCER', 'Myr
+icetin': 'SIMPLE_CHEMICAL', 'TNBC cells': 'CELL', 'mitogen-activated protein kinase (': 'GENE_OR_GENE_PRODUCT', 'phosphoinositide 3-kinase (PI3K)/Protei
+n kinase B': 'GENE_OR_GENE_PRODUCT', 'AKT': 'GENE_OR_GENE_PRODUCT', 'PI3K/AKT/mTOR': 'GENE_OR_GENE_PRODUCT', 'IkappaB/NF-kappaB': 'GENE_OR_GENE_PRODUCT'
+, 'Hippo': 'GENE_OR_GENE_PRODUCT', 'STAT3': 'GENE_OR_GENE_PRODUCT', 'GSK-3beta': 'GENE_OR_GENE_PRODUCT', 'Nrf2/HO-1': 'GENE_OR_GENE_PRODUCT', 'TLR': 'GE
+NE_OR_GENE_PRODUCT', 'eNOS': 'GENE_OR_GENE_PRODUCT', 'NO': 'GENE_OR_GENE_PRODUCT', 'AChE.': 'GENE_OR_GENE_PRODUCT', 'tumor cells': 'CELL', 'tumor cell':
+ 'CELL', 'T cells': 'CELL', 'T cell': 'CELL', 'malignancies': 'CANCER', 'tumor-infiltrating immune cells': 'CELL', ') T cells': 'CELL', 'ten-eleven': 'G
+ENE_OR_GENE_PRODUCT', 'TETs': 'CANCER', 'TET1': 'GENE_OR_GENE_PRODUCT', 'TET2': 'GENE_OR_GENE_PRODUCT', 'TET3': 'GENE_OR_GENE_PRODUCT', 'hematopoietic t
+issues': 'TISSUE', 'hematopoietic malignancies': 'CANCER', 'lineage': 'CELL', 'hematopoietic stem/progenitor cells': 'CELL', 'HSPCs': 'CELL', 'lung canc
+er': 'CANCER', 'polyphenol': 'SIMPLE_CHEMICAL', 'pistachios': 'SIMPLE_CHEMICAL', 'bilberries': 'ORGANISM_SUBSTANCE', 'blueberries': 'CELL', 'cardiovascu
+lar': 'MULTI_TISSUE_STRUCTURE', 'RES': 'GENE_OR_GENE_PRODUCT', 'docetaxel': 'SIMPLE_CHEMICAL', 'paclitaxel': 'SIMPLE_CHEMICAL', 'doxorubicin': 'SIMPLE_C
+HEMICAL', 'BC cells': 'CELL', 'Pancreatic cancer': 'CANCER', 'metastatic pancreatic cancer': 'CANCER', 'PARP': 'GENE_OR_GENE_PRODUCT', 'immune checkpoin
+t-': 'CELL', 'granulomas': 'CANCER', 'macrophages': 'CELL', 'necrotic cell': 'CELL', 'PCD': 'CANCER', 'host cell': 'CELL', 'grafts': 'TISSUE', 'vasculat
+ure': 'MULTI_TISSUE_STRUCTURE', 'graft': 'TISSUE', 'regenerating tissue': 'TISSUE', 'microvascular': 'TISSUE', 'vascular': 'MULTI_TISSUE_STRUCTURE', 'VM
+E': 'SIMPLE_CHEMICAL', 'TE': 'GENE_OR_GENE_PRODUCT', 'craniofacial TE': 'CANCER', 'craniofacial bone': 'TISSUE', 'metastatic cancer': 'CANCER', 'extrace
+llular vesicles': 'CELLULAR_COMPONENT', 'EVs': 'SIMPLE_CHEMICAL', 'Exosomes': 'CELL', 'intracellular': 'IMMATERIAL_ANATOMICAL_ENTITY', 'nuclei': 'CELLUL
+AR_COMPONENT', 'cargo': 'CELLULAR_COMPONENT', 'body': 'TISSUE', 'exosomes': 'CELL', 'host cells': 'CELL', 'Immune cells': 'CELL', 'Toll-like receptor/NF
+-kappaB': 'GENE_OR_GENE_PRODUCT', 'Patient': 'ORGANISM', 'organoid': 'TISSUE', 'colorectal cancer': 'CANCER', 'ERalpha': 'GENE_OR_GENE_PRODUCT', 'breast
+ cancers': 'CANCER', 'Estrogen Receptor Degraders': 'GENE_OR_GENE_PRODUCT', 'SERDs': 'GENE_OR_GENE_PRODUCT', 'metastatic breast cancer patients': 'CANCE
+R', 'SERD': 'SIMPLE_CHEMICAL', 'Esophageal squamous cell carcinoma': 'CANCER', 'ESCC': 'CANCER', 'human malignancies': 'ORGANISM', 'ESCC patients': 'CAN
+CER', 'fibroblasts': 'CELL', 'CAFs': 'CELL', 'epithelial': 'TISSUE', 'chemo-': 'CELL', 'ESCC cells': 'CELL', 'Prokineticin': 'GENE_OR_GENE_PRODUCT', 'G-
+protein-coupled receptors': 'GENE_OR_GENE_PRODUCT', 'prokineticin receptor 1': 'GENE_OR_GENE_PRODUCT', 'prokineticin 2': 'GENE_OR_GENE_PRODUCT', 'endoth
+elial cells': 'CELL', 'ULK1': 'GENE_OR_GENE_PRODUCT', 'Soft tissue sarcomas': 'TISSUE', 'STS': 'CELL', 'mesenchymal tumors': 'CANCER', 'unresectable': '
+CANCER', 'serine/threonine': 'AMINO_ACID', 'EGFRs': 'GENE_OR_GENE_PRODUCT', 'PI3K': 'GENE_OR_GENE_PRODUCT', 'protein kinase B': 'GENE_OR_GENE_PRODUCT', 
+'STS tumor': 'CANCER', 'sarcoma': 'CANCER', 'aqueous': 'ORGANISM_SUBSTANCE', 'bowel': 'ORGAN', 'intestinal tissues': 'TISSUE', 'colon cancer': 'CANCER',
+ 'Triclosan': 'SIMPLE_CHEMICAL', 'colon': 'CANCER', 'mice': 'ORGANISM', 'gut': 'ORGANISM_SUBDIVISION', 'colonic': 'ORGAN', 'beta-glucuronidase': 'GENE_O
+R_GENE_PRODUCT', 'TCS': 'TISSUE', 'Epstein-Barr virus': 'ORGANISM', 'EBV': 'ORGANISM', 'human tumor': 'ORGANISM', 'virus-carrying tumor cells': 'CELL', 
+'B cells': 'CELL', 'CD8': 'GENE_OR_GENE_PRODUCT', 'CD4': 'GENE_OR_GENE_PRODUCT', 'cellular antigens': 'CELL', 'tumor-associated antigens': 'GENE_OR_GENE
+_PRODUCT', 'immune system controls EBV': 'TISSUE', 'EBV-unrelated cancers': 'CANCER', 'TAAs': 'CELL', 'class 1 cell-surface receptor': 'GENE_OR_GENE_PRO
+DUCT', 'receptor tyrosine kinase-like orphan receptor 1': 'GENE_OR_GENE_PRODUCT', 'ROR1': 'GENE_OR_GENE_PRODUCT', 'lymphocytic leukemia': 'CANCER', 'CLL
+': 'CANCER', 'leukemia cells': 'CELL', 'noncancer cells': 'CELL', 'ROR1-expressing malignancies': 'CANCER', 'myosin II': 'GENE_OR_GENE_PRODUCT', 'alpha-
+actinins': 'GENE_OR_GENE_PRODUCT', 'filamins': 'GENE_OR_GENE_PRODUCT', 'actin': 'GENE_OR_GENE_PRODUCT', 'T-cell': 'CELL', 'PD-1': 'GENE_OR_GENE_PRODUCT'
+, 'CD4+': 'GENE_OR_GENE_PRODUCT', 'Treg cells': 'CELL', 'CD4+ T': 'GENE_OR_GENE_PRODUCT', 'anti-tumor': 'CANCER', 'brain tumor': 'CANCER', 'nonneoplasti
+c cells': 'CELL', 'monocytes': 'CELL', 'microglia': 'CELL', 'myeloid-derived': 'CELL', 'natural killer cells': 'CELL', 'T lymphocytes': 'CELL', 'nonneop
+lastic cellular': 'CELL', 'astrocytomas': 'CANCER', 'neoplastic cells': 'CELL', 'brain cancer': 'CANCER', 'glioma': 'CANCER', 'high-grade glioma': 'CANC
+ER', 'Lung epithelium': 'TISSUE', 'inner surface': 'TISSUE', 'epithelial cells': 'CELL', 'regeneration-associated cell': 'CELL'}
