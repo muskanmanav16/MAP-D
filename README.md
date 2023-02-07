@@ -1,80 +1,45 @@
-# Group2
+# MAP-D: Next-Generation Search Engine for Academics and Researchers
 
 
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.informatik.uni-bonn.de/bschultz/group2.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.informatik.uni-bonn.de/bschultz/group2/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-**MAP-D Project:** A search engine based on NER methods.
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+MAP-D is an innovative search engine designed to make the process of finding relevant biomedical papers easier and more efficient. 
+
+If you're a student, professor, or researcher, you'll find MAP-D a game-changer in your research process. Say goodbye to the frustration of traditional search engines and try MAP-D today!
+
+### Features:
+- Utilizes NER technology to categorize and index biomedical papers
+- Delivers relevant search results from a large corpus
+- Ideal for students, professors, and researchers alike
+
+Try MAP-D now and take the first step towards a smoother and more efficient research experience!
 
 ## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-
+#### CSS Animations and Transitions
 
 ![CSS Animations and Transitions ↑](/uploads/b35e62291ed8c7845b7514265d8129f6/css_animations_and_transitions.webm)
 
+## MAPD Package Installation
+ To install all the requirements and dependencies used in this project run the following command in the project repository.
+```python
+pip install -e project_package/
+```
+All the requirements are stored in [setup.py](https://gitlab.informatik.uni-bonn.de/bschultz/group2/-/blob/main/project_package/setup.py)
 
 ## Installation
-Installing scispacy requires two steps: installing the library and intalling the models. To install the library, run:
+
+Please skip this section if you already setup our **mapd** package in your system without any issue. If there is problem while installing scispacy please follow the following steps.
+
+Installing scispacy requires two steps, installing the library and intalling the models. 
+
+To install the library, run:
 ```bash
 pip install scispacy
 ```
 
-to install a model (see our full selection of available models below), run a command like the following:
+To install a model (see our full selection of available models below), run a command like the following:
 
 ```bash
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_sm-0.5.1.tar.gz
@@ -85,9 +50,10 @@ Take a look below in the "Setting up a virtual environment" section if you need 
 Additionally, scispacy uses modern features of Python and as such is only available for **Python 3.6 or greater**.
 
 
-
 #### Setting up a virtual environment
+Please skip this section if you already setup your virtual environment using our own Build-in package **mapd**.
 
+Although There are several optons which can be used to setup the virtual envionment in your system.
 [Conda](https://conda.io/) can be used set up a virtual environment with the
 version of Python required for scispaCy.  If you already have a Python
 environment you want to use, you can skip to the 'installing via pip' section.
@@ -121,6 +87,8 @@ If you are upgrading `scispacy`, you will need to download the models again, to 
 
 ## Available Models
 
+Apart from the model ('**_en_ner_bionlp13cg_md_**') we used there are other models which you can download or install in your system.
+
 To install a model, click on the link below to download the model, and then run 
 
 ```python
@@ -143,21 +111,57 @@ pip install CMD-V(to paste the copied URL)
 | en_ner_bc5cdr_md |  A spaCy NER model trained on the BC5CDR corpus. | [Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz)|
 | en_ner_bionlp13cg_md |  A spaCy NER model trained on the BIONLP13CG corpus. |[Download](https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz)|
 
+
+## Command Line Interfaces & Containerization
+
+CLI commands:
+
+From the command line, you can:
+  - build and rebuild the database, with `build-db` and `rebuild-db`
+  - get a dictionary of the entities and their labels in the database, with `get-entity-dict`
+  - retrieve information about an abstract using its PubMed identifier, with `get-abstract-info`
+  - given a text, predict entities contained within it, with `predict-entities` 
+  - query the database for abstracts matching a keyword and time range, with `query-db`
+  - start the web server, with `serve` 
+
+For more information on options and arguments, run `python cli.py --help`.
+
+To build the database with two tables, Abstract and Entity, run the following command:
+
+```bash
+python cli.py build-db
+```
+
+Containerization:
+
+Please refer to our Dockerfile and run the following commands:
+
+```bash
+docker build . -t mapdpkg:latest
+```
+
+```bash
+docker run --name groupprojectplab2 -p 5000:5000 -e DOCKER_CONTAINER=1 -d mapdpkg:latest
+```
+
+To stop the container:
+
+```bash
+docker stop groupprojectplab2
+```
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+
+![Quick_walkthrough-MAP-D ↑](/uploads/e03eaaef943bac975c2f046c564a17be/Quick_walkthrough-MAP-D.webm)
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+For any assistance, you can write to us at our official email address: mapd@gmx.net. <br>
+-or- <br>
+You can use the contact form on the website.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+![image](/uploads/658761253ed260a6c88f4b323ee0e936/image.png)
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+We would love to hear from you!
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
 ## Authors and acknowledgment
 This project is contributed by:
@@ -170,21 +174,57 @@ This project is contributed by:
 
 **D**eepika Pradeep [s0deprad@uni-bonn.de]() ; [pradeepd0](https://gitlab.informatik.uni-bonn.de/pradeepd0)
 
-And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-bonn.de/bschultz) for helping us out through out the project.
+And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-bonn.de/bschultz) for helping us through out this project.
 
-## License
-For open source projects, say how it is licensed.
+## Project Contributors
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+###### **NLP Tasks:**
 
+- **Task-1 : Create a Corpus (2pts)**
+
+    - _API: Parinishtha_
+    
+    - _Build Database: Muskan_
+
+- **Task-2 : Tag the Abstracts using NER (2pts)**
+
+    - _Muskan_, _Deepika_
+
+- **Task-3: Develop the Search Functionality (2pts)**
+  
+  - _Function and GUI connection: Muskan,Astha_
+
+- **Task-4: GUI (3pts)**
+  
+  - _Astha_ 
+
+- **Task-5: Containerize the Application (1pts)**
+  - _Astha, Muskan_
+
+###### **Package:**
+
+- _setup.py : Muskan_
+- _Rest: All_
+
+###### **Unit Test:** 
+- _Parinishtha_
+
+###### **CLI:**
+- _Deepika_
+
+###### **Compilation:** 
+
+- _Astha, Muskan_
+
+###### **Testing:** 
+- _All_
 ## Citing
 
 We use **ScispaCy** model '**_en_ner_bionlp13cg_md_**' to create our search engine MAP-D which predict Named Entity from Pubmed Abstracts.
 
 ![](data/scispacy_logo.png)
 
-Citing the paper which uses this project [ScispaCy: Fast and Robust Models for Biomedical Natural Language Processing](https://www.semanticscholar.org/paper/ScispaCy%3A-Fast-and-Robust-Models-for-Biomedical-Neumann-King/de28ec1d7bd38c8fc4e8ac59b6133800818b4e29). Additionally, indicating the version and model of ScispaCy used in the research.
+Citing the paper which uses this project [ScispaCy: Fast and Robust Models for Biomedical Natural Language Processing](https://www.semanticscholar.org/paper/ScispaCy%3A-Fast-and-Robust-Models-for-Biomedical-Neumann-King/de28ec1d7bd38c8fc4e8ac59b6133800818b4e29). 
 
 ```
 @inproceedings{neumann-etal-2019-scispacy,
