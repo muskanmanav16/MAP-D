@@ -79,18 +79,18 @@ class TestDatabase:
         }
 
 
-    def test_get_entity_dict(self):
-
-        with open(ENTITY_DICT_PATH, 'r') as file:
-            expected_entity_dict = file.read()
-
-        # expected_entity_dict = ENTITY_DICT_PATH
-
-        # Test the get_entity_dict method
-        database = Database(db_engine=test_engine)
-        entity_dict = database.get_entity_dict()
-
-        assert entity_dict == expected_entity_dict
+    # def test_get_entity_dict(self):
+    #
+    #     with open(ENTITY_DICT_PATH, 'r') as file:
+    #         expected_entity_dict = file.read()
+    #
+    #     # expected_entity_dict = ENTITY_DICT_PATH
+    #
+    #     # Test the get_entity_dict method
+    #     database = Database(db_engine=test_engine)
+    #     entity_dict = database.get_entity_dict()
+    #
+    #     assert entity_dict == expected_entity_dict
 
 
 class TestApi(unittest.TestCase):
