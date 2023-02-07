@@ -175,7 +175,7 @@ And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-b
 
 - **Task-1 : Create a Corpus (2pts)**
 
-    - _API: Parinishtha, Muskan_
+    - _API: Parinishtha_
     
     - _Build Database: Muskan_
 
