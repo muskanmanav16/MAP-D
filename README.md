@@ -114,7 +114,17 @@ pip install CMD-V(to paste the copied URL)
 
 ## Command Line Interfaces & Containerization
 
-CLI command:
+CLI commands:
+
+From the command line, you can:
+  - build and rebuild the database, with `build-db` and `rebuild-db`
+  - get a dictionary of the entities and their labels in the database, with `get-entity-dict`
+  - retrieve information about an abstract using its PubMed identifier, with `get-abstract-info`
+  - given a text, predict entities contained within it, with `predict-entities` 
+  - query the database for abstracts matching a keyword and time range, with `query-db`
+  - start the web server, with `serve` 
+
+For more information on options and arguments, run `python cli.py --help`.
 
 To build the database with two tables, Abstract and entity, run the following command:
 
@@ -152,9 +162,6 @@ You can use the contact form on the website.
 
 We would love to hear from you!
 
-## Roadmap
-
-
 
 ## Authors and acknowledgment
 This project is contributed by:
@@ -181,7 +188,7 @@ And special Thanks to our Mentor [Bruce Schultz](https://gitlab.informatik.uni-b
 
 - **Task-2 : Tag the Abstracts using NER (2pts)**
 
-    - _Muskan_
+    - _Muskan_, _Deepika_
 
 - **Task-3: Develop the Search Functionality (2pts)**
   
