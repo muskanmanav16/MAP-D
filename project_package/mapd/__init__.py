@@ -20,7 +20,7 @@ DB_PATH = PROJECT_DIR.joinpath("gp2_plab2.db")
 DATA_DIR = PROJECT_DIR.joinpath("data")
 PUBMED_DIR = DATA_DIR.joinpath("pubmed")
 TEST_PUBMED_DIR = DATA_DIR.joinpath("pubmed_test")
-
+TEST_DB_PATH = Path(__file__).parent.parent.joinpath("tests","data","Test_DB.db")
 
 # Make directories
 LOG_DIR.mkdir(exist_ok=True, parents=True)

@@ -11,6 +11,7 @@ from Bio import Medline, Entrez
 
 from time import sleep
 from urllib.error import HTTPError
+from http.client import IncompleteRead
 from mapd import engine, PUBMED_DIR
 
 from mapd.models import Base, Abstract, Entity
@@ -201,7 +202,7 @@ class Utilapi:
                     path_outfile = self.PUBMED_DIR.joinpath(f'{start + 1}-{end}.xml')
                     with open(path_outfile, "w", encoding='utf-8') as f:
                         f.write(data)
-                except HTTPError:
+                except (HTTPError, IncompleteRead):
                     pass
                 sleep(self.sleep_time)
                 pbar.update(batch_size)
