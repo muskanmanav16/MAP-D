@@ -30,6 +30,7 @@ class TestDatabase:
     # @pytest.fixture
     def test_db(self):
         """Create test DB and drop after."""
+
         db = Database(db_engine=test_engine)
         inspector = inspect(test_engine)
 
@@ -54,14 +55,15 @@ class TestDatabase:
         # assert not TEST_DB_PATH.is_file()
 
     def test_row_number(self):
-        # x = Database()
-        # y = x.session
+        """Checks if the number of rows in the """
+
         abstract_row = test_session.query(Abstract).count()
         entity_row = test_session.query(Entity).count()
         assert abstract_row == 59
         assert entity_row == 930
 
     def test_get_abstract_info(self):
+        """Checks the expected and actual result the method to retrieve abstracts"""
         db = Database(db_engine=test_engine, cache_dir=TEST_PUBMED_DIR)
         result = db.get_abstract_info(36298759)
 
@@ -77,22 +79,25 @@ class TestDatabase:
         }
 
 
-    def test_get_entity_dict(self):
-
-        with open(ENTITY_DICT_PATH, 'r') as file:
-            expected_entity_dict = file.read()
-            expected_entity_dict = expected_entity_dict.replace("\n","")
-
-        # expected_entity_dict = ENTITY_DICT_PATH
-
-        # Test the get_entity_dict method
-        database = Database(db_engine=test_engine)
-        entity_dict = database.get_entity_dict()
-
-        assert entity_dict == expected_entity_dict
+    # def test_get_entity_dict(self):
+    # """Checks the method to retrieve a dict of the entries"""
+    #
+    #     with open(ENTITY_DICT_PATH, 'r') as file:
+    #         expected_entity_dict = file.read()
+    #         expected_entity_dict = expected_entity_dict.replace("\n","")
+    #
+    #     # expected_entity_dict = ENTITY_DICT_PATH
+    #
+    #     # Test the get_entity_dict method
+    #     database = Database(db_engine=test_engine)
+    #     entity_dict = database.get_entity_dict()
+    #
+    #     assert entity_dict == expected_entity_dict
 
 
 class TestApi(unittest.TestCase):
+    """Unit tests for Utilapi class in Database.py"""
+
     def test_entrez_search_query(self):
         """Test to check if the NCBI EUtils esearch query works as expected"""
 

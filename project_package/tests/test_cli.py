@@ -10,6 +10,8 @@ class TestCli:
     """Class for testing the CLI commands."""
 
     def test_get_entity_dict(self):
+        """Checks if the method to get entities works as expected"""
+
         result = runner.invoke(get_entity_dict)
         assert result.exit_code == 0
 
@@ -17,6 +19,8 @@ class TestCli:
         assert "option to print dict entries row by row" in help_result.output
 
     def test_get_abstract_info(self):
+        """Checks if the method to retrieve abstract information works as expected"""
+
         # expected_out = {
         #     "pubmed_id": '36298759',
         #     "Title": "Current In Vitro and In Vivo Models to Study MCPyV-Associated MCC.",
@@ -32,9 +36,13 @@ class TestCli:
         assert result.exit_code == 0
 
     def test_predict_entities(self):
+        """Checks if the method to predict entities works as expected"""
+
         result = runner.invoke(predict_entities, ["Merkel cell polyomavirus (MCPyV) is the only human polyomavirus currently known to cause human cancer."])
         assert result.exit_code == 0
 
     def test_query_db(self):
+        """Checks if the method to query the database works as expected"""
+
         result = runner.invoke(query_db, ['nose', 'test_results.csv', '-s', '2021-01-03', '-e', '2021-09-02'])
         assert result.exit_code == 0

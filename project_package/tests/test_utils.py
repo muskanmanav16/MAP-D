@@ -9,6 +9,8 @@ engine = create_engine(CONN_STRING)
 
 
 def test_query_database():
+    """Checks the method to query the database in utils.py"""
+
     keyword = "amino acid"
     # start_date = '2022-01-01'
     # end_date = '2022-06-31'
