@@ -1,18 +1,16 @@
 import click
 import uvicorn
-import pandas as pd
+
 from mapd.Database import Database
 from mapd.NER import EntityPrediction
 from mapd.utils import query_database
 from mapd import DB_PATH
-from pathlib import Path
-import logging
 
+import pandas as pd
+
+import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
-# Instantiate Database class
-db = Database()
 
 @click.group()
 def main():
@@ -23,6 +21,7 @@ def main():
 @main.command()
 def build_db():
     """Builds database and populates it with abstract records using either cached/newly downloaded files."""
+
     db = Database()
     db.add_entity_data()
     click.echo("Built database of PubMed abstracts at {}.".format(DB_PATH))
@@ -32,8 +31,10 @@ def build_db():
 def rebuild_db():
     """Rebuilds database from scratch after dropping any existing tables, and adds associated entities to Entity table"""
 
+    db = Database()
     db.rebuild_database()
     db.add_entity_data()
+
     click.echo("Rebuilt database of PubMed abstracts from scratch at {}.".format(DB_PATH))
     click.echo("Entity table of database populated with entities for each abstract.")
 
@@ -43,6 +44,8 @@ def rebuild_db():
 def get_entity_dict(row_wise_results: bool):
     """Returns a dictionary of entities in the table, with each entry containing
     an entity (key) and its label (value) """
+
+    db = Database()
 
     if db.raw_entity_data:
         entity_dict = db.raw_entity_data
@@ -67,6 +70,7 @@ def get_abstract_info(pmid: int): # can test with PMID 36316711
     pmid: int
         PubMed ID of abstract
     """
+    db = Database()
 
     entries_dict = db.get_abstract_info(pubmed_id=pmid)
     click.echo(entries_dict)
@@ -80,6 +84,7 @@ def predict_entities(text: str):
     text: str
         Input text for entity prediction
     """
+    db = Database()
 
     entity_predictor = EntityPrediction(db.session)
     entities = entity_predictor.predict_entities(text)
@@ -102,6 +107,7 @@ def query_db(keyword: str, filepath: str, start_date=None, end_date=None):
     filepath: str
         File path for query results .csv file
     """
+    db = Database()
 
     results = query_database(keyword, start_date, end_date)
     for result in results:
