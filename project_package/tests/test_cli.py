@@ -32,7 +32,6 @@ class TestCli:
         # }
         result = runner.invoke(get_abstract_info, ['36298759'])
         # assert result.output == expected_out
-
         assert result.exit_code == 0
 
     def test_predict_entities(self):

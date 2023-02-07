@@ -22,6 +22,7 @@ test_session = Session(bind=test_engine)
 from mapd import TEST_PUBMED_DIR
 ENTITY_DICT_PATH = "tests/data/test_data_entities.txt"
 
+
 class TestDatabase:
     """Unit tests for Database class in Database.py"""
 

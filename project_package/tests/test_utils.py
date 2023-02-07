@@ -3,6 +3,7 @@
 from sqlalchemy import select, inspect, create_engine,distinct
 from mapd.utils import get_abstract_info, query_database
 
+
 DB_PATH = 'project_package/tests/data/Test_DB.db'
 CONN_STRING = f"sqlite:///{DB_PATH}"
 engine = create_engine(CONN_STRING)
