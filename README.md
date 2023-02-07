@@ -126,7 +126,7 @@ From the command line, you can:
 
 For more information on options and arguments, run `python cli.py --help`.
 
-To build the database with two tables, Abstract and entity, run the following command:
+To build the database with two tables, Abstract and Entity, run the following command:
 
 ```bash
 python cli.py build-db
