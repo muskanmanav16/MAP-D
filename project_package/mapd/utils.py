@@ -22,6 +22,13 @@ else:
     print(CONN_STRING)
 
 def get_abstract_info(pubmed_id: int):
+    """Get abstract info  for a given pubmedid from the relational database.
+            param:
+            pubmed_id: int
+
+            returns: dict, each dict represents a records in the abstract table along
+            with dictionary of entities containing entity and labels"""
+
     engine = create_engine(CONN_STRING)
     test_session = Session(bind=engine)
     stmt = select(
@@ -49,6 +56,14 @@ def get_abstract_info(pubmed_id: int):
     return entries_dict
 
 def query_database(keyword: str, start_date=None, end_date=None):
+    """To query the database.
+            param:
+            keyword: str
+            start_date : None
+            end_date : None
+
+            returns: dict"""
+
     engine = create_engine(CONN_STRING)
     test_session = Session(bind=engine)
     query_ = test_session.query(Abstract.pubmed_id).join(Entity, Abstract.id == Entity.abstract_id)

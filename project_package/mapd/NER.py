@@ -23,6 +23,8 @@ class EntityPrediction:
         self.session = session
 
     def predict_entities(self, abstract_text):
+        """To predict the entities in abstract using the NLP model"""
+
         doc = nlp(abstract_text)
         entities = []
         for ent in doc.ents:
@@ -30,6 +32,8 @@ class EntityPrediction:
         return entities
 
     def insert_entities(self, abstract_id, entities):
+        """To add the predicted entities into the database"""
+
         for entity in entities:
             e = Entity(entity=entity["entity"], labels=entity["labels"], abstract_id=abstract_id)
             self.session.add(e)

@@ -45,11 +45,13 @@ class Database:
 
     def rebuild_database(self) -> None:
         """Burn everything and builds the database."""
+
         self.drop_database()
         self.build_database()
 
     def build_database(self) -> None:
         """Build the tables of the database."""
+
         logger.info("Building database...")
         Base.metadata.create_all(bind=self.engine)
 
@@ -60,7 +62,8 @@ class Database:
         Base.metadata.drop_all(bind=self.engine)
 
     def add_entity_data(self):
-        '''Populating the Entity table it also checks if record exists or not to aviod any duplicates'''
+        """Populating the Entity table it also checks if record exists or not to aviod any duplicates"""
+
         self.add_abstract_to_database()
         # Get all abstracts in the database from Abstract table
         abstracts = self.session.query(Abstract).all()
@@ -83,6 +86,7 @@ class Database:
     def add_abstract_to_database(self):
         """First check if files exists in pubmed_dir if not it will download the Abstract in the cache folder
         Also checks the Abstract Table if it filled or not then add the data to the database """
+
         if len(list(self.PUBMED_DIR.glob("*.xml"))) > 0:
             print('Abstract Downloaded')
         else:
@@ -139,6 +143,7 @@ class Database:
 
         returns: dict, each dict represents a records in the abstract table along
         with dictionary of entities containing entity and labels"""
+
         self.add_entity_data()
         stmt = select(
             Abstract.pubmed_id,
@@ -174,6 +179,7 @@ class Utilapi:
 
     def search(self):
         """Search pubmed abstract using NCBI Entrez API - esearch"""
+
         try:
             search_info = Entrez.esearch(db="pubmed", term=self.search_query, usehistory='y', retmax=100)
             record = Entrez.read(search_info)
